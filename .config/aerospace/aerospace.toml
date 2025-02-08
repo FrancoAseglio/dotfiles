@@ -1,0 +1,85 @@
+after-login-command   = []
+after-startup-command = []
+
+# Start AeroSpace at login
+start-at-login = true
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# The 'accordion-padding' specifies the size of accordion padding
+# You can set 0 to disable the padding feature
+accordion-padding = 5
+
+# Possible values: tiles|accordion
+default-root-container-layout = 'tiles'
+
+# Possible values: horizontal|vertical|auto
+# 'auto' means: wide monitor (anything wider than high) gets horizontal orientation,
+#               tall monitor (anything higher than wide) gets vertical orientation
+default-root-container-orientation = 'auto'
+
+# Possible values: (qwerty|dvorak)
+key-mapping.preset = 'qwerty'
+
+# Mouse follows focus when focused monitor changes
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Gaps between windows (inner-*) and between monitor edges (outer-*).
+[gaps]
+inner.horizontal = 5
+inner.vertical   = 5
+outer.left       = 5
+outer.bottom     = 5
+outer.top        = 5
+outer.right      = 5
+
+[mode.main.binding]
+# Layout Split  
+alt-t = 'layout tiles horizontal vertical'
+alt-a = 'layout accordion'
+
+# Focus commands  
+alt-left  = 'focus left'
+alt-down  = 'focus down'
+alt-up    = 'focus up'
+alt-right = 'focus right'
+
+# Move commands  
+alt-shift-left  = 'move left'
+alt-shift-down  = 'move down'
+alt-shift-up    = 'move up'
+alt-shift-right = 'move right'
+
+# Move to Workspaces   
+alt-g = 'workspace G' # GoodNotes 
+alt-h = 'workspace H' # Home Finder 
+alt-i = 'workspace I' # AI interaction
+alt-m = 'workspace M' # Music
+alt-n = 'workspace N' # Notes 
+alt-s = 'workspace S' # Safari
+alt-w = 'workspace W' # WezTerm
+alt-y = 'workspace Y' # YouTube
+
+# Moving node to Workspace  
+cmd-alt-g = 'move-node-to-workspace G'
+cmd-alt-h = 'move-node-to-workspace H'
+cmd-alt-i = 'move-node-to-workspace I'
+cmd-alt-m = 'move-node-to-workspace M'
+cmd-alt-n = 'move-node-to-workspace N'
+cmd-alt-s = 'move-node-to-workspace S'
+cmd-alt-w = 'move-node-to-workspace W'
+cmd-alt-y = 'move-node-to-workspace Y'
+
+# Sevice Mode  
+alt-shift-s = 'mode service'
+
+# 'service' binding mode declaration.
+[mode.service.binding]
+r   = ['reload-config', 'mode main']
+esc = ['flatten-workspace-tree', 'mode main'] # Reload layout
+f   = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+
+# shift-left  = ['join-with left' , 'mode main']
+# shift-down  = ['join-with down' , 'mode main']
+# shift-up    = ['join-with up'   , 'mode main']
+# shift-right = ['join-with right', 'mode main']
