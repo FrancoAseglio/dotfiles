@@ -42,7 +42,7 @@ Before you begin, ensure you have the following installed:
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/YourUsername/terminal-config.git ~/.terminal-config
+git clone git@github.com:FrancoAseglio/dotfiles.git
 ```
 
 2. Run the installation script:
