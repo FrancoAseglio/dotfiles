@@ -37,6 +37,9 @@ _Terminal-based file management with detailed information and tree structure_
 ![Neovim Dashboard](./assets/custom2.png)
 _FZF file preview with customized split panes_
 
+![Lazy Git](./assets/custom3.png)
+_Lazy Git for easy access on terminal interface_
+
 ## 📋 Prerequisites
 
 ### Operating System Support
