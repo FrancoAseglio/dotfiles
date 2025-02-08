@@ -227,7 +227,7 @@ MIT License - See [LICENSE](LICENSE) for details.
 - [WezTerm Reference](https://wezfurlong.org/wezterm/)
 - [Starship Configuration](https://starship.rs/)
 - [Homebrew Guide](https://docs.brew.sh/)
-- [Aerospace Documentation](https://nikitabobko.github.io/AeroSpace/guide/)
+- [Aerospace Documentation](https://nikitabobko.github.io/AeroSpace/guide)
 
 ## ⭐️ Acknowledgments
 
