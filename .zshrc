@@ -66,6 +66,3 @@ alias xxx="cmatrix -B -C yellow"
 
 #---- Starship ~.config/starship.toml  ----
 eval "$(starship init zsh)"
-
-#---- Orbstack aliases ----
-alias orbq='osascript -e "quit app \"OrbStack\""'
