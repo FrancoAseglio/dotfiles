@@ -77,7 +77,7 @@ Supported package managers:
 ### 1. Clone the Repository
 
 ```bash
-git clone git@github.com:YourUsername/dotfiles.git ~/.dotfiles
+git clone git@github.com:FrancoAseglio/dotfiles.git
 cd ~/.dotfiles
 ```
 
