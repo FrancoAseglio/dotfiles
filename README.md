@@ -10,6 +10,15 @@ My personal terminal configuration files for macOS, including settings for Neovi
 - Various CLI tool configurations (bat, htop, neofetch)
 - Shell configuration files (.zshrc)
 
+![ZSH Configuration](./assets/custom0.png)
+_Neovim dashboard with system information and quick actions_
+
+![File Management](./assets/custom1.png)
+_Terminal-based file management with detailed information and tree structure via aliases_
+
+![Neovim Dashboard](./assets/custom2.png)
+_fzf file previw on splits with customs_
+
 ## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
@@ -19,6 +28,14 @@ Before you begin, ensure you have the following installed:
 - Neovim (latest version)
 - Zsh
 - WezTerm
+- Aerospace
+- Starship
+- Bat
+- Eza
+- The Fuck
+- Zoxide
+- Neofetch
+- Htop
 
 ## 🔧 Installation
 
@@ -75,13 +92,6 @@ cd ~/.terminal-config
 git pull
 ./install.sh
 ```
-
-## 💡 Tips
-
-- Use `SPC + ee` for File Explorer
-- Use `SPC + ff` for Find File
-- Use `SPC + fs` for Live Grep
-- Use `SPC + wr` to Restore Session
 
 ## 🤝 Contributing
 
