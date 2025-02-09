@@ -217,10 +217,6 @@ Guidelines:
 - Test on both macOS and Linux
 - Include relevant screenshots
 
-## 📝 License
-
-MIT License - See [LICENSE](LICENSE) for details.
-
 ## 📚 Resources
 
 - [Neovim Documentation](https://neovim.io/doc/)
