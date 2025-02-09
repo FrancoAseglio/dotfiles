@@ -89,6 +89,28 @@ detect_and_install_packages() {
     done
 }
 
+# Configure shell environment
+configure_shell() {
+    print_message "Configuring shell environment..."
+    
+    # Create .zshrc if it doesn't exist
+    if [ ! -f "$HOME/.zshrc" ]; then
+        touch "$HOME/.zshrc"
+        print_success "Created new .zshrc file"
+    fi
+    
+    # Add starship initialization if not already present
+    if ! grep -q "starship init" "$HOME/.zshrc"; then
+        echo 'eval "$(starship init zsh)"' >> "$HOME/.zshrc"
+        print_success "Added starship initialization to .zshrc"
+    else
+        print_success "Starship initialization already configured"
+    fi
+    
+    # Source the updated configuration
+    source "$HOME/.zshrc" 2>/dev/null || true
+}
+
 # Main installation process
 main() {
     print_message "Starting installation..."
@@ -106,6 +128,7 @@ main() {
     backup_configs
     detect_and_install_packages
     create_symlinks
+    configure_shell
 
     print_success "Installation completed successfully!"
     print_message "Please restart your terminal for changes to take effect."
