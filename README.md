@@ -1,8 +1,8 @@
 # Terminal Configuration
 
 My personal terminal configuration files for macOS;  
-providing a comprehensive development environment with Neovim, WezTerm, and essential CLI tools.
-This setup aims to create a consistent, efficient, and pleasant terminal experience across different operating systems.
+providing a comprehensive development environment with Neovim, WezTerm, and CLI tools.
+This setup aims to create a consistent, efficient, and pleasant terminal experience.
 
 ## 🚀 Features
 
@@ -42,11 +42,14 @@ _Lazy Git for easy access on terminal interface_
 
 ## 📋 Prerequisites
 
-### Operating System Support
+### System Requirements
 
-The installation script automatically detects your operating system and uses the appropriate package manager:
+- Git for version control
+- Curl for downloading dependencies
+- Terminal emulator that supports UTF-8
+- Optional: Compatible Nerd Font
 
-**macOS**
+### macOS Setup
 
 - Install Homebrew:
 
@@ -60,20 +63,6 @@ The installation script automatically detects your operating system and uses the
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
-
-**Linux**
-Supported package managers:
-
-- apt (Debian/Ubuntu)
-- dnf (Fedora/RHEL)
-- pacman (Arch Linux)
-
-### System Requirements
-
-- Git for version control
-- Curl for downloading dependencies
-- Terminal emulator that supports UTF-8
-- Optional: Compatible Nerd Font
 
 ## 🔧 Installation
 
@@ -103,25 +92,25 @@ chmod +x install.sh
 
 The script performs the following steps:
 
+1. **Shell Configuration**
+
+   - Generates a new `.zshrc` file in your home directory
+   - Configures ZSH with optimal defaults and aliases
+   - Sets up integration with Starship prompt
+
 1. **Backup Creation**
 
    - Creates timestamped backup directory
    - Moves existing configurations to backup
    - Preserves your previous settings
 
-2. **OS Detection**
+1. **Package Installation**
 
-   - Identifies operating system
-   - Selects appropriate package manager
-   - Verifies package manager availability
-
-3. **Package Installation**
-
-   - Installs missing required packages
+   - Installs missing required packages via Homebrew
    - Skips already installed packages
    - Reports installation status
 
-4. **Symlink Creation**
+1. **Symlink Creation**
    - Creates ~/.config directory if needed
    - Sets up symbolic links for all configurations
    - Maintains easy update capability
@@ -142,25 +131,19 @@ sudo chown -R $USER:$USER ~/.config
 bash -x install.sh
 ```
 
-3. Package Manager Issues
+3. Homebrew Issues
 
 ```bash
-# macOS
 brew doctor
-
-# Linux (Ubuntu/Debian)
-sudo apt update
-
-# Fedora
-sudo dnf check-update
-
-# Arch
-sudo pacman -Sy
 ```
 
 ## 📦 Configuration Structure
 
 ```
+# Home Directory
+~/.zshrc                  # ZSH configuration file
+
+# Configuration Directory
 .config/
 ├── nvim/                  # Neovim configuration
 │   ├── init.lua           # Main configuration
@@ -214,7 +197,7 @@ Guidelines:
 
 - Follow existing code style
 - Update documentation
-- Test on both macOS and Linux
+- Test on macOS
 - Include relevant screenshots
 
 ## 📚 Resources
@@ -224,12 +207,3 @@ Guidelines:
 - [Starship Configuration](https://starship.rs/)
 - [Homebrew Guide](https://docs.brew.sh/)
 - [Aerospace Documentation](https://nikitabobko.github.io/AeroSpace/guide)
-
-## ⭐️ Acknowledgments
-
-Thanks to:
-
-- Neovim community for plugins and inspiration
-- WezTerm developers for an excellent terminal
-- Starship contributors for a great prompt
-- The open source community
