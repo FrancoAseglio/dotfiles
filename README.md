@@ -27,6 +27,7 @@ This setup aims to create a consistent, efficient, and pleasant terminal experie
   - htop: Interactive process viewer
   - neofetch: System information display
   - aerospace: Window management for macOS
+  - yazi: Modern terminal file manager with image preview
 
 ![ZSH Configuration](./assets/custom0.png)
 _Neovim dashboard featuring system information and quick actions_
@@ -39,6 +40,9 @@ _FZF file preview with customized split panes_
 
 ![Lazy Git](./assets/custom3.png)
 _Lazy Git for easy access on terminal interface_
+
+![Yazi](./assets/custom4.png)
+_Yazi terminal file system management_
 
 ## 📋 Prerequisites
 
@@ -141,25 +145,37 @@ brew doctor
 
 ```
 # Home Directory
-~/.zshrc                  # ZSH configuration file
+~/.zshrc                         # ZSH configuration file
 
 # Configuration Directory
 .config/
-├── nvim/                  # Neovim configuration
-│   ├── init.lua           # Main configuration
-│   ├── lua/               # Lua modules
-│   └── plugins/           # Plugin configurations
-├── wezterm/               # WezTerm terminal emulator
-│   └── wezterm.lua        # Main configuration
-├── bat/                   # Bat configuration
-│   └── config             # Syntax highlighting settings
-├── htop/                  # Process viewer
-│   └── htoprc             # Layout and color settings
-├── neofetch/              # System information
-│   └── config.conf        # Display configuration
-├── aerospace/             # Window manager
-│   └── aerospace.toml     # Window management rules
-└── starship.toml          # Shell prompt configuration
+├── nvim/                         # Neovim configuration
+│   ├── init.lua                  # Main configuration
+│   ├── lua/                      # Lua modules
+│   └── plugins/                  # Plugin configurations
+├── wezterm/                      # WezTerm terminal emulator
+│   └── wezterm.lua               # Main configuration
+├── bat/                          # Bat configuration
+│   └── config                    # Syntax highlighting settings
+├── htop/                         # Process viewer
+│   └── htoprc                    # Layout and color settings
+├── neofetch/                     # System information
+│   └── config.conf               # Display configuration
+├── aerospace/                    # Window manager
+│   └── aerospace.toml            # Window management rules
+├── yazi/                         # Modern file manager
+│   ├── flavors/                  # Color schemes
+│   │   └── catppuccin-mocha.yazi/
+│   │       ├── flavor.toml       # Color configuration
+│   │       ├── LICENSE           # Theme license
+│   │       ├── LICENSE-tmtheme   # Syntax theme license
+│   │       ├── README.md         # Theme documentation
+│   │       └── tmtheme.xml       # Syntax highlighting theme
+│   ├── keymap.toml               # Keyboard shortcuts
+│   ├── package.toml              # Package configuration
+│   ├── theme.toml                # Visual customization
+│   └── yazi.toml                 # Main configuration
+└── starship.toml                 # Shell prompt configuration
 ```
 
 ## 🔄 Maintaining Your Setup
@@ -207,3 +223,4 @@ Guidelines:
 - [Starship Configuration](https://starship.rs/)
 - [Homebrew Guide](https://docs.brew.sh/)
 - [Aerospace Documentation](https://nikitabobko.github.io/AeroSpace/guide)
+- [Yazi Documentation](https://yazi-rs.github.io/docs/installation)

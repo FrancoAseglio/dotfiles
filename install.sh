@@ -120,9 +120,9 @@ main() {
     fi
 
     # Configurations and files to be linked
-    configs=("nvim" "wezterm" "bat" "htop" "neofetch" "aerospace")
+    configs=("nvim" "wezterm" "bat" "htop" "neofetch" "aerospace" "yazi")
     files=("starship.toml")
-    packages=("neovim" "wezterm" "bat" "htop" "neofetch" "starship")
+    packages=("neovim" "wezterm" "bat" "htop" "neofetch" "starship" "yazi")
 
     backup_configs
     detect_and_install_packages
