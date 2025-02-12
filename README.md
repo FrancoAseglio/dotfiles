@@ -29,6 +29,8 @@ This setup aims to create a consistent, efficient, and pleasant terminal experie
   - aerospace: Window management for macOS
   - yazi: Modern terminal file manager with image preview
 
+---
+
 ![ZSH Configuration](./assets/custom0.png)
 _Neovim dashboard featuring system information and quick actions_
 
@@ -43,6 +45,8 @@ _Lazy Git for easy access on terminal interface_
 
 ![Yazi](./assets/custom4.png)
 _Yazi terminal file system management_
+
+---
 
 ## 📋 Prerequisites
 
@@ -67,6 +71,8 @@ _Yazi terminal file system management_
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
+
+---
 
 ## 🔧 Installation
 
@@ -188,6 +194,8 @@ git pull
 ./install.sh
 ```
 
+---
+
 ### Adding New Configurations
 
 1. Add directory/file to `.config/`
@@ -200,6 +208,8 @@ git pull
 - Backups are stored in `~/.config/backup_[timestamp]`
 - Review and clean old backups periodically
 - Keep at least one known working backup
+
+---
 
 ## 🤝 Contributing
 
