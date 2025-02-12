@@ -20,19 +20,41 @@ return {
 				liquid = { "prettier" },
 				lua = { "stylua" },
 				python = { "isort", "black" },
+				java = { "google-java-format" },
+				sql = { "pg_format" },
 			},
+			formatters = {
+				pg_format = {
+					command = "pg_format",
+					args = { "postgresql" },
+				},
+			},
+			--  Enable format on save properly
 			format_on_save = {
-				lsp_fallback = false,
+				lsp_fallback = true, -- Ensure fallback to LSP if formatter fails
 				async = false,
-				timeout_ms = 1000,
+				timeout_ms = 5000,
 			},
 		})
 
+		--  Add autocommand to ensure format on save works
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			pattern = "*",
+			callback = function()
+				conform.format({
+					lsp_fallback = true,
+					async = false,
+					timeout_ms = 5000,
+				})
+			end,
+		})
+
+		--  Keybinding to manually trigger formatting
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
 			conform.format({
 				lsp_fallback = true,
 				async = false,
-				timeout_ms = 1000,
+				timeout_ms = 5000,
 			})
 		end, { desc = "Format file or range (in visual mode)" })
 	end,

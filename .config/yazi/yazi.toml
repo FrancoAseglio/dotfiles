@@ -1,13 +1,13 @@
 "$schema" = "https://yazi-rs.github.io/schemas/yazi.json"
 
 [manager]
-ratio          = [ 2, 2, 10 ]
+ratio          = [ 2, 3, 9 ]
 sort_by        = "alphabetical"
 sort_sensitive = false
 sort_reverse   = false
 sort_dir_first = true
 linemode       = "none"
-show_hidden    = true 
+show_hidden    = false 
 show_symlink   = true
 scrolloff      = 5
 mouse_events   = [ "click", "scroll" ]

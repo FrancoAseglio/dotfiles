@@ -7,10 +7,7 @@ return {
 	config = function()
 		-- import mason
 		local mason = require("mason")
-
-		-- import mason-lspconfig
 		local mason_lspconfig = require("mason-lspconfig")
-
 		local mason_tool_installer = require("mason-tool-installer")
 
 		-- enable mason and configure icons
@@ -25,9 +22,8 @@ return {
 		})
 
 		mason_lspconfig.setup({
-			-- list of servers for mason to install
+			automatic_installation = true,
 			ensure_installed = {
-				--"tsserver",
 				"html",
 				"cssls",
 				"tailwindcss",
@@ -37,6 +33,7 @@ return {
 				"emmet_ls",
 				"prismals",
 				"pyright",
+				"sqlls", -- Added SQL language server
 			},
 		})
 
@@ -48,6 +45,7 @@ return {
 				"black", -- python formatter
 				"pylint", -- python linter
 				"eslint_d", -- js linter
+				"sqlfmt", -- SQL formatter
 			},
 		})
 	end,

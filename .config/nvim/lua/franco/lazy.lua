@@ -10,10 +10,20 @@ if not vim.loop.fs_stat(lazypath) then
 	})
 end
 vim.opt.rtp:prepend(lazypath)
-
 require("lazy").setup({
 	{ import = "franco.plugins" },
 	{ import = "franco.plugins.lsp" },
+	{
+		"mfussenegger/nvim-jdtls", -- Java language server integration
+		ft = { "java" },
+	},
+	{
+		"kristijanhusak/vim-dadbod-ui",
+		dependencies = {
+			"tpope/vim-dadbod",
+			"kristijanhusak/vim-dadbod-completion",
+		},
+	},
 }, {
 	checker = {
 		enabled = true,
