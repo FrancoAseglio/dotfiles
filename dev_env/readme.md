@@ -40,12 +40,6 @@ chmod +x restore.sh
 ./restore.sh <backup_zip_file>
 ```
 
-For example:
-
-```bash
-./restore.sh <backup_zip_file>
-```
-
 ## Post-Restore Steps
 
 Depending on your OS:
