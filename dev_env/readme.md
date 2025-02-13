@@ -6,7 +6,7 @@ A pair of scripts for backing up and restoring your macOS development environmen
 
 - Backs up:
   - Homebrew packages (formulae and casks)
-  - Config directories (.config/*)
+  - Config directories (.config/\*)
   - Neovim configuration and plugins
   - Various dotfiles (.zshrc, .gitconfig, etc.)
   - Terminal configurations (WezTerm, etc.)
@@ -27,8 +27,8 @@ A pair of scripts for backing up and restoring your macOS development environmen
 ### Backup (macOS only)
 
 ```bash
-chmod +x macos-backup.sh
-./macos-backup.sh
+chmod +x backup.sh
+./backup.sh
 ```
 
 This will create a zip file named `mac_env_backup_YYYYMMDD_HHMMSS.zip` in your current directory.
@@ -41,8 +41,9 @@ chmod +x restore.sh
 ```
 
 For example:
+
 ```bash
-./restore.sh mac_env_backup_20250213_102245.zip
+./restore.sh <backup_zip_file>
 ```
 
 ## Post-Restore Steps
@@ -60,6 +61,7 @@ To add more directories or files to backup, edit the `CONFIG_DIRS` and `CONFIG_F
 ## Troubleshooting
 
 If you encounter issues:
+
 1. Check file permissions
 2. Ensure all required utilities are installed
 3. Verify the backup zip file exists and isn't corrupted
