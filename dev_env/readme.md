@@ -1,22 +1,35 @@
-# Mac Environment Backup Scripts
+# Mac Environment Backup & System Health Check Scripts
 
-A pair of scripts for backing up and restoring your macOS development environment, including configurations for various tools, dotfiles, and Homebrew packages.
+A set of scripts for backing up and monitoring your macOS development environment, including configurations for various tools, dotfiles, Homebrew packages, and system health checks.
 
 ## Features
 
-- Backs up:
-  - Homebrew packages (formulae and casks)
-  - Config directories (.config/\*)
-  - Neovim configuration and plugins
-  - Various dotfiles (.zshrc, .gitconfig, etc.)
-  - Terminal configurations (WezTerm, etc.)
-- Cross-platform restore capability
-- Verification of backed-up files
-- Automatic package manager setup on restore
+- **Backup Script:**
+
+  - Backs up:
+    - Homebrew packages (formulae and casks)
+    - Config directories (.config/\*)
+    - Neovim configuration and plugins
+    - Various dotfiles (.zshrc, .gitconfig, etc.)
+    - Terminal configurations (WezTerm, etc.)
+  - Cross-platform restore capability
+  - Verification of backed-up files
+  - Automatic package manager setup on restore
+
+- **System Health Check Script:**
+  - Checks:
+    - Installed and outdated Homebrew casks
+    - Large files, empty files, and old files
+    - Memory usage and compression status
+    - CPU usage and active processes
+    - Disk space and running services
+    - Network status and battery health
+    - Security settings (Gatekeeper, SIP, Firewall)
+  - Saves a detailed log file in `~/macos-health-logs/`
 
 ## Prerequisites
 
-- macOS (for backup)
+- macOS (for backup and health check)
 - Any Unix-like system or Windows with WSL (for restore)
 - Bash shell
 - `zip` utility (for backup)
@@ -32,6 +45,15 @@ chmod +x backup.sh
 ```
 
 This will create a zip file named `mac_env_backup_YYYYMMDD_HHMMSS.zip` in your current directory.
+
+### System Health Check (macOS only)
+
+```bash
+chmod +x system_health.sh
+./system_health.sh
+```
+
+This will generate a log file in `~/macos-health-logs/` with detailed system health information.
 
 ### Restore (Cross-platform)
 
