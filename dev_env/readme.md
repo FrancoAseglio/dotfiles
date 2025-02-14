@@ -72,7 +72,7 @@ Depending on your OS:
 
 ## Customization
 
-To add more directories or files to backup, edit the `CONFIG_DIRS` and `CONFIG_FILES` arrays in `macos-backup.sh`.
+To add more directories or files to backup, edit the `CONFIG_DIRS` and `CONFIG_FILES` arrays in `backup.sh`.
 
 ## Troubleshooting
 
@@ -82,3 +82,4 @@ If you encounter issues:
 2. Ensure all required utilities are installed
 3. Verify the backup zip file exists and isn't corrupted
 4. Check available disk space in the destination
+
