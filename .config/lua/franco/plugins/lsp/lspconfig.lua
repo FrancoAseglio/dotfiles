@@ -151,14 +151,6 @@ return {
 				})
 			end,
 
-			["java_language_server"] = function()
-				lspconfig.java_language_server.setup({
-					cmd = { "java-language-server" },
-					capabilities = capabilities,
-					root_dir = lspconfig.util.root_pattern("pom.xml", "build.gradle", ".git"),
-				})
-			end,
-
 			-- SQL
 			["sqlls"] = function()
 				lspconfig["sqlls"].setup({

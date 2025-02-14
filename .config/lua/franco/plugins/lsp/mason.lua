@@ -34,7 +34,6 @@ return {
 				"prismals",
 				"pyright",
 				"sqlls", -- Added SQL language server
-				"jdtls", -- Java LSP
 			},
 		})
 
@@ -47,8 +46,6 @@ return {
 				"pylint", -- python linter
 				"eslint_d", -- js linter
 				"sqlfmt", -- SQL formatter
-				"java-debug-adapter", -- Java debugging
-				"java-test", -- Java test framework
 			},
 		})
 	end,
