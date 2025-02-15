@@ -211,12 +211,6 @@ git pull
 
 ---
 
-## 💾 dev_env/
-
-A set of scripts for backing up and monitoring your macOS development environment,
-including configurations for various tools, dotfiles, Homebrew packages, and system health checks.
-Check relative README.md
-
 ## 🤝 Contributing
 
 1. Fork the repository
