@@ -91,27 +91,6 @@ source ~/fzf-git.sh/fzf-git.sh
 eval $(fzf --zsh)
 
 # ========================================
-# Java Utilities
-# ========================================
-
-# --- Java Compile ---
-jc() {
-    javac "$1"
-}
-
-# --- Java Run (supports CL input) ---
-jr() {
-    local classfile=$(basename "$1" .java)
-    shift
-    java "$classfile" "$@"
-}
-
-# --- Java Compile & Run ---
-jcr() {
-    jc "$1" && jr "$1" "${@:2}"
-}
-
-# ========================================
 # Enhancements
 # ========================================
 

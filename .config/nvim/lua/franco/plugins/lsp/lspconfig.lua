@@ -151,6 +151,7 @@ return {
 				})
 			end,
 
+			-- Java
 			["java_language_server"] = function()
 				lspconfig.java_language_server.setup({
 					cmd = { "java-language-server" },

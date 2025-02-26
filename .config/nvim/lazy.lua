@@ -33,3 +33,4 @@ require("lazy").setup({
 		notify = false,
 	},
 })
+vim.opt.foldmethod = "bc"

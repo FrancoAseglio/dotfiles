@@ -32,28 +32,15 @@ return {
 			--  Enable format on save properly
 			format_on_save = {
 				lsp_fallback = true, -- Ensure fallback to LSP if formatter fails
-				async = false,
 				timeout_ms = 5000,
 			},
-		})
-
-		--  Add autocommand to ensure format on save works
-		vim.api.nvim_create_autocmd("BufWritePre", {
-			pattern = "*",
-			callback = function()
-				conform.format({
-					lsp_fallback = true,
-					async = false,
-					timeout_ms = 5000,
-				})
-			end,
 		})
 
 		--  Keybinding to manually trigger formatting
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
 			conform.format({
 				lsp_fallback = true,
-				async = false,
+				async = true,
 				timeout_ms = 5000,
 			})
 		end, { desc = "Format file or range (in visual mode)" })

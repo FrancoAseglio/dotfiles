@@ -33,8 +33,8 @@ return {
 				"emmet_ls",
 				"prismals",
 				"pyright",
-				"sqlls", -- Added SQL language server
-				"jdtls", -- Java LSP
+				"sqlls",
+				"jdtls",
 			},
 		})
 
