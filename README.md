@@ -25,7 +25,7 @@ This setup aims to create a consistent, efficient, and pleasant terminal experie
 - **Development Tools**
   - bat: Modern replacement for cat
   - htop: Interactive process viewer
-  - neofetch: System information display
+  - macchina: System information display
   - aerospace: Window management for macOS
   - yazi: Modern terminal file manager with image preview
 
@@ -165,8 +165,6 @@ brew doctor
 │   └── config                    # Syntax highlighting settings
 ├── htop/                         # Process viewer
 │   └── htoprc                    # Layout and color settings
-├── neofetch/                     # System information
-│   └── config.conf               # Display configuration
 ├── aerospace/                    # Window manager
 │   └── aerospace.toml            # Window management rules
 ├── yazi/                         # Modern file manager
