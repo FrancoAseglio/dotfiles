@@ -9,6 +9,16 @@ return {
 		-- import nvim-treesitter plugin
 		local treesitter = require("nvim-treesitter.configs")
 
+		-- Add this at the end of your init.lua file
+		vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+			callback = function()
+				vim.wo.foldmethod = "expr"
+				vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+				vim.wo.foldenable = false
+				vim.wo.foldlevel = 99
+			end,
+		})
+
 		-- configure treesitter
 		treesitter.setup({ -- enable syntax highlighting
 			highlight = {
