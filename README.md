@@ -24,7 +24,7 @@ This setup aims to create a consistent, efficient, and pleasant terminal experie
   - Node.js version display
 - **Development Tools**
   - bat: Modern replacement for cat
-  - htop: Interactive process viewer
+  - btop: Interactive process viewer
   - macchina: System information display
   - aerospace: Window management for macOS
   - yazi: Modern terminal file manager with image preview
@@ -151,35 +151,37 @@ brew doctor
 
 ```
 # Home Directory
-~/.zshrc                         # ZSH configuration file
+~/.zshrc                         
 
 # Configuration Directory
 .config/
-├── nvim/                         # Neovim configuration
-│   ├── init.lua                  # Main configuration
-│   ├── lua/                      # Lua modules
-│   └── plugins/                  # Plugin configurations
-├── wezterm/                      # WezTerm terminal emulator
-│   └── wezterm.lua               # Main configuration
-├── bat/                          # Bat configuration
-│   └── config                    # Syntax highlighting settings
-├── htop/                         # Process viewer
-│   └── htoprc                    # Layout and color settings
-├── aerospace/                    # Window manager
-│   └── aerospace.toml            # Window management rules
-├── yazi/                         # Modern file manager
-│   ├── flavors/                  # Color schemes
+├── nvim/                         
+│   ├── init.lua                  
+│   ├── lua/                    
+│   └── plugins/                  
+├── wezterm/                      
+│   └── wezterm.lua               
+├── bat/                          
+│   └── config                    
+├── btop/                         
+│   ├─ themes/
+│   ├─ btop.conf
+│   └─ btop.log
+├── aerospace/                    
+│   └── aerospace.toml            
+├── yazi/                         
+│   ├── flavors/                 
 │   │   └── catppuccin-mocha.yazi/
-│   │       ├── flavor.toml       # Color configuration
-│   │       ├── LICENSE           # Theme license
-│   │       ├── LICENSE-tmtheme   # Syntax theme license
-│   │       ├── README.md         # Theme documentation
-│   │       └── tmtheme.xml       # Syntax highlighting theme
-│   ├── keymap.toml               # Keyboard shortcuts
-│   ├── package.toml              # Package configuration
-│   ├── theme.toml                # Visual customization
-│   └── yazi.toml                 # Main configuration
-└── starship.toml                 # Shell prompt configuration
+│   │       ├── flavor.toml    
+│   │       ├── LICENSE           
+│   │       ├── LICENSE-tmtheme   
+│   │       ├── README.md         
+│   │       └── tmtheme.xml       
+│   ├── keymap.toml               
+│   ├── package.toml              
+│   ├── theme.toml                
+│   └── yazi.toml                
+└── starship.toml                
 ```
 
 ## 🔄 Maintaining Your Setup
