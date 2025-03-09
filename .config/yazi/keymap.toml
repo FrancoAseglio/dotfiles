@@ -103,8 +103,8 @@ keymap = [
 	{ on = "f", run = "filter --smart", desc = "Filter files" },
 
 	# Find
-	{ on = "/", run = "find --smart",            desc = "Find next file" },
-	{ on = "?", run = "find --previous --smart", desc = "Find previous file" },
+	{ on = ">", run = "find --smart",            desc = "Find next file" },
+	{ on = "<", run = "find --previous --smart", desc = "Find previous file" },
 	{ on = "n", run = "find_arrow",              desc = "Goto the next found" },
 	{ on = "N", run = "find_arrow --previous",   desc = "Goto the previous found" },
 
@@ -126,7 +126,8 @@ keymap = [
   # Goto
   { on = [ "g", "h" ],       run = "cd ~",             desc = "Go home" },
   { on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Goto ~/.config" },
-  { on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Goto ~/Downloads" },
+  { on = [ "g", "l" ],       run = "cd ~/Downloads",   desc = "Goto ~/Downloads" },
+  { on = [ "g", "d" ],       run = "cd ~/Desktop",     desc = "Goto ~/Desktop" },
   { on = [ "g", "t" ],       run = "cd ~/.Trash",      desc = "Goto ~/.Trash" },
   
   # Tabs
@@ -152,7 +153,7 @@ keymap = [
 	{ on = "w", run = "tasks_show", desc = "Show task manager" },
 
 	# Help
-	{ on = "~",    run = "help", desc = "Open help" },
+	{ on = "?",    run = "help", desc = "Open help" },
 	{ on = "<F1>", run = "help", desc = "Open help" },
 ]
 
