@@ -1,4 +1,5 @@
 # ========================================
+# ========================================
 # ZSH Configuration
 # ========================================
 
@@ -49,6 +50,7 @@ alias xxx="cmatrix -B -C yellow"                  # Matrix effect
 alias orbq='osascript -e "quit app \"OrbStack\""' # Quit Orbstack
 alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'    # Yazi file manager
 alias lg="lazygit"                                # Lazygit
+alias psql="pgcli"                                # Postgres
 
 ## --- Eza (Better ls) ---
 alias ls="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
