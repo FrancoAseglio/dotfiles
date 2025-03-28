@@ -10,7 +10,6 @@ My personal terminal configuration files for macOS with Neovim, WezTerm, and CLI
 - Curl for downloading dependencies
 - Terminal emulator that supports UTF-8
 - Optional: Compatible Nerd Font
-- Optional: Rust + Cargo for Aerospace
 
 ---
 
@@ -95,10 +94,10 @@ The script performs the following automated steps:
    - Ensures `~/.config` structure exists
    - Keeps your environment consistent and updatable
 
-5. **Aerospace Installation**
-   - Clones and builds Aerospace from source
-   - Installs the binary to `~/.cargo/bin`
+5. **Aerospace NOT Installed**
+   - Rememeber to clones and builds Aerospace from source
    - Requires Rust installed beforehand
+   - Then apply the custom from here
 
 ---
 

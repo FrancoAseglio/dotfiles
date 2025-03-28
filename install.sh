@@ -17,7 +17,7 @@ print_error() { echo -e "${RED}==>${NC} $1"; }
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # ========== Config Targets ==========
-configs=("nvim" "wezterm" "bat" "btop" "aerospace" "yazi" "pgcli" "lazygit")
+configs=("nvim" "wezterm" "bat" "btop" "yazi" "pgcli" "lazygit")
 files=("starship.toml")
 packages=("neovim" "wezterm" "bat" "btop" "starship" "yazi" "pgcli" "git")
 
@@ -166,45 +166,6 @@ install_lazygit() {
     fi
 }
 
-# ========== Install Aerospace ==========
-install_aerospace() {
-    print_message "Installing Aerospace (Tiling WM)..."
-
-    if command -v aerospace &>/dev/null; then
-        print_success "Aerospace is already installed"
-        return
-    fi
-
-    if ! command -v cargo &>/dev/null; then
-        print_error "Rust and cargo not found. Please install Rust (https://rustup.rs/) first."
-        return
-    fi
-
-    AERO_DIR="$HOME/.local/src/aerospace"
-    if [ ! -d "$AERO_DIR" ]; then
-        git clone https://github.com/helix-editor/aerospace "$AERO_DIR"
-        print_success "Cloned aerospace repo"
-    else
-        print_message "Aerospace repo already exists. Pulling latest changes..."
-        git -C "$AERO_DIR" pull
-    fi
-
-    print_message "Building aerospace..."
-    cd "$AERO_DIR"
-    cargo build --release
-
-    BIN_PATH="$HOME/.cargo/bin/aerospace"
-    mkdir -p "$(dirname "$BIN_PATH")"
-    cp target/release/aerospace "$BIN_PATH"
-    chmod +x "$BIN_PATH"
-
-    print_success "Aerospace built and installed to $BIN_PATH"
-
-    if ! echo "$PATH" | grep -q "$HOME/.cargo/bin"; then
-        print_message "Consider adding $HOME/.cargo/bin to your PATH in .zshrc"
-    fi
-}
-
 # ========== Main ==========
 main() {
     print_message "Starting setup..."
@@ -218,7 +179,9 @@ main() {
     detect_and_install_packages
     create_symlinks
     install_zsh_autosuggestions
-    install_aerospace
+
+    print_message "🚀 Note: Aerospace is not installed automatically."
+    print_message "👉 You can install it manually from https://github.com/helix-editor/aerospace"
 
     print_success "All done!"
     print_message "✨ Restart your terminal to apply changes."
