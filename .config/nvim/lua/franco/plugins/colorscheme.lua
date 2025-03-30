@@ -39,20 +39,18 @@ return {
 			end,
 		})
 
+		-- Folding
 		vim.api.nvim_create_autocmd("ColorScheme", {
 			pattern = "tokyonight",
 			callback = function()
-				vim.api.nvim_set_hl(0, "Folded", { fg = "#7AA2F7", bg = "NONE", bold = true }) -- Match function names
-				vim.api.nvim_set_hl(0, "FoldColumn", { fg = "#CBE0F0", bg = "NONE", bold = true }) -- Maintain contrast
+				vim.api.nvim_set_hl(0, "Folded", { fg = "#7AA2F7", bg = "NONE", bold = true })
+				vim.api.nvim_set_hl(0, "FoldColumn", { fg = "#CBE0F0", bg = "NONE", bold = true })
 			end,
 		})
 
-		-- Apply highlight settings immediately
-		vim.api.nvim_set_hl(0, "Folded", { fg = "#7AA2F7", bg = "NONE", bold = true }) -- No background
-		vim.api.nvim_set_hl(0, "FoldColumn", { fg = "#CBE0F0", bg = "NONE", bold = true })
 		-- Apply the colorscheme
 		vim.cmd("colorscheme tokyonight")
-		-- Ensure TabLineFill stays transparent (fix for bufferline)
+		-- TabLineFill bufferline fix
 		vim.api.nvim_set_hl(0, "TabLineFill", { bg = "NONE" })
 	end,
 }

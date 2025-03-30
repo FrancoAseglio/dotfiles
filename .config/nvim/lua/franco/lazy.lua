@@ -14,7 +14,7 @@ require("lazy").setup({
 	{ import = "franco.plugins" },
 	{ import = "franco.plugins.lsp" },
 	{
-		"mfussenegger/nvim-jdtls", -- Java language server integration
+		"mfussenegger/nvim-jdtls",
 		ft = { "java" },
 	},
 }, {

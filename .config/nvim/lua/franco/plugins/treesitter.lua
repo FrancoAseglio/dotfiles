@@ -9,9 +9,11 @@ return {
 		local treesitter = require("nvim-treesitter.configs")
 
 		treesitter.setup({
-			highlight = { enable = true },
-			indent = { enable = true },
-			autotag = { enable = true },
+			modules = {},
+			sync_install = false,
+			auto_install = true,
+			ignore_install = {},
+
 			ensure_installed = {
 				"json",
 				"javascript",
@@ -36,6 +38,11 @@ return {
 				"sql",
 				"java",
 			},
+
+			highlight = { enable = true },
+			indent = { enable = true },
+			autotag = { enable = true },
+
 			incremental_selection = {
 				enable = true,
 				keymaps = {

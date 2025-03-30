@@ -37,23 +37,16 @@ return {
 
 		dashboard.section.header.opts.hl = "AlphaHeader"
 
-		-- Function to get the config directory path reliably
+		-- Function to get the config directory path
 		local function get_config_path()
-			-- Try to get the path in a cross-platform way
-			local config_path = vim.fn.stdpath("config")
-			if config_path then
-				return config_path
-			else
-				-- Fallback to the common path
-				return "~/.config/nvim"
-			end
+			local home = os.getenv("HOME")
+			return home .. "/.config"
 		end
 
 		-- Get the config path
 		local nvim_config_path = get_config_path()
 
 		-- Custom function for buttons that directly executes commands
-
 		local function create_button(sc, txt, keybind)
 			local opts = {
 				position = "center",
@@ -80,11 +73,11 @@ return {
 		-- Set menu with direct command execution
 		dashboard.section.buttons.val = {
 			create_button("SPC + ee", "  > File Explorer", "<cmd>NvimTreeToggle<CR>"),
-			create_button("SPC + ff", "󰱼  > Find File", "<cmd>Telescope find_files<CR>"),
+			create_button("SPC + ff", "󰱼  > Fuzzy File", "<cmd>Telescope find_files<CR>"),
 			create_button("SPC + fs", "  > Live Grep", "<cmd>Telescope live_grep<CR>"),
-			create_button("SPC + wr", "󰁯  > Restore Session", "<cmd>SessionRestore<CR>"),
-			create_button("SPC + cc", "  > Config/nvim", ""),
-			create_button("SPC + ll", "󰒲  > Lazy Package Manager", "Lazy"),
+			create_button("SPC + cc", "  > .config/", ""),
+			create_button("SPC + lg", "  > LazyGit", ""),
+			create_button("SPC + ll", "󰒲  > Lazy", "Lazy"),
 		}
 		dashboard.section.buttons.opts.hl = "AlphaButtons"
 

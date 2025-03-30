@@ -12,7 +12,7 @@ return {
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 		local keymap = vim.keymap
 
-		-- Diagnostic signs (✅ Neovim 0.11+ style)
+		-- Diagnostic signs (Neovim 0.11+ style)
 		vim.diagnostic.config({
 			signs = {
 				text = {
@@ -25,7 +25,7 @@ return {
 		})
 
 		-- Show diagnostics on hover
-		vim.o.updatetime = 250
+		vim.o.updatetime = 2000
 		vim.cmd([[
 			autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })
 		]])
@@ -34,8 +34,6 @@ return {
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
-				local opts = { buffer = ev.buf, silent = true }
-
 				-- Keybindings
 				keymap.set(
 					"n",
