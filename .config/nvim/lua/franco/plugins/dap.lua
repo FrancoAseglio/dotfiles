@@ -7,30 +7,7 @@ return {
 
 		dap.configurations.cpp = dap.configurations.c
 
-		-- Java debug adapter configuration 81j
-		dap.configurations.java = {
-			{
-				type = "java",
-				request = "attach",
-				name = "Debug (Attach) - Remote",
-				hostName = "127.0.0.1",
-				port = 5005,
-			},
-			{
-				type = "java",
-				request = "launch",
-				name = "Debug (Launch) - Current File",
-				mainClass = "${file}", -- Ensures the main class is the current file
-				projectName = function()
-					return vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-				end,
-				projectRoot = function()
-					return vim.fn.expand("%:p:h") -- This expands to the directory containing the current file.
-				end,
-			},
-		}
-
-		-- Setup integration between nvim-jdtls and nvim-dap
+		-- Setup integration between nvim-jdtls and nvim-dap  58j
 		local jdtls_setup = function()
 			local mason_registry = require("mason-registry") -- Make sure java debug extension is present
 
@@ -88,7 +65,7 @@ return {
 				require("jdtls").start_or_attach(config)
 			end,
 		})
-		---------- java debug setting 81k ----------
+		---------- java debug setting 58k ----------
 
 		-- DAP keymaps
 		key("n", "<leader>ds", dap.continue, { desc = "Start aka Continue" })
