@@ -23,11 +23,6 @@ return {
 				java = { "google-java-format" },
 				sql = { "pg_format" },
 			},
-			formatters = {
-				pg_format = {
-					command = "pg_format",
-				},
-			},
 			--  Enable format on save properly
 			format_on_save = {
 				lsp_fallback = false,

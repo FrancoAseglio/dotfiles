@@ -24,8 +24,8 @@ export BAT_THEME=tokyonight_night
 # --- General Aliases ---
 alias xxx="cmatrix -B -C yellow"                  # Matrix effect
 alias orbq='osascript -e "quit app \"OrbStack\""' # Quit Orbstack
-alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'    # Yazi file manager
-alias db="cd ~/db && pgcli"                       # Postgres
+alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'    # Yazi
+alias db="cd ~/db && pgcli"                       # Postgres into sql scripts dir
 
 # --- Eza (Better ls) ---
 alias ls="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
@@ -40,17 +40,23 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ..../../.."
 
-# --- fzf cd: fd ---
+# --- Useful Dir Navigation ---
+alias gd="cd ~/Desktop"
+alias gl="cd ~/Downloads"
+alias gt="cd ~/.Trash"
+alias gc="cd ~/.config"
+
+# --- fzf cd ---
 function fd() {
     local dir
     dir=$(find ~/ -type d 2>/dev/null | fzf)
-    [[ -n "$dir" ]] && cd "$dir"
+    [[ -n "$dir" ]] && cd "$dir" && nvim "$dir"
 }
 
-# --- fzf file preview = ff ---
+# --- fzf file preview ---
 alias ff='fzf --preview="bat --style=numbers --color=always --line-range=:500 {}"'
 
-# --- fzf file open in nvim = fn ---
+# --- fzf file open in nvim ---
 alias fn='nvim -p $(fzf -m --preview="bat --style=numbers --color=always --line-range=:500 {}")'
 
 # --- fzf theme ---
@@ -73,3 +79,6 @@ eval "$(starship init zsh)"
 # --- Java Path ---
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
 export PATH="$JAVA_HOME/bin:$PATH"
+
+# --- C dap ---
+alias debug='function _debug() { gcc -g "$1" -o debugme && nvim "$1"; }; _debug'
