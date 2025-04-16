@@ -44,5 +44,24 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- Transparent MsgArea
-vim.api.nvim_set_hl(0, "MsgArea", { bg = "NONE" })
+-- DBUI message area colors
+vim.api.nvim_create_autocmd("UIEnter", {
+	once = true,
+	callback = function()
+		vim.defer_fn(function()
+			vim.api.nvim_set_hl(0, "MsgArea", { bg = "NONE", fg = "white" })
+			vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
+			vim.api.nvim_set_hl(0, "FloatBorder", { bg = "NONE" })
+		end, 100)
+	end,
+})
+
+-- BDUI output resize
+vim.api.nvim_create_autocmd("BufWinEnter", {
+	callback = function()
+		if vim.bo.filetype == "dbout" then
+			vim.cmd("resize 25")
+		end
+	end,
+})
