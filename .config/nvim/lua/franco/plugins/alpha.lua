@@ -38,15 +38,6 @@ return {
 
 		dashboard.section.header.opts.hl = "AlphaHeader"
 
-		-- Function to get the config directory path
-		local function get_config_path()
-			local home = os.getenv("HOME")
-			return home .. "/.config"
-		end
-
-		-- Get the config path
-		local nvim_config_path = get_config_path()
-
 		-- Custom function for buttons that directly executes commands
 		local function create_button(sc, txt, keybind)
 			local opts = {
@@ -76,9 +67,10 @@ return {
 			create_button("SPC + ee", "  > File Explorer", "<cmd>NvimTreeToggle<CR>"),
 			create_button("SPC + ff", "󰱼  > Fuzzy File", "<cmd>Telescope find_files<CR>"),
 			create_button("SPC + fs", "  > Live Grep", "<cmd>Telescope live_grep<CR>"),
-			create_button("SPC + cc", "  > .config/", ""),
+			create_button("SPC + cc", "  > .config/nvim/", ""),
 			create_button("SPC + lg", "  > LazyGit", ""),
-			create_button("SPC + ll", "󰒲  > Lazy", "Lazy"),
+			create_button("SPC + mm", "󱁤  > Mason", ""),
+			create_button("SPC + ll", "󰒲  > Lazy", ""),
 		}
 		dashboard.section.buttons.opts.hl = "AlphaButtons"
 
@@ -97,19 +89,6 @@ return {
 				margin = 5,
 			},
 		}
-
-		-- Define keymaps for when alpha is loaded
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "alpha",
-			callback = function()
-				vim.keymap.set("n", "cc", function()
-					vim.cmd("cd " .. nvim_config_path)
-					vim.cmd("NvimTreeToggle")
-				end, { buffer = true, silent = true })
-
-				vim.keymap.set("n", "l", ":Lazy<CR>", { buffer = true, silent = true })
-			end,
-		})
 
 		vim.defer_fn(function()
 			alpha.setup(dashboard.config)

@@ -21,7 +21,7 @@ return {
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				java = { "google-java-format" },
-				sql = { "pg_format" },
+				-- sql = { "pg_format" },
 			},
 			--  Enable format on save properly
 			format_on_save = {

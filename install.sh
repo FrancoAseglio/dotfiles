@@ -17,9 +17,9 @@ print_error() { echo -e "${RED}==>${NC} $1"; }
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # ========== Config Targets ==========
-configs=("nvim" "wezterm" "bat" "btop" "yazi" "pgcli" "lazygit")
+configs=("nvim" "wezterm" "bat" "btop" "yazi" "lazygit")
 files=("starship.toml")
-packages=("neovim" "wezterm" "bat" "btop" "starship" "yazi" "pgcli" "git")
+packages=("neovim" "wezterm" "bat" "btop" "starship" "yazi" "git")
 
 # ========== Backup Configs ==========
 backup_configs() {

@@ -54,5 +54,19 @@ return {
 				}),
 			},
 		})
+		-- Enable vim-dadbod-completion in SQL files
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = { "sql", "mysql", "plsql" },
+			callback = function()
+				cmp.setup.buffer({
+					sources = {
+						{ name = "vim-dadbod-completion" },
+						{ name = "buffer" },
+						{ name = "nvim_lsp" },
+						{ name = "luasnip" },
+					},
+				})
+			end,
+		})
 	end,
 }

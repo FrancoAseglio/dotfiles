@@ -115,7 +115,6 @@ The script performs the following automated steps:
 - [BTOP](https://github.com/aristocratos/btop)
 - [Homebrew](https://docs.brew.sh/)
 - [Neovim](https://neovim.io/doc/)
-- [Pgcli](https://github.com/dbcli/pgcli)
 - [Starship](https://starship.rs/)
 - [WezTerm](https://wezfurlong.org/wezterm/)
 - [Yazi](https://yazi-rs.github.io/docs/installation)

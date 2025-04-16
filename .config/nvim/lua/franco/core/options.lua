@@ -43,3 +43,6 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.commentstring = "-- %s"
 	end,
 })
+
+-- Transparent MsgArea
+vim.api.nvim_set_hl(0, "MsgArea", { bg = "NONE" })

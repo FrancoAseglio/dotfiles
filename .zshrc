@@ -22,10 +22,8 @@ eval "$(zoxide init zsh)"
 export BAT_THEME=tokyonight_night
 
 # --- General Aliases ---
-alias xxx="cmatrix -B -C yellow"                  # Matrix effect
 alias orbq='osascript -e "quit app \"OrbStack\""' # Quit Orbstack
 alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'    # Yazi
-alias db="cd ~/db && pgcli"                       # Postgres into sql scripts dir
 
 # --- Eza (Better ls) ---
 alias ls="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
@@ -79,6 +77,3 @@ eval "$(starship init zsh)"
 # --- Java Path ---
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
 export PATH="$JAVA_HOME/bin:$PATH"
-
-# --- C dap ---
-alias debug='function _debug() { gcc -g "$1" -o debugme && nvim "$1"; }; _debug'
