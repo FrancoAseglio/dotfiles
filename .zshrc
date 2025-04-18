@@ -22,8 +22,9 @@ eval "$(zoxide init zsh)"
 export BAT_THEME=tokyonight_night
 
 # --- General Aliases ---
-alias orbq='osascript -e "quit app \"OrbStack\""' # Quit Orbstack
-alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'    # Yazi
+alias orbq='osascript -e "quit app \"OrbStack\""'
+alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'
+alias db="nvim +'DBUI'"
 
 # --- Eza (Better ls) ---
 alias ls="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
@@ -71,9 +72,10 @@ export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${
 source ~/fzf-git.sh/fzf-git.sh
 eval $(fzf --zsh)
 
-# --- Starship Prompt ---
-eval "$(starship init zsh)"
-
 # --- Java Path ---
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
 export PATH="$JAVA_HOME/bin:$PATH"
+
+# --- Starship Prompt ---
+eval "$(starship init zsh)"
+
