@@ -81,3 +81,6 @@ __pycache__/
 tmp/
 temp/
 .temp/
+
+# databases query
+**/db_ui_queries/
