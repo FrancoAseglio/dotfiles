@@ -83,4 +83,4 @@ temp/
 .temp/
 
 # databases query
-**/db_ui_querie/
+**/db_ui_queries/

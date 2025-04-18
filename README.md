@@ -95,7 +95,7 @@ The script performs the following automated steps:
    - Keeps your environment consistent and updatable
 
 5. **Aerospace NOT Installed**
-   - Rememeber to clones and builds Aerospace from source
+   - Rememeber to clone and build Aerospace from source
    - Requires Rust installed beforehand
    - Then apply the custom from here
 
