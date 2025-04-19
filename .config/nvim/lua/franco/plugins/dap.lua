@@ -1,13 +1,18 @@
 return {
 	"mfussenegger/nvim-dap",
-	dependencies = { "rcarriga/nvim-dap-ui", "theHamsta/nvim-dap-virtual-text", "jay-babu/mason-nvim-dap.nvim" },
+	dependencies = {
+		"rcarriga/nvim-dap-ui",
+		"theHamsta/nvim-dap-virtual-text",
+		"jay-babu/mason-nvim-dap.nvim",
+		"nvim-neotest/nvim-nio",
+	},
 	config = function()
 		local dap, dapui = require("dap"), require("dapui")
 		local key = vim.keymap.set
 
 		dap.configurations.cpp = dap.configurations.c
 
-		-- Setup integration between nvim-jdtls and nvim-dap  58j
+		-- Setup integration between nvim-jdtls and nvim-dap 58j
 		local jdtls_setup = function()
 			local mason_registry = require("mason-registry") -- Make sure java debug extension is present
 
@@ -68,8 +73,6 @@ return {
 		---------- java debug setting 58k ----------
 
 		-- DAP keymaps
-		key("n", "<leader>ds", dap.continue, { desc = "Start aka Continue" })
-
 		key("n", "<leader><Right>", require("dap").continue, { desc = "Continue" })
 		key("n", "<leader><Up>", require("dap").step_over, { desc = "Step Over" })
 		key("n", "<leader><Down>", require("dap").step_into, { desc = "Step Into" })

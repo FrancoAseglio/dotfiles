@@ -1,5 +1,4 @@
 vim.cmd("let g:netrw_liststyle = 3")
-
 local opt = vim.opt -- for conciseness
 
 -- line numbers
@@ -35,3 +34,11 @@ opt.swapfile = false
 
 -- system clipboard as default register
 opt.clipboard:append("unnamedplus")
+
+-- folding
+opt.foldenable = true
+opt.foldlevel = 10
+opt.foldlevelstart = 10
+opt.foldcolumn = "0"
+opt.foldmethod = "expr"
+opt.foldexpr = "nvim_treesitter#foldexpr()"

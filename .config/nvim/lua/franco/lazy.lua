@@ -17,15 +17,6 @@ require("lazy").setup({
 		"mfussenegger/nvim-jdtls",
 		ft = { "java" },
 	},
-	{
-		"mfussenegger/nvim-dap",
-		dependencies = {
-			"rcarriga/nvim-dap-ui",
-			"theHamsta/nvim-dap-virtual-text",
-			"jay-babu/mason-nvim-dap.nvim",
-			"nvim-neotest/nvim-nio",
-		},
-	},
 }, {
 	checker = {
 		enabled = true,

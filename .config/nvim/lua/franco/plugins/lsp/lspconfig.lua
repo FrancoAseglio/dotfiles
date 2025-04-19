@@ -22,40 +22,80 @@ return {
 					[vim.diagnostic.severity.INFO] = "",
 				},
 			},
+			float = {
+				border = "rounded",
+				format = function(diagnostic)
+					return string.format("%s (%s)", diagnostic.message, diagnostic.source)
+				end,
+			},
 		})
 
 		-- Show diagnostics on hover
 		vim.o.updatetime = 1500
-		vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false })]])
+		vim.cmd(
+			[[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })]]
+		)
 
 		-- LSP Attach autocommand
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
-				-- Keybindings
-				keymap.set("n", "gR", "<cmd>Telescope lsp_references<CR>", { buffer = ev.buf, desc = "Show LSP references" })
+				keymap.set(
+					"n",
+					"gR",
+					"<cmd>Telescope lsp_references<CR>",
+					{ buffer = ev.buf, desc = "Show LSP references" }
+				)
 				keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = ev.buf, desc = "Go to declaration" })
-				keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", { buffer = ev.buf, desc = "Show LSP definitions" })
-				keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", { buffer = ev.buf, desc = "Show LSP implementations" })
-				keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", { buffer = ev.buf, desc = "Show LSP type definitions" })
-				keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { buffer = ev.buf, desc = "See available code actions" })
+				keymap.set(
+					"n",
+					"gd",
+					"<cmd>Telescope lsp_definitions<CR>",
+					{ buffer = ev.buf, desc = "Show LSP definitions" }
+				)
+				keymap.set(
+					"n",
+					"gi",
+					"<cmd>Telescope lsp_implementations<CR>",
+					{ buffer = ev.buf, desc = "Show LSP implementations" }
+				)
+				keymap.set(
+					"n",
+					"gt",
+					"<cmd>Telescope lsp_type_definitions<CR>",
+					{ buffer = ev.buf, desc = "Show LSP type definitions" }
+				)
+				keymap.set(
+					{ "n", "v" },
+					"<leader>ca",
+					vim.lsp.buf.code_action,
+					{ buffer = ev.buf, desc = "See available code actions" }
+				)
 				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "Smart rename" })
-				keymap.set("n", "<leader>D", "<cmd>Telescope diagnostics bufnr=0<CR>", { buffer = ev.buf, desc = "Show buffer diagnostics" })
-				keymap.set("n", "<leader>d", vim.diagnostic.open_float, { buffer = ev.buf, desc = "Show line diagnostics" })
-				keymap.set("n", "K", vim.lsp.buf.hover, { buffer = ev.buf, desc = "Show documentation for what is under cursor" })
+				keymap.set(
+					"n",
+					"<leader>D",
+					"<cmd>Telescope diagnostics bufnr=0<CR>",
+					{ buffer = ev.buf, desc = "Show buffer diagnostics" }
+				)
+				keymap.set(
+					"n",
+					"<leader>d",
+					vim.diagnostic.open_float,
+					{ buffer = ev.buf, desc = "Show line diagnostics" }
+				)
+				keymap.set("n", "K", function()
+					vim.lsp.buf.hover({ border = "rounded" })
+				end, { buffer = ev.buf, desc = "Show documentation for what is under cursor" })
 				keymap.set("n", "<leader>rs", ":LspRestart<CR>", { buffer = ev.buf, desc = "Restart LSP" })
 			end,
 		})
 
-		-- Autocompletion capabilities
 		local capabilities = cmp_nvim_lsp.default_capabilities()
-
-		-- Setup handlers per server
 		mason_lspconfig.setup_handlers({
 			function(server_name)
 				lspconfig[server_name].setup({ capabilities = capabilities })
 			end,
-
 			["svelte"] = function()
 				lspconfig.svelte.setup({
 					capabilities = capabilities,
@@ -69,21 +109,27 @@ return {
 					end,
 				})
 			end,
-
 			["graphql"] = function()
 				lspconfig.graphql.setup({
 					capabilities = capabilities,
 					filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
 				})
 			end,
-
 			["emmet_ls"] = function()
 				lspconfig.emmet_ls.setup({
 					capabilities = capabilities,
-					filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte", },
+					filetypes = {
+						"html",
+						"typescriptreact",
+						"javascriptreact",
+						"css",
+						"sass",
+						"scss",
+						"less",
+						"svelte",
+					},
 				})
 			end,
-
 			["lua_ls"] = function()
 				lspconfig.lua_ls.setup({
 					capabilities = capabilities,
@@ -95,7 +141,6 @@ return {
 					},
 				})
 			end,
-
 			["sqlls"] = function()
 				lspconfig.sqlls.setup({
 					capabilities = capabilities,
@@ -109,6 +154,16 @@ return {
 							diagnostics = { enable = true },
 						},
 					},
+				})
+			end,
+			["clangd"] = function()
+				lspconfig.clangd.setup({ capabilities = capabilities })
+			end,
+			["jdtls"] = function()
+				lspconfig.jdtls.setup({
+					capabilities = capabilities,
+					cmd = { "jdtls" },
+					-- additional setup if needed for workspace folders, root_dir, etc.
 				})
 			end,
 		})
