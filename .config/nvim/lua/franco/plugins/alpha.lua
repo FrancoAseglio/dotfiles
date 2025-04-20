@@ -62,13 +62,13 @@ return {
 			}
 		end
 
-		-- Set menu with direct command execution
+		-- Set menu with direct command execution ( see keymaps.lua )
 		dashboard.section.buttons.val = {
 			create_button("SPC + ee", "  > File Explorer", "<cmd>NvimTreeToggle<CR>"),
 			create_button("SPC + ff", "󰱼  > Fuzzy File", "<cmd>Telescope find_files<CR>"),
 			create_button("SPC + fs", "  > Live Grep", "<cmd>Telescope live_grep<CR>"),
 			create_button("SPC + lg", "  > LazyGit", ""),
-			create_button("SPC + cc", "  > Config", ""),
+			create_button("SPC + gc", "  > Config", ""),
 			create_button("SPC + mm", "󱁤  > Mason", ""),
 			create_button("SPC + ll", "󰒲  > Lazy", ""),
 		}
