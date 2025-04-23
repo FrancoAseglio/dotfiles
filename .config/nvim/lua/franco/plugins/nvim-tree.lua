@@ -10,7 +10,6 @@ return {
 				width = 35,
 				relativenumber = true,
 			},
-			-- change folder arrow icons
 			renderer = {
 				indent_markers = {
 					enable = true,
@@ -24,14 +23,6 @@ return {
 					},
 				},
 			},
-			-- disable window_picker for explorer to work well with window splits
-			actions = {
-				open_file = {
-					window_picker = {
-						enable = false,
-					},
-				},
-			},
 			filters = {
 				custom = { ".DS_Store" },
 			},
@@ -39,8 +30,7 @@ return {
 				ignore = false,
 			},
 		})
-		-- set keymaps
-		local keymap = vim.keymap -- for conciseness
-		keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
+
+		vim.keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
 	end,
 }

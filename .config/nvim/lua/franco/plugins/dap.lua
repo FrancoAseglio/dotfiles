@@ -37,10 +37,10 @@ return {
 
 		---------- General DAP Configuration ----------
 		-- DAP keymaps
-		key("n", "<leader><Right>", require("dap").continue, { desc = "Continue" })
-		key("n", "<leader><Up>", require("dap").step_over, { desc = "Step Over" })
-		key("n", "<leader><Down>", require("dap").step_into, { desc = "Step Into" })
-		key("n", "<leader><Left>", require("dap").step_out, { desc = "Step Out" })
+		key("n", "<leader>ds", require("dap").continue, { desc = "Continue" })
+		key("n", "<leader>do", require("dap").step_over, { desc = "Step Over" })
+		key("n", "<leader>di", require("dap").step_into, { desc = "Step Into" })
+		key("n", "<leader>du", require("dap").step_out, { desc = "Step Out" })
 		key("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
 		key("n", "<leader>dc", function()
 			dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
