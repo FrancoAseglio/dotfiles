@@ -21,44 +21,8 @@ eval "$(zoxide init zsh)"
 # --- Bat (better cat) ---
 export BAT_THEME=tokyonight_night
 
-# --- General Aliases ---
-alias orbq='osascript -e "quit app \"OrbStack\""'
-alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'
-alias db="nvim +'DBUI'"
-
-# --- Eza (Better ls) ---
-alias ls="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
-alias ll="eza --header --git --long --grid --accessed --modified --created"
-alias ls2="eza --tree --level=2"
-alias ls3="eza --tree --level=3"
-alias ls4="eza --tree --level=4"
-alias ls5="eza --tree --level=5"
-
-# --- Parental dir navigation ---
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ..../../.."
-
-# --- Useful Dir Navigation ---
-alias gd="cd ~/Desktop"
-alias gl="cd ~/Downloads"
-alias gt="cd ~/.Trash"
-alias gc="cd ~/.config"
-
-# --- fzf cd ---
-function fd() {
-    local dir
-    dir=$(find ~/ -type d 2>/dev/null | fzf)
-    [[ -n "$dir" ]] && cd "$dir" && nvim "$dir"
-}
-
-# --- fzf file preview ---
-alias ff='fzf --preview="bat --style=numbers --color=always --line-range=:500 {}"'
-
-# --- fzf file open in nvim ---
-alias fn='nvim -p $(fzf -m --preview="bat --style=numbers --color=always --line-range=:500 {}")'
-
-# --- fzf theme ---
+# --- fzf ---
+# theme
 fg="#CBE0F0"
 bg="#011628"
 bg_highlight="#143652"
@@ -67,8 +31,7 @@ blue="#06BCE4"
 cyan="#2CF9ED"
 
 export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},prompt:${cyan},pointer:${cyan},marker:${cyan},spinner:${cyan},header:${cyan}"
-
-# --- fzf git ---
+# fzf git
 source ~/fzf-git.sh/fzf-git.sh
 eval $(fzf --zsh)
 
@@ -79,3 +42,50 @@ export PATH="$JAVA_HOME/bin:$PATH"
 # --- Starship Prompt ---
 eval "$(starship init zsh)"
 
+# --- Aliases ---
+
+# Parental dir navigation 
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# Useful Dir Navigation
+alias gd="cd ~/Desktop"
+alias gl="cd ~/Downloads"
+alias gt="cd ~/.Trash"
+alias gc="cd ~/.config"
+
+# Eza (Better ls)
+alias ls="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
+alias la="eza -a --color=always --git --icons=always"
+alias ll="eza --color=always --git --icons=always --long --grid --accessed --modified --created"
+alias lla="eza -a --color=always --git --icons=always --long --grid --accessed --modified --created"
+alias ls2="eza --tree --level=2"
+alias la2="eza -a --tree --level=2"
+alias ls3="eza --tree --level=3"
+alias la3="eza -a --tree --level=3"
+alias ls4="eza --tree --level=4"
+alias la4="eza -a --tree --level=4"
+alias ls5="eza --tree --level=5"
+alias la5="eza -a --tree --level=5"
+
+# fzf cd
+function fd() {
+    local dir
+    dir=$(find ~/ -type d 2>/dev/null | fzf)
+    [[ -n "$dir" ]] && cd "$dir"
+}
+
+# fzf file to nvim
+alias fn='nvim -p $(fzf -m --preview="bat --style=numbers --color=always --line-range=:500 {}")'
+
+# Java utils
+alias javag="touch .git && javac -g *.java"
+alias javam="touch .git && javac *.java"
+alias javar="rm .git && rm *.class"
+alias javae="java -ea $1"
+
+# Various
+alias orbq='osascript -e "quit app \"OrbStack\""'
+alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'
+alias ndb="nvim +'DBUI'"
