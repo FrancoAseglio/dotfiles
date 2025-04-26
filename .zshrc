@@ -89,3 +89,4 @@ alias javae="java -ea $1"
 alias orbq='osascript -e "quit app \"OrbStack\""'
 alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'
 alias ndb="nvim +'DBUI'"
+alias db="cd ~/db && ls"

@@ -7,49 +7,22 @@ return {
 		"nvim-neotest/nvim-nio",
 	},
 	config = function()
-		local dap, dapui = require("dap"), require("dapui")
+		local dap = require("dap")
+		local dapui = require("dapui")
 		local key = vim.keymap.set
 
-		---------- C/C++ debug configuration ----------
-		dap.configurations.cpp = dap.configurations.c
-		-- Additional C/C++ specific configuration would go here
-
-		---------- Java debug configuration ----------
-		-- Setup integration between nvim-jdtls and nvim-dap
-		local mason_registry = require("mason-registry")
-
-		-- Ensure Java debug extension is present
-		if not mason_registry.is_installed("java-debug-adapter") then
-			vim.cmd("MasonInstall java-debug-adapter")
-		end
-		if not mason_registry.is_installed("java-test") then
-			vim.cmd("MasonInstall java-test")
-		end
-
-		-- Setup DAP for Java files
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "java",
-			callback = function()
-				-- This just sets up the DAP part, assuming JDTLS is already running
-				require("jdtls").setup_dap({ hotcodereplace = "auto" })
-			end,
-		})
-
-		---------- General DAP Configuration ----------
-		-- DAP keymaps
-		key("n", "<leader>ds", require("dap").continue, { desc = "Continue" })
-		key("n", "<leader>do", require("dap").step_over, { desc = "Step Over" })
-		key("n", "<leader>di", require("dap").step_into, { desc = "Step Into" })
-		key("n", "<leader>du", require("dap").step_out, { desc = "Step Out" })
+		---------- Debug Adapter Protocol (DAP) Keymaps ----------
+		key("n", "<leader>ds", dap.continue, { desc = "Continue" })
+		key("n", "<leader>do", dap.step_over, { desc = "Step Over" })
+		key("n", "<leader>di", dap.step_into, { desc = "Step Into" })
+		key("n", "<leader>du", dap.step_out, { desc = "Step Out" })
 		key("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
 		key("n", "<leader>dc", function()
 			dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
 		end, { desc = "Conditional Breakpoint" })
-
-		-- Cleanup DAP windows when quitting debugging session
 		key("n", "<leader>dq", function()
-			require("dap").terminate()
-			require("dapui").close()
+			dap.terminate()
+			dapui.close()
 			for _, buf in ipairs(vim.api.nvim_list_bufs()) do
 				local name = vim.api.nvim_buf_get_name(buf)
 				if name:match("DAP") or name:match("REPL") then
@@ -58,7 +31,63 @@ return {
 			end
 		end, { desc = "Quit" })
 
-		---------- DAP UI Configuration ----------
+		---------- C/C++ Debug Configuration ----------
+		dap.configurations.cpp = dap.configurations.c
+
+		---------- Java DAP Setup with JDTLS ----------
+		local jdtls_setup = function()
+			local mason_registry = require("mason-registry")
+			local java_debug_path = vim.fn.stdpath("data") .. "/mason/packages/java-debug-adapter"
+			local java_test_path = vim.fn.stdpath("data") .. "/mason/packages/java-test"
+
+			-- Ensure debug and test extensions are installed
+			if not mason_registry.is_installed("java-debug-adapter") then
+				vim.cmd("MasonInstall java-debug-adapter")
+			end
+			if not mason_registry.is_installed("java-test") then
+				vim.cmd("MasonInstall java-test")
+			end
+
+			-- Gather bundles for debugger and tests
+			local bundles = {
+				vim.fn.glob(java_debug_path .. "/extension/server/com.microsoft.java.debug.plugin-*.jar", true),
+			}
+			vim.list_extend(bundles, vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar", true), "\n"))
+
+			-- Setup JDTLS with DAP support
+			local config = {
+				cmd = { "jdtls" },
+				root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
+				settings = {
+					java = {
+						configuration = {
+							runtimes = {
+								{
+									name = "JavaSE-17",
+									path = "/Library/Java/JavaVirtualMachines/jdk-24.jdk/Contents/Home",
+								},
+							},
+						},
+					},
+				},
+				init_options = { bundles = bundles },
+			}
+
+			require("jdtls").setup_dap({ hotcodereplace = "auto" })
+
+			return config
+		end
+
+		-- Automatically start or attach jdtls on Java file open
+		vim.api.nvim_create_autocmd("FileType", {
+			pattern = "java",
+			callback = function()
+				local config = jdtls_setup()
+				require("jdtls").start_or_attach(config)
+			end,
+		})
+
+		---------- DAP UI Setup ----------
 		dapui.setup({
 			icons = { expanded = "▾", collapsed = "▸" },
 			mappings = {
@@ -71,7 +100,12 @@ return {
 			},
 			layouts = {
 				{
-					elements = { { id = "scopes", size = 0.25 }, "breakpoints", "stacks", "watches" },
+					elements = {
+						{ id = "scopes", size = 0.25 },
+						"breakpoints",
+						"stacks",
+						"watches",
+					},
 					size = 60,
 					position = "left",
 				},
@@ -90,7 +124,7 @@ return {
 			windows = { indent = 1 },
 		})
 
-		-- DAP UI event listeners
+		-- Auto-open/close DAP UI on events
 		dap.listeners.after.event_initialized["dapui_config"] = function()
 			dapui.open()
 		end
@@ -101,7 +135,7 @@ return {
 			dapui.close()
 		end
 
-		---------- DAP Virtual Text Configuration ----------
+		---------- DAP Virtual Text Setup ----------
 		require("nvim-dap-virtual-text").setup({
 			enabled = true,
 			enabled_commands = true,
@@ -118,7 +152,7 @@ return {
 			virt_text_win_col = nil,
 		})
 
-		---------- Mason DAP Integration ----------
+		---------- Mason DAP Setup ----------
 		require("mason-nvim-dap").setup({
 			automatic_setup = true,
 			automatic_installation = true,

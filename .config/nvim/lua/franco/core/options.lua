@@ -1,6 +1,9 @@
 vim.cmd("let g:netrw_liststyle = 3")
 local opt = vim.opt -- for conciseness
 
+-- input timing
+opt.timeoutlen = 500
+
 -- line numbers
 opt.relativenumber = true
 opt.number = true
