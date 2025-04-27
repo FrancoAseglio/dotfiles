@@ -16,14 +16,6 @@ return {
 		-- set keymaps for navigation
 		local keymap = vim.keymap -- for conciseness
 
-		keymap.set("n", "]t", function()
-			todo_comments.jump_next()
-		end, { desc = "Next todo comment" })
-
-		keymap.set("n", "[t", function()
-			todo_comments.jump_prev()
-		end, { desc = "Previous todo comment" })
-
 		-- Open TODO list with Telescope
 		keymap.set("n", "<leader>tt", ":TodoTelescope<CR>", { desc = "Search TODO comments with Telescope" })
 
