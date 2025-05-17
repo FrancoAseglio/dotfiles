@@ -10,19 +10,17 @@ return {
 		-- Initialize harpoon
 		harpoon:setup()
 
-		-- for concisensess
-		local keymap = vim.keymap.set
-
-		keymap("n", "<leader>a", function()
+		vim.keymap.set("n", "<leader>a", function()
 			list:add()
 		end, { desc = "Add to Harpoon" })
-		keymap("n", "<leader>o", function()
+
+		vim.keymap.set("n", "<leader>o", function()
 			ui:toggle_quick_menu(list)
 		end, { desc = "Toggle menu" })
 
 		-- Navigate to specific file slots
 		for i = 1, 4 do
-			keymap("n", "<leader>" .. i, function()
+			vim.keymap.set("n", "<leader>" .. i, function()
 				list:select(i)
 			end, { desc = "Harpoon file " .. i })
 		end

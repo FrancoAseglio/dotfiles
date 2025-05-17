@@ -64,13 +64,14 @@ return {
 
 		-- Set menu with direct command execution
 		dashboard.section.buttons.val = {
-			create_button("SPC + ee", "  > File Explorer", ""),
+			create_button("SPC + fe", "  > File Explorer", ""),
 			create_button("SPC + ff", "󰱼  > Fuzzy File", ""),
 			create_button("SPC + fs", "  > Live Grep", ""),
 			create_button("SPC + lg", "  > LazyGit", ""),
 			create_button("SPC + gc", "  > Config", ""),
-			create_button("SPC + mm", "󱁤  > Mason", ""),
-			create_button("SPC + ll", "󰒲  > Lazy", ""),
+			-- create_button("SPC + mm", "󱁤  > Mason", ""),
+			-- create_button("SPC + dd", "󰆼  > DBUI", ""),
+			create_button("SPC + la", "󰒲  > Lazy", ""),
 		}
 		dashboard.section.buttons.opts.hl = "AlphaButtons"
 

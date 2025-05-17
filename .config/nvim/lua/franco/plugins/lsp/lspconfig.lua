@@ -4,15 +4,17 @@ return {
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
-		{ "folke/neodev.nvim", opts = {} },
 	},
 	config = function()
-		local lspconfig = require("lspconfig")
-		local mason_lspconfig = require("mason-lspconfig")
-		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-		local keymap = vim.keymap
+		-- Local variables for brevity
+		local lspconfig, cmp_nvim_lsp, keymap, util =
+			require("lspconfig"), require("cmp_nvim_lsp"), vim.keymap, require("lspconfig.util")
+		local capabilities = cmp_nvim_lsp.default_capabilities()
+		local runtime_path = vim.split(package.path, ";")
+		table.insert(runtime_path, "lua/?.lua")
+		table.insert(runtime_path, "lua/?/init.lua")
 
-		-- Diagnostic signs (Neovim 0.11+ style)
+		-- Configure diagnostics
 		vim.diagnostic.config({
 			signs = {
 				text = {
@@ -24,104 +26,103 @@ return {
 			},
 			float = {
 				border = "rounded",
-				format = function(diagnostic)
-					return string.format("%s (%s)", diagnostic.message, diagnostic.source)
+				format = function(d)
+					return string.format("%s (%s)", d.message, d.source)
 				end,
 			},
 		})
 
 		-- Show diagnostics on hover
 		vim.o.updatetime = 1500
-		vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })]])
+		vim.cmd(
+			[[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })]]
+		)
+
+		-- Keymaps setup function to reduce repetition
+		local function setup_lsp_keymaps(bufnr)
+			local maps = {
+				["gR"] = { "<cmd>Telescope lsp_references<CR>", "Show LSP references" },
+				["gD"] = { vim.lsp.buf.declaration, "Go to declaration" },
+				["gd"] = { "<cmd>Telescope lsp_definitions<CR>", "Show LSP definitions" },
+				["gi"] = { "<cmd>Telescope lsp_implementations<CR>", "Show LSP implementations" },
+				["gt"] = { "<cmd>Telescope lsp_type_definitions<CR>", "Show LSP type definitions" },
+				["<leader>ca"] = { vim.lsp.buf.code_action, "See code actions", { "n", "v" } },
+				["<leader>rn"] = { vim.lsp.buf.rename, "Smart rename" },
+				["<leader>D"] = { "<cmd>Telescope diagnostics bufnr=0<CR>", "Show buffer diagnostics" },
+				["<leader>d"] = { vim.diagnostic.open_float, "Show line diagnostics" },
+				["<leader>rs"] = { ":LspRestart<CR>", "Restart LSP" },
+				["K"] = {
+					function()
+						vim.lsp.buf.hover({ border = "rounded" })
+					end,
+					"Show documentation for what is under cursor",
+				},
+			}
+
+			for k, v in pairs(maps) do
+				keymap.set(v[3] or "n", k, v[1], { buffer = bufnr, desc = v[2] })
+			end
+		end
 
 		-- LSP Attach autocommand
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
 			callback = function(ev)
-				keymap.set("n","gR","<cmd>Telescope lsp_references<CR>",{ buffer = ev.buf, desc = "Show LSP references" })
-				keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = ev.buf, desc = "Go to declaration" })
-				keymap.set("n","gd","<cmd>Telescope lsp_definitions<CR>",{ buffer = ev.buf, desc = "Show LSP definitions" })
-				keymap.set("n","gi","<cmd>Telescope lsp_implementations<CR>",{ buffer = ev.buf, desc = "Show LSP implementations" })
-				keymap.set("n","gt","<cmd>Telescope lsp_type_definitions<CR>",{ buffer = ev.buf, desc = "Show LSP type definitions" })
-				keymap.set({ "n", "v" },"<leader>ca",vim.lsp.buf.code_action,{ buffer = ev.buf, desc = "See available code actions" })
-				keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = ev.buf, desc = "Smart rename" })
-				keymap.set("n","<leader>D","<cmd>Telescope diagnostics bufnr=0<CR>",{ buffer = ev.buf, desc = "Show buffer diagnostics" })
-				keymap.set("n","<leader>d",vim.diagnostic.open_float,{ buffer = ev.buf, desc = "Show line diagnostics" })
-				keymap.set("n", "<leader>rs", ":LspRestart<CR>", { buffer = ev.buf, desc = "Restart LSP" })
-				keymap.set("n", "K", function()
-					vim.lsp.buf.hover({ border = "rounded" })
-				end, { buffer = ev.buf, desc = "Show documentation for what is under cursor" })
+				setup_lsp_keymaps(ev.buf)
 			end,
 		})
 
-		local capabilities = cmp_nvim_lsp.default_capabilities()
-		mason_lspconfig.setup_handlers({
-			function(server_name)
-				lspconfig[server_name].setup({ capabilities = capabilities })
-			end,
-			["svelte"] = function()
-				lspconfig.svelte.setup({
-					capabilities = capabilities,
-					on_attach = function(client, _)
-						vim.api.nvim_create_autocmd("BufWritePost", {
-							pattern = { "*.js", "*.ts" },
-							callback = function(ctx)
-								client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-							end,
-						})
-					end,
-				})
-			end,
-			["graphql"] = function()
-				lspconfig.graphql.setup({
-					capabilities = capabilities,
-					filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-				})
-			end,
-			["emmet_ls"] = function()
-				lspconfig.emmet_ls.setup({
-					capabilities = capabilities,
-					filetypes = {
-						"html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte",
-					},
-				})
-			end,
-			["lua_ls"] = function()
-				lspconfig.lua_ls.setup({
-					capabilities = capabilities,
-					settings = {
-						Lua = {
-							diagnostics = { globals = { "vim" } },
-							completion = { callSnippet = "Replace" },
+		-- Common root_dir function for configs
+		local function nvim_config_root_dir(fname)
+			return fname:find(vim.fn.stdpath("config"), 1, true) and vim.fn.stdpath("config")
+				or util.find_git_ancestor(fname)
+				or util.path.dirname(fname)
+		end
+
+		-- Global LSP settings
+		local servers = {
+			svelte = {
+				on_attach = function(client, _)
+					vim.api.nvim_create_autocmd("BufWritePost", {
+						pattern = { "*.js", "*.ts" },
+						callback = function(ctx)
+							client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
+						end,
+					})
+				end,
+			},
+			graphql = { filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" } },
+			emmet_ls = {
+				filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+			},
+			lua_ls = {
+				settings = {
+					Lua = {
+						runtime = { version = "LuaJIT", path = runtime_path },
+						diagnostics = {
+							globals = { "vim", "require", "pairs", "ipairs", "print", "table", "string", "math", "os" },
 						},
+						workspace = { checkThirdParty = false, library = vim.api.nvim_get_runtime_file("", true) },
+						completion = { callSnippet = "Replace" },
 					},
-				})
-			end,
-			["sqlls"] = function()
-				lspconfig.sqlls.setup({
-					capabilities = capabilities,
-					on_attach = function(client, bufnr)
-						vim.diagnostic.enable(bufnr)
-						client.server_capabilities.documentFormattingProvider = true
-					end,
-					settings = {
-						sqlls = {
-							lint = { enable = true },
-							diagnostics = { enable = true },
-						},
-					},
-				})
-			end,
-			["clangd"] = function()
-				lspconfig.clangd.setup({ capabilities = capabilities })
-			end,
-			["jdtls"] = function()
-				lspconfig.jdtls.setup({
-					capabilities = capabilities,
-					cmd = { "jdtls" },
-					-- additional setup if needed for workspace folders, root_dir, etc.
-				})
-			end,
-		})
+				},
+				root_dir = nvim_config_root_dir,
+			},
+			sqlls = {
+				on_attach = function(client, bufnr)
+					vim.diagnostic.enable(bufnr)
+					client.server_capabilities.documentFormattingProvider = true
+				end,
+				settings = { sqlls = { lint = { enable = true }, diagnostics = { enable = true } } },
+			},
+			clangd = {},
+			jdtls = { cmd = { "jdtls" } },
+		}
+
+		-- Setup all servers
+		for server, config in pairs(servers) do
+			config.capabilities = capabilities
+			lspconfig[server].setup(config)
+		end
 	end,
 }

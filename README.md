@@ -112,7 +112,6 @@ The script performs the following automated steps:
 ## 🔗 Resources
 
 - [Aerospace](https://nikitabobko.github.io/AeroSpace/guide)
-- [BTOP](https://github.com/aristocratos/btop)
 - [Homebrew](https://docs.brew.sh/)
 - [Neovim](https://neovim.io/doc/)
 - [Starship](https://starship.rs/)

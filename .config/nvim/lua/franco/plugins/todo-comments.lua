@@ -12,12 +12,10 @@ return {
 		-- FIX:  sample 3
 		-- NOTE: sample 4
 		-- PERF: sample 5
-
-		-- set keymaps for navigation
-		local keymap = vim.keymap -- for conciseness
+		-- HACK: sample 6
 
 		-- Open TODO list with Telescope
-		keymap.set("n", "<leader>tt", ":TodoTelescope<CR>", { desc = "Search TODO comments with Telescope" })
+		vim.keymap.set("n", "<leader>tt", ":TodoTelescope<CR>", { desc = "Search TODO comments with Telescope" })
 
 		todo_comments.setup()
 	end,

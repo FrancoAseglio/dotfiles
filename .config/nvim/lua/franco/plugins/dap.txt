@@ -11,7 +11,7 @@ return {
 		local dapui = require("dapui")
 		local key = vim.keymap.set
 
-		---------- Debug Adapter Protocol (DAP) Keymaps ----------
+		---------- Keymaps ----------
 		key("n", "<leader>ds", dap.continue, { desc = "Continue" })
 		key("n", "<leader>do", dap.step_over, { desc = "Step Over" })
 		key("n", "<leader>di", dap.step_into, { desc = "Step Into" })
@@ -31,11 +31,12 @@ return {
 			end
 		end, { desc = "Quit" })
 
-		---------- C/C++ Debug Configuration ----------
+		---------- C/C++ Configuration ----------
 		dap.configurations.cpp = dap.configurations.c
 
-		---------- Java DAP Setup with JDTLS ----------
-		local jdtls_setup = function()
+		---------- Java Setup ----------
+		-- Attach to JDTLS when it loads
+		local setup_java_debug = function()
 			local mason_registry = require("mason-registry")
 			local java_debug_path = vim.fn.stdpath("data") .. "/mason/packages/java-debug-adapter"
 			local java_test_path = vim.fn.stdpath("data") .. "/mason/packages/java-test"
@@ -54,40 +55,46 @@ return {
 			}
 			vim.list_extend(bundles, vim.split(vim.fn.glob(java_test_path .. "/extension/server/*.jar", true), "\n"))
 
-			-- Setup JDTLS with DAP support
-			local config = {
-				cmd = { "jdtls" },
-				root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
+			-- Add Java runtime configuration through init_options
+			local init_options = {
+				bundles = bundles,
 				settings = {
 					java = {
 						configuration = {
 							runtimes = {
 								{
-									name = "JavaSE-17",
-									path = "/Library/Java/JavaVirtualMachines/jdk-24.jdk/Contents/Home",
+									name = "JavaSE-21",
+									path = "/opt/homebrew/opt/openjdk@21",
 								},
+							},
+						},
+						import = {
+							gradle = {
+								enabled = true,
 							},
 						},
 					},
 				},
-				init_options = { bundles = bundles },
 			}
 
+			-- Override jdtls initialization_options
+			require("jdtls.setup").add_commands()
 			require("jdtls").setup_dap({ hotcodereplace = "auto" })
 
-			return config
+			return init_options
 		end
 
-		-- Automatically start or attach jdtls on Java file open
-		vim.api.nvim_create_autocmd("FileType", {
-			pattern = "java",
-			callback = function()
-				local config = jdtls_setup()
-				require("jdtls").start_or_attach(config)
+		-- This attaches to the existing jdtls setup instead of creating a new one
+		vim.api.nvim_create_autocmd("LspAttach", {
+			callback = function(args)
+				local client = vim.lsp.get_client_by_id(args.data.client_id)
+				if client and client.name == "jdtls" then
+					setup_java_debug()
+				end
 			end,
 		})
 
-		---------- DAP UI Setup ----------
+		---------- Setup ----------
 		dapui.setup({
 			icons = { expanded = "▾", collapsed = "▸" },
 			mappings = {
@@ -135,7 +142,7 @@ return {
 			dapui.close()
 		end
 
-		---------- DAP Virtual Text Setup ----------
+		---------- Virtual Text ----------
 		require("nvim-dap-virtual-text").setup({
 			enabled = true,
 			enabled_commands = true,
@@ -152,12 +159,23 @@ return {
 			virt_text_win_col = nil,
 		})
 
-		---------- Mason DAP Setup ----------
+		---------- Mason ----------
 		require("mason-nvim-dap").setup({
 			automatic_setup = true,
 			automatic_installation = true,
 			handlers = {},
-			ensure_installed = { "codelldb", "java-debug-adapter" },
+			ensure_installed = { "codelldb", "java-debug-adapter", "java-test" },
 		})
+
+		-- Java configurations
+		dap.configurations.java = {
+			{
+				type = "java",
+				request = "attach",
+				name = "Debug (Attach) - Remote",
+				hostName = "127.0.0.1",
+				port = 5005,
+			},
+		}
 	end,
 }

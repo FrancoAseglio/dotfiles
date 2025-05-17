@@ -33,7 +33,6 @@ return {
 				"emmet_ls",
 				"prismals",
 				"pyright",
-				"sqlls",
 			},
 		})
 
@@ -45,7 +44,6 @@ return {
 				"black",
 				"pylint",
 				"eslint_d",
-				"sqlfmt",
 			},
 		})
 	end,

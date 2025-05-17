@@ -24,6 +24,7 @@ return {
 				},
 			},
 			filters = {
+				dotfiles = true,
 				custom = { ".DS_Store" },
 			},
 			git = {
@@ -31,6 +32,6 @@ return {
 			},
 		})
 
-		vim.keymap.set("n", "<leader>ee", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
+		vim.keymap.set("n", "<leader>fe", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file explorer" })
 	end,
 }

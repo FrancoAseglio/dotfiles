@@ -19,21 +19,15 @@ source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 eval "$(zoxide init zsh)"
 
 # --- Bat (better cat) ---
-export BAT_THEME=tokyonight_night
+export BAT_THEME=tokyonight
 
 # --- fzf ---
-# theme
-fg="#CBE0F0"
-bg="#011628"
-bg_highlight="#143652"
-purple="#B388FF"
-blue="#06BCE4"
-cyan="#2CF9ED"
-
-export FZF_DEFAULT_OPTS="--color=fg:${fg},bg:${bg},hl:${purple},fg+:${fg},bg+:${bg_highlight},hl+:${purple},info:${blue},prompt:${cyan},pointer:${cyan},marker:${cyan},spinner:${cyan},header:${cyan}"
-# fzf git
-source ~/fzf-git.sh/fzf-git.sh
-eval $(fzf --zsh)
+export FZF_DEFAULT_OPTS="
+  --color=fg:${fg},bg:${bg},hl:${purple} \
+  --color=fg+:${fg},bg+:${bg_highlight},hl+:${purple} \
+  --color=info:${blue},prompt:${cyan},pointer:${cyan} \
+  --color=marker:${cyan},spinner:${cyan},header:${cyan}
+"
 
 # --- Java Path ---
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
@@ -71,22 +65,16 @@ alias la5="eza -a --tree --level=5"
 
 # fzf cd
 function fd() {
-    local dir
-    dir=$(find ~/ -type d 2>/dev/null | fzf)
-    [[ -n "$dir" ]] && cd "$dir"
+  local dir
+  dir=$(find ~/ -type d 2>/dev/null | fzf)
+  [[ -n "$dir" ]] && cd "$dir"
 }
 
 # fzf file to nvim
 alias fn='nvim -p $(fzf -m --preview="bat --style=numbers --color=always --line-range=:500 {}")'
 
-# Java utils
-alias javag="touch .git && javac -g *.java"
-alias javam="touch .git && javac *.java"
-alias javar="rm .git && rm *.class"
-alias javae="java -ea $1"
-
 # Various
 alias orbq='osascript -e "quit app \"OrbStack\""'
 alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'
-alias ndb="nvim +'DBUI'"
+alias pg="pgcli"
 alias db="cd ~/db && ls"

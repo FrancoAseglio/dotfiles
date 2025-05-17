@@ -1,4 +1,3 @@
--- Pull in the WezTerm API
 local wezterm = require("wezterm")
 
 -- Create configuration object
@@ -6,13 +5,13 @@ local config = wezterm.config_builder()
 
 -- Font settings
 config.font = wezterm.font("MesloLGS Nerd Font Mono")
-config.font_size = 14
+config.font_size = 14.5
 
 -- Window appearance
 config.enable_tab_bar = false
 config.window_decorations = "RESIZE"
-config.window_background_opacity = 0.90
-config.macos_window_background_blur = 8
+config.window_background_opacity = 0.85
+config.macos_window_background_blur = 5
 -- config.window_background_image = ""
 
 -- Alt key behavior
@@ -21,25 +20,7 @@ config.send_composed_key_when_right_alt_is_pressed = true
 
 -- Key bindings
 config.keys = {
-	-- Special character mappings
 	{ key = "5", mods = "ALT", action = wezterm.action.SendString("~") },
-
-	-- Pane management
-	{ key = "-", mods = "CMD", action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }) },
-	{ key = "ì", mods = "CMD", action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
-	{ key = "x", mods = "CMD", action = wezterm.action.CloseCurrentPane({ confirm = false }) },
-
-	-- Pane navigation
-	{ key = "UpArrow", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Up") },
-	{ key = "DownArrow", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Down") },
-	{ key = "LeftArrow", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Left") },
-	{ key = "RightArrow", mods = "CMD", action = wezterm.action.ActivatePaneDirection("Right") },
-
-	-- Pane resizing
-	{ key = "UpArrow", mods = "CMD|OPT", action = wezterm.action.AdjustPaneSize({ "Up", 5 }) },
-	{ key = "DownArrow", mods = "CMD|OPT", action = wezterm.action.AdjustPaneSize({ "Down", 5 }) },
-	{ key = "LeftArrow", mods = "CMD|OPT", action = wezterm.action.AdjustPaneSize({ "Left", 5 }) },
-	{ key = "RightArrow", mods = "CMD|OPT", action = wezterm.action.AdjustPaneSize({ "Right", 5 }) },
 }
 
 -- Color scheme
