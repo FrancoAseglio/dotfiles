@@ -25,4 +25,8 @@ require("lazy").setup({
 	change_detection = {
 		notify = false,
 	},
+	ui = {
+		border = "rounded",
+		title_pos = "center",
+	},
 })

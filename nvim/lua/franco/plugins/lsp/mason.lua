@@ -18,6 +18,8 @@ return {
 					package_pending = "󱑞",
 					package_uninstalled = "󱂱",
 				},
+				border = "rounded",
+				title_pos = "center",
 			},
 		})
 
