@@ -14,16 +14,16 @@ return {
 			local dapui = require("dapui")
 			local vt = require("nvim-dap-virtual-text")
 
-			-- 1) Mason-DAP → auto-install codelldb
+			-- 1) Mason-DAP
 			require("mason-nvim-dap").setup({
 				ensure_installed = { "codelldb" },
 				automatic_installation = true,
 			})
 
-			-- 2) Load only C adapter
+			-- 2) Load adapters
 			require("franco.plugins.dap.adapters.c").setup(dap)
 
-			-- 3) Define configurations for C/C++/Rust
+			-- 3) Define configurations
 			dap.configurations.c = {
 				{
 					name = "Launch executable",
@@ -34,7 +34,10 @@ return {
 					end,
 					cwd = "${workspaceFolder}",
 					stopOnEntry = false,
-					args = {},
+					args = function()
+						local args_string = vim.fn.input("Program arguments: ")
+						return vim.split(args_string, " ")
+					end,
 				},
 			}
 
@@ -107,19 +110,16 @@ return {
 			end
 
 			-- 7) Keymaps
-			-- Basic
 			vim.keymap.set("n", "<leader><Right>", dap.continue, { desc = "Start/Continue" })
 			vim.keymap.set("n", "<leader><Down>", dap.step_into, { desc = "Step Into" })
 			vim.keymap.set("n", "<leader><Up>", dap.step_over, { desc = "Step Over" })
 			vim.keymap.set("n", "<leader><Left>", dap.step_out, { desc = "Step Out" })
 
-			-- Breakpoints
 			vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
 			vim.keymap.set("n", "<leader>dc", function()
 				dap.set_breakpoint(vim.fn.input("Breakpoint condition: "))
 			end, { desc = "Set Breakpoint with Condition" })
 
-			-- UI
 			vim.keymap.set("n", "<leader>di", function()
 				if dap.session() then
 					dap.terminate()

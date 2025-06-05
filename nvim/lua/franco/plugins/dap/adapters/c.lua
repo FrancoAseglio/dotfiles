@@ -1,6 +1,6 @@
 local M = {}
 
---- @param dap table  -- require("dap")
+--- @param dap table
 function M.setup(dap)
 	local install_path = vim.fn.stdpath("data") .. "/mason/bin/codelldb"
 	dap.adapters.codelldb = {
