@@ -16,32 +16,14 @@ return {
 
 			-- 1) Mason-DAP
 			require("mason-nvim-dap").setup({
-				ensure_installed = { "codelldb" },
+				ensure_installed = { "codelldb", "java-debug-adapter" },
 				automatic_installation = true,
 			})
 
-			-- 2) Load adapters
+			-- 2) Load adapters and their configurations
 			require("franco.plugins.dap.adapters.c").setup(dap)
 
-			-- 3) Define configurations
-			dap.configurations.c = {
-				{
-					name = "Launch executable",
-					type = "codelldb",
-					request = "launch",
-					program = function()
-						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-					end,
-					cwd = "${workspaceFolder}",
-					stopOnEntry = false,
-					args = function()
-						local args_string = vim.fn.input("Program arguments: ")
-						return vim.split(args_string, " ")
-					end,
-				},
-			}
-
-			-- 4) Set up dap-ui
+			-- 3) Set up dap-ui
 			dapui.setup({
 				icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
 				mappings = {
@@ -81,7 +63,7 @@ return {
 				},
 			})
 
-			-- 5) Virtual text
+			-- 4) Virtual text
 			vt.setup({
 				enabled = true,
 				enabled_commands = true,
@@ -98,7 +80,7 @@ return {
 				virt_text_win_col = nil,
 			})
 
-			-- 6) Auto-open/close dap-ui
+			-- 5) Auto-open/close dap-ui
 			dap.listeners.after.event_initialized["dapui_config"] = function()
 				dapui.open()
 			end
@@ -109,7 +91,7 @@ return {
 				dapui.close()
 			end
 
-			-- 7) Keymaps
+			-- 6) Keymaps
 			vim.keymap.set("n", "<leader><Right>", dap.continue, { desc = "Start/Continue" })
 			vim.keymap.set("n", "<leader><Down>", dap.step_into, { desc = "Step Into" })
 			vim.keymap.set("n", "<leader><Up>", dap.step_over, { desc = "Step Over" })
