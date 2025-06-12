@@ -26,13 +26,13 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 inner.horizontal = 30
 inner.vertical   = 30
 outer.left       = 30
-outer.bottom     = 28
-outer.top        = 33
-outer.right      = 28
+outer.bottom     = 30
+outer.top        = 30
+outer.right      = 30
 
 [mode.main.binding]
 # Layout Split  
-alt-t = 'layout tiles horizontal vertical'
+alt-t = 'layout tiles'
 alt-a = 'layout accordion'
 
 # Focus commands  
@@ -48,6 +48,7 @@ alt-up    = 'move up'
 alt-right = 'move right'
 
 # Move to Workspaces   
+alt-d = 'workspace D' # Discord
 alt-g = 'workspace G' # GoodNotes 
 alt-h = 'workspace H' # Home 
 alt-m = 'workspace M' # Music
@@ -57,6 +58,7 @@ alt-w = 'workspace W' # WezTerm
 alt-y = 'workspace Y' # YouTube
 
 # Moving node to Workspace  
+cmd-alt-d = 'move-node-to-workspace D'
 cmd-alt-g = 'move-node-to-workspace G'
 cmd-alt-h = 'move-node-to-workspace H'
 cmd-alt-m = 'move-node-to-workspace M'

@@ -3,6 +3,7 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		local conform = require("conform")
+
 		conform.setup({
 			-- Configure formatters by file type
 			formatters_by_ft = {
@@ -21,6 +22,7 @@ return {
 			},
 			format_on_save = false,
 		})
+
 		-- Keybinding to manually trigger formatting
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
 			conform.format({

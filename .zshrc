@@ -48,20 +48,20 @@ alias gd="cd ~/Desktop"
 alias gl="cd ~/Downloads"
 alias gt="cd ~/.Trash"
 alias gc="cd ~/.config"
+alias gu="cd ~/unito"
 
 # Eza (Better ls)
 alias ls="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
 alias la="eza -a --color=always --git --icons=always"
+
 alias ll="eza --color=always --git --icons=always --long --grid --accessed --modified --created"
 alias lla="eza -a --color=always --git --icons=always --long --grid --accessed --modified --created"
+
 alias ls2="eza --tree --level=2"
 alias la2="eza -a --tree --level=2"
+
 alias ls3="eza --tree --level=3"
 alias la3="eza -a --tree --level=3"
-alias ls4="eza --tree --level=4"
-alias la4="eza -a --tree --level=4"
-alias ls5="eza --tree --level=5"
-alias la5="eza -a --tree --level=5"
 
 # fzf cd
 function fd() {
@@ -80,5 +80,5 @@ alias db="cd ~/db && ls"
 alias pg="pgcli"
 
 # dotfiles
-# alias dotme="git clone git@github.com:FrancoAseglio/dotfiles.git"
+# alias dotme="git clone git@github.com:FrancoAseglio/dotfiles.git && cd ~/dotfiles"
 # alias undot="rm -rf ~/dotfiles"

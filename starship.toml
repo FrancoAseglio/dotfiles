@@ -39,13 +39,9 @@ format = '(fg:current_line)[](fg:cyan)[$symbol](fg:primary bg:cyan)[](fg:c
 disabled = false
 
 [os.symbols]
-Android     = ''
 Arch        = ''
-Debian      = ''
-Fedora      = ''
 Linux       = ''
 Macos       = ''
-OracleLinux = '⊂⊃'
 Ubuntu      = ''
 Unknown     = ''
 Windows     = ''
