@@ -12,7 +12,6 @@ setopt hist_ignore_dups
 setopt hist_verify
 
 # --- ZSH Plugins ---
-plugins=(git zsh-syntax-highlighting)
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # --- Zoxide (better cd) ---
@@ -21,17 +20,26 @@ eval "$(zoxide init zsh)"
 # --- Bat (better cat) ---
 export BAT_THEME=tokyonight
 
-# --- fzf ---
-export FZF_DEFAULT_OPTS="
-  --color=fg:${fg},bg:${bg},hl:${purple} \
-  --color=fg+:${fg},bg+:${bg_highlight},hl+:${purple} \
-  --color=info:${blue},prompt:${cyan},pointer:${cyan} \
-  --color=marker:${cyan},spinner:${cyan},header:${cyan}
-"
-
 # --- Java Path ---
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
 export PATH="$JAVA_HOME/bin:$PATH"
+
+# --- fzf theme ---
+export FZF_DEFAULT_OPTS="
+--color=fg:#CBE0F0
+--color=bg:#011628
+--color=hl:#7AA2F7
+--color=fg+:#CBE0F0
+--color=bg+:#143652
+--color=hl+:#7AA2F7
+--color=info:#B4D0E9
+--color=prompt:#CBE0F0
+--color=pointer:#7AA2F7
+--color=marker:#7AA2F7
+--color=spinner:#B4D0E9
+--color=header:#627E97
+--color=border:#547998
+--color=gutter:#011628"
 
 # --- Starship Prompt ---
 eval "$(starship init zsh)"

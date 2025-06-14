@@ -7,10 +7,10 @@ Originally based on [Josean Martinez](https://github.com/josean-dev) work.
 
 ### 📋 0.1 System Requirements
 
-- Git for version control
-- Curl for downloading dependencies
-- Terminal emulator that supports UTF-8
-- Optional: Compatible Nerd Font
+- Terminal emulator that supports UTF-8: [WezTerm](https://wezfurlong.org/wezterm/)
+- Curl for downloading dependencies: [curl](https://curl.se/)
+- Fzf for fuzzy finding: [fzf](https://github.com/junegunn/fzf)
+- Compatible Nerd Font: [NerdFont](https://www.nerdfonts.com/) 
 
 ---
 
@@ -117,5 +117,4 @@ The script performs the following automated steps:
 - [Neovim](https://neovim.io/doc/)
 - [Pgcli](https://github.com/dbcli/pgcli)
 - [Starship](https://starship.rs/)
-- [WezTerm](https://wezfurlong.org/wezterm/)
 - [Yazi](https://yazi-rs.github.io/docs/installation)
