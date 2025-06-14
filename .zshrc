@@ -12,7 +12,6 @@ setopt hist_ignore_dups
 setopt hist_verify
 
 # --- ZSH Plugins ---
-plugins=(git zsh-syntax-highlighting)
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # --- Zoxide (better cd) ---
@@ -20,14 +19,6 @@ eval "$(zoxide init zsh)"
 
 # --- Bat (better cat) ---
 export BAT_THEME=tokyonight
-
-# --- fzf ---
-export FZF_DEFAULT_OPTS="
-  --color=fg:${fg},bg:${bg},hl:${purple} \
-  --color=fg+:${fg},bg+:${bg_highlight},hl+:${purple} \
-  --color=info:${blue},prompt:${cyan},pointer:${cyan} \
-  --color=marker:${cyan},spinner:${cyan},header:${cyan}
-"
 
 # --- Java Path ---
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
