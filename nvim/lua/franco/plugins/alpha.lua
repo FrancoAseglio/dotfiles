@@ -5,12 +5,12 @@ return {
 		local alpha = require("alpha")
 		local dashboard = require("alpha.themes.dashboard")
 
-		-- Set colors from starship palette
+		-- Colors Set inspired by starship palette
 		vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#FFCC80" }) -- Light orange for header
 		vim.api.nvim_set_hl(0, "AlphaButtons", { fg = "#80DEEA" }) -- Cyan for buttons and icons
 		vim.api.nvim_set_hl(0, "AlphaShortcut", { fg = "#80DEEA" }) -- Cyan for shortcuts
 
-		-- Keep your existing header
+    -- Headers at: https://texteditor.com/multiline-text-art/
 		dashboard.section.header.val = {
 			"██╗████████╗ █╗ ███████╗   █╗█╗     ██╗ █████╗ ██╗   ██╗ █╗█╗   ██╗   █╗█╗  █████╗ █╗█╗",
 			"██║╚══██╔══╝ ╚╝ ██╔════╝   ╚╝╚╝     ██║██╔══██╗██║   ██║ ╚╝╚╝   ██║   ╚╝╚╝ ██╔══██╗╚╝╚╝",
@@ -38,8 +38,7 @@ return {
 
 		dashboard.section.header.opts.hl = "AlphaHeader"
 
-		-- Custom function for buttons that directly executes commands
-		local function create_button(sc, txt, keybind)
+		local function create_button(sc, txt)
 			local opts = {
 				position = "center",
 				text = txt,
@@ -54,53 +53,30 @@ return {
 			return {
 				type = "button",
 				val = txt,
-				on_press = function()
-					local key = vim.api.nvim_replace_termcodes(keybind, true, false, true)
-					vim.api.nvim_feedkeys(key, "normal", false)
-				end,
 				opts = opts,
 			}
 		end
 
-		-- Set menu with direct command execution
+		-- Menu: check keymaps.lua
+    -- icons at: https://www.nerdfonts.com/cheat-sheet
 		dashboard.section.buttons.val = {
 			-- create_button("SPC + sr", "  > Session Restore", ""),
-			create_button("SPC + fe", "  > File Explorer", ""),
-			create_button("SPC + ff", "󰱼  > Fuzzy File", ""),
-			create_button("SPC + fs", "  > Live Grep", ""),
-			create_button("SPC + nf", "  > New File", ""),
-			create_button("SPC + lg", "  > LazyGit", ""),
-			create_button("SPC + gc", "  > Config", ""),
-			create_button("SPC + la", "󰒲  > Lazy", ""),
+			create_button("SPC + fe", "  > File Explorer"),
+			create_button("SPC + ff", "󰱼  > Fuzzy File"),
+			create_button("SPC + fs", "󰺮  > Live Grep"),
+			create_button("SPC + nf", "  > New File"),
+			create_button("SPC + lg", "  > LazyGit"),
+			create_button("SPC + gc", "  > Config"),
+			create_button("SPC + la", "󰒲  > Lazy"),
 		}
 		dashboard.section.buttons.opts.hl = "AlphaButtons"
-
-		-- Configure the layout without system info and quotes
-		local layout = {
-			{ type = "padding", val = 2 },
-			dashboard.section.header,
-			{ type = "padding", val = 2 },
-			dashboard.section.buttons,
-		}
-
-		-- Set up the config
-		dashboard.config = {
-			layout = layout,
-			opts = {
-				margin = 5,
-			},
-		}
-
-		vim.defer_fn(function()
-			alpha.setup(dashboard.config)
-		end, 0)
+		dashboard.section.buttons.opts.spacing = 0
 
 		alpha.setup(dashboard.config)
 		vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])
 	end,
 }
 
--- header at:  https://texteditor.com/multiline-text-art/
 
 -- " ███████╗███████╗ ██████╗ ███╗   ███╗███████╗███╗   ██╗████████╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗",
 -- " ██╔════╝██╔════╝██╔════╝ ████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║",
@@ -115,6 +91,7 @@ return {
 -- "              ╚██╔╝  ██║   ██║██║   ██║██╔══██╗     ██╔══╝  ██╔══██║██║   ██║██║     ██║               ",
 -- "               ██║   ╚██████╔╝╚██████╔╝██║  ██║     ██║     ██║  ██║╚██████╔╝███████╗██║               ",
 -- "               ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝     ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝               ",
+--
 --
 --
 -- "    ██████╗ ██████╗ ██╗███╗   ███╗███████╗ █████╗  ██████╗ ███████╗███╗   ██╗    ███╗   ███╗███████╗   ",
