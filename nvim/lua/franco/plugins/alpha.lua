@@ -64,10 +64,11 @@ return {
 
 		-- Set menu with direct command execution
 		dashboard.section.buttons.val = {
-			-- create_button("SPC + rs", "  > Session Restore", ""),
+			-- create_button("SPC + sr", "  > Session Restore", ""),
 			create_button("SPC + fe", "  > File Explorer", ""),
 			create_button("SPC + ff", "󰱼  > Fuzzy File", ""),
 			create_button("SPC + fs", "  > Live Grep", ""),
+			create_button("SPC + nf", "  > New File", ""),
 			create_button("SPC + lg", "  > LazyGit", ""),
 			create_button("SPC + gc", "  > Config", ""),
 			create_button("SPC + la", "󰒲  > Lazy", ""),
