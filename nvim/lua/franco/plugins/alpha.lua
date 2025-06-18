@@ -10,7 +10,7 @@ return {
 		vim.api.nvim_set_hl(0, "AlphaButtons", { fg = "#80DEEA" }) -- Cyan for buttons and icons
 		vim.api.nvim_set_hl(0, "AlphaShortcut", { fg = "#80DEEA" }) -- Cyan for shortcuts
 
-    -- Headers at: https://texteditor.com/multiline-text-art/
+		-- Headers at: https://texteditor.com/multiline-text-art/
 		dashboard.section.header.val = {
 			"██╗████████╗ █╗ ███████╗   █╗█╗     ██╗ █████╗ ██╗   ██╗ █╗█╗   ██╗   █╗█╗  █████╗ █╗█╗",
 			"██║╚══██╔══╝ ╚╝ ██╔════╝   ╚╝╚╝     ██║██╔══██╗██║   ██║ ╚╝╚╝   ██║   ╚╝╚╝ ██╔══██╗╚╝╚╝",
@@ -58,7 +58,7 @@ return {
 		end
 
 		-- Menu: check keymaps.lua
-    -- icons at: https://www.nerdfonts.com/cheat-sheet
+		-- icons at: https://www.nerdfonts.com/cheat-sheet
 		dashboard.section.buttons.val = {
 			-- create_button("SPC + sr", "  > Session Restore", ""),
 			create_button("SPC + fe", "  > File Explorer"),
@@ -67,6 +67,7 @@ return {
 			create_button("SPC + nf", "  > New File"),
 			create_button("SPC + lg", "  > LazyGit"),
 			create_button("SPC + gc", "  > Config"),
+			create_button("SPC + td", "  > ToDos"),
 			create_button("SPC + la", "󰒲  > Lazy"),
 		}
 		dashboard.section.buttons.opts.hl = "AlphaButtons"
@@ -76,7 +77,6 @@ return {
 		vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])
 	end,
 }
-
 
 -- " ███████╗███████╗ ██████╗ ███╗   ███╗███████╗███╗   ██╗████████╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗",
 -- " ██╔════╝██╔════╝██╔════╝ ████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║",
