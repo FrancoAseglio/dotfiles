@@ -26,7 +26,11 @@ vim.keymap.set("n", "<leader>hc", ":noh<CR>", { desc = "Clean buffer result" })
 vim.keymap.set("n", "<leader>la", ":Lazy<CR>", { desc = "Toggle Lazy" })
 vim.keymap.set("n", "<leader>ma", ":Mason<CR>", { desc = "Toggle Mason" })
 vim.keymap.set('n', '<leader>nf', function()
-  vim.cmd("edit " .. vim.fn.input("New file: "))
+  local ok, filename = pcall(vim.fn.input, "New file: ")
+  if not ok or filename == "" then
+    return
+  end
+  vim.cmd("edit " .. filename)
 end, { desc = "Edit new file in cwd" })
 
 -- Quickfix List
