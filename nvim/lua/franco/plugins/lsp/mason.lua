@@ -14,8 +14,8 @@ return {
 		mason.setup({
 			ui = {
 				icons = {
-					package_installed = "✓",
-					package_pending = "󱑞",
+					package_installed   = "✓",
+					package_pending     = "󱑞",
 					package_uninstalled = "󱂱",
 				},
 				border = "rounded",
@@ -28,16 +28,13 @@ return {
 			automatic_setup = true,
 			automatic_installation = true,
 			ensure_installed = {
-				"lua_ls",
-				"clangd",
-				"jdtls",
+				"lua_ls", "clangd", "jdtls",
 			},
 		})
 
 		-- Formatters, linters, and other tools
 		mason_tool_installer.setup({
 			ensure_installed = {
-				-- Formatters
 				"stylua",
 			},
 		})

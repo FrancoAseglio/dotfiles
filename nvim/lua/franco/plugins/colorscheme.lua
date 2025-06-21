@@ -18,7 +18,7 @@ return {
 			transparent = transparent,
 			styles = {
 				sidebars = transparent and "transparent" or "dark",
-				floats = transparent and "transparent" or "dark",
+				floats   = transparent and "transparent" or "dark",
 			},
 			on_colors = function(colors)
 				colors.bg = bg
@@ -50,7 +50,8 @@ return {
 
 		-- Apply the colorscheme
 		vim.cmd("colorscheme tokyonight")
+
 		-- TabLineFill bufferline fix
-		vim.api.nvim_set_hl(0, "TabLineFill", { bg = "NONE" })
+		-- vim.api.nvim_set_hl(0, "TabLineFill", { bg = "NONE" })
 	end,
 }

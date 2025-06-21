@@ -28,10 +28,10 @@ return {
 				icons = { expanded = "▾", collapsed = "▸", current_frame = "▸" },
 				mappings = {
 					expand = { "<CR>", "<2-LeftMouse>" },
-					open = "o",
+					open   = "o",
 					remove = "d",
-					edit = "e",
-					repl = "r",
+					edit   = "e",
+					repl   = "r",
 					toggle = "t",
 				},
 				layouts = {
@@ -57,7 +57,7 @@ return {
 				controls = { enabled = true, element = "repl" },
 				floating = {
 					max_height = nil,
-					max_width = nil,
+					max_width  = nil,
 					border = "single",
 					mappings = { close = { "q", "<Esc>" } },
 				},
@@ -81,21 +81,15 @@ return {
 			})
 
 			-- 5) Auto-open/close dap-ui
-			dap.listeners.after.event_initialized["dapui_config"] = function()
-				dapui.open()
-			end
-			dap.listeners.before.event_terminated["dapui_config"] = function()
-				dapui.close()
-			end
-			dap.listeners.before.event_exited["dapui_config"] = function()
-				dapui.close()
-			end
+			dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open()  end
+			dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+			dap.listeners.before.event_exited["dapui_config"]     = function() dapui.close() end
 
 			-- 6) Keymaps
-			vim.keymap.set("n", "<leader><Right>", dap.continue, { desc = "Start/Continue" })
-			vim.keymap.set("n", "<leader><Down>", dap.step_into, { desc = "Step Into" })
-			vim.keymap.set("n", "<leader><Up>", dap.step_over, { desc = "Step Over" })
-			vim.keymap.set("n", "<leader><Left>", dap.step_out, { desc = "Step Out" })
+			vim.keymap.set("n", "<leader><Right>", dap.continue,  { desc = "Start/Continue" })
+			vim.keymap.set("n", "<leader><Down>",  dap.step_into, { desc = "Step Into" })
+			vim.keymap.set("n", "<leader><Up>",    dap.step_over, { desc = "Step Over" })
+			vim.keymap.set("n", "<leader><Left>",  dap.step_out,  { desc = "Step Out" })
 
 			vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint, { desc = "Toggle Breakpoint" })
 			vim.keymap.set("n", "<leader>dc", function()

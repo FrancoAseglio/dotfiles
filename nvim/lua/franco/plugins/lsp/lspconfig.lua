@@ -18,9 +18,9 @@ return {
 			signs = {
 				text = {
 					[vim.diagnostic.severity.ERROR] = "",
-					[vim.diagnostic.severity.WARN] = "",
-					[vim.diagnostic.severity.HINT] = "󰠠",
-					[vim.diagnostic.severity.INFO] = "",
+					[vim.diagnostic.severity.WARN]  = "",
+					[vim.diagnostic.severity.HINT]  = "󰠠",
+					[vim.diagnostic.severity.INFO]  = "",
 				},
 			},
 			float = {
@@ -33,9 +33,7 @@ return {
 
 		-- Show diagnostics on hover
 		vim.o.updatetime = 1500
-		vim.cmd(
-			[[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })]]
-		)
+		vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })]])
 
 		-- Keymaps setup function to reduce repetition
 		local function setup_lsp_keymaps(bufnr)
@@ -67,9 +65,16 @@ return {
 
 		-- Common root_dir function for configs
 		local function nvim_config_root_dir(fname)
-			return fname:find(vim.fn.stdpath("config"), 1, true) and vim.fn.stdpath("config")
-				or vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1])
-				or vim.fs.dirname(fname)
+			local config  = vim.fn.stdpath("config")
+			local wezterm = vim.fn.expand("~/.config/wezterm")
+
+			if fname:find(config, 1, true) then
+				return config
+			elseif fname:find(wezterm, 1, true) then
+				return wezterm
+			end
+
+			return vim.fs.dirname(vim.fs.find(".git", { path = fname, upward = true })[1]) or vim.fs.dirname(fname)
 		end
 
 		-- Global LSP settings
@@ -77,7 +82,7 @@ return {
 			svelte = {
 				on_attach = function(client, _)
 					vim.api.nvim_create_autocmd("BufWritePost", {
-						pattern = { "*.js", "*.ts" },
+						pattern  = { "*.js", "*.ts" },
 						callback = function(ctx)
 							client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
 						end,
@@ -91,7 +96,7 @@ return {
 						diagnostics = {
 							enable = false, -- turn off LSP diagnostics
 						},
-						workspace = { checkThirdParty = false, library = vim.api.nvim_get_runtime_file("", true) },
+						workspace  = { checkThirdParty = false, library = vim.api.nvim_get_runtime_file("", true) },
 						completion = { callSnippet = "Replace" },
 					},
 				},

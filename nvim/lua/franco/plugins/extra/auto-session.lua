@@ -9,6 +9,6 @@ return {
 		})
 
 		vim.keymap.set("n", "<leader>sr", "<cmd>SessionRestore<CR>", { desc = "Restore session for cwd" })
-		vim.keymap.set("n", "<leader>sw", "<cmd>SessionSave<CR>", { desc = "Save session for auto session" })
+		vim.keymap.set("n", "<leader>sw", "<cmd>SessionSave<CR>",    { desc = "Save session for auto session" })
 	end,
 }

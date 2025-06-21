@@ -6,8 +6,8 @@ return {
 		local dashboard = require("alpha.themes.dashboard")
 
 		-- Colors Set inspired by starship palette
-		vim.api.nvim_set_hl(0, "AlphaHeader", { fg = "#FFCC80" }) -- Light orange for header
-		vim.api.nvim_set_hl(0, "AlphaButtons", { fg = "#80DEEA" }) -- Cyan for buttons and icons
+		vim.api.nvim_set_hl(0, "AlphaHeader",   { fg = "#FFCC80" }) -- Light orange for header
+		vim.api.nvim_set_hl(0, "AlphaButtons",  { fg = "#80DEEA" }) -- Cyan for buttons and icons
 		vim.api.nvim_set_hl(0, "AlphaShortcut", { fg = "#80DEEA" }) -- Cyan for shortcuts
 
 		-- Headers at: https://texteditor.com/multiline-text-art/
@@ -64,11 +64,12 @@ return {
 			create_button("SPC + fe", "  > File Explorer"),
 			create_button("SPC + ff", "󰱼  > Fuzzy File"),
 			create_button("SPC + fs", "󰺮  > Live Grep"),
-			create_button("SPC + nf", "  > New File"),
-			create_button("SPC + lg", "  > LazyGit"),
+			create_button("SPC + tt", "  > Terminal"),
+			create_button("SPC + nf", "  > NewFile"),
 			create_button("SPC + gc", "  > Config"),
 			create_button("SPC + td", "  > ToDos"),
 			create_button("SPC + la", "󰒲  > Lazy"),
+			create_button("SPC + lg", "  > Git"),
 		}
 		dashboard.section.buttons.opts.hl = "AlphaButtons"
 		dashboard.section.buttons.opts.spacing = 0
@@ -76,6 +77,15 @@ return {
 		alpha.setup(dashboard.config)
 		vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])
 	end,
+
+  -- Utils toggle
+	vim.keymap.set("n", "<leader><leader>", function()
+		if vim.bo.filetype == "alpha" then
+			require("alpha").close()
+		else
+			require("alpha").start()
+		end
+	end, { desc = "Toggle Alpha" }),
 }
 
 -- " ███████╗███████╗ ██████╗ ███╗   ███╗███████╗███╗   ██╗████████╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗",
