@@ -30,6 +30,6 @@ return {
 				async = false,
 				timeout_ms = 5000,
 			})
-		end, { desc = "Format file or range (in visual mode)" })
+		end, { desc = "Format file or range" })
 	end,
 }

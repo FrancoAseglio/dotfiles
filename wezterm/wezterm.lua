@@ -3,6 +3,9 @@ local wezterm = require("wezterm")
 -- Create configuration object
 local config = wezterm.config_builder()
 
+-- Disable Confirmation Prompt
+config.window_close_confirmation = "NeverPrompt"
+
 -- Font settings
 config.font = wezterm.font("MesloLGS Nerd Font Mono")
 config.font_size = 16

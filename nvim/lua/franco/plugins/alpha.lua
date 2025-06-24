@@ -67,7 +67,7 @@ return {
 			create_button("SPC + tt", "  > Terminal"),
 			create_button("SPC + nf", "  > NewFile"),
 			create_button("SPC + gc", "  > Config"),
-			create_button("SPC + td", "  > ToDos"),
+			-- create_button("SPC + td", "  > ToDos"),
 			create_button("SPC + la", "󰒲  > Lazy"),
 			create_button("SPC + lg", "  > Git"),
 		}

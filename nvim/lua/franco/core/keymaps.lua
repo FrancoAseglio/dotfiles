@@ -68,7 +68,7 @@ vim.keymap.set("n", "fk", "<cmd>:cprev<CR>", { desc = "Prev quickfix item" })
 -- Terminal
 local state = { buf = -1, win = -1 }
 local function floating_terminal()
-  local width  = math.floor(vim.o.columns * 0.8)
+  local width  = math.floor(vim.o.columns * 0.6)
   local height = math.floor(vim.o.lines   * 0.8)
   local col = math.floor((vim.o.columns - width)  / 2)
   local row = math.floor((vim.o.lines   - height) / 2)

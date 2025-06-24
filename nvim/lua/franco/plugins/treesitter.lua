@@ -7,10 +7,8 @@ return {
 		local treesitter = require("nvim-treesitter.configs")
 
 		treesitter.setup({
-			modules = {},
 			sync_install = false,
 			auto_install = true,
-			ignore_install = {},
 
 			ensure_installed = {
 				"json", "javascript", "typescript", "tsx", "yaml",
@@ -20,17 +18,17 @@ return {
 			},
 
 			highlight = { enable = true },
-			indent = { enable = true },
-			autotag = { enable = true },
-			fold = { enable = true },
+			indent    = { enable = true },
+			autotag   = { enable = true },
+			fold      = { enable = true },
 
 			incremental_selection = {
-				enable = true,
+				enable  = true,
 				keymaps = {
-					init_selection = "<C-space>",
-					node_incremental = "<C-space>",
+					init_selection    = "<C-space>",
+					node_incremental  = "<C-space>",
 					scope_incremental = false,
-					node_decremental = "<bs>",
+					node_decremental  = "<bs>",
 				},
 			},
 		})
