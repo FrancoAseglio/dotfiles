@@ -7,17 +7,18 @@ return {
 		conform.setup({
 			-- Configure formatters by file type
 			formatters_by_ft = {
-				lua        = { "stylua" },
 				c          = { "clang_format" },
 				cpp        = { "clang_format" },
+				css        = { "prettier" },
+				lua        = { "stylua" },
 				java       = { "google-java-format" },
+				html       = { "prettier" },
+				json       = { "prettier" },
+				svelte     = { "prettier" },
+        python     = { "black" },
+				markdown   = { "prettier" },
 				javascript = { "prettier" },
 				typescript = { "prettier" },
-				svelte     = { "prettier" },
-				html       = { "prettier" },
-				css        = { "prettier" },
-				json       = { "prettier" },
-				markdown   = { "prettier" },
 				postgresql = { "sqlfluff" },
 			},
 			format_on_save = false,
@@ -27,8 +28,8 @@ return {
 		vim.keymap.set({ "n", "v" }, "<leader>mp", function()
 			conform.format({
 				lsp_fallback = true,
-				async = false,
 				timeout_ms = 5000,
+				async = false,
 			})
 		end, { desc = "Format file or range" })
 	end,

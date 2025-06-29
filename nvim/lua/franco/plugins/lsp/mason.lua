@@ -18,7 +18,7 @@ return {
 					package_pending     = "󱑞",
 					package_uninstalled = "󱂱",
 				},
-				border = "rounded",
+				border    = "rounded",
 				title_pos = "center",
 			},
 		})
@@ -28,7 +28,7 @@ return {
 			automatic_setup = true,
 			automatic_installation = true,
 			ensure_installed = {
-				"lua_ls", "clangd", "jdtls",
+				"lua_ls", "clangd", "jdtls", "pyright",
 			},
 		})
 
@@ -36,6 +36,7 @@ return {
 		mason_tool_installer.setup({
 			ensure_installed = {
 				"stylua",
+				"black", "pylint", "mypy",
 			},
 		})
 	end,
