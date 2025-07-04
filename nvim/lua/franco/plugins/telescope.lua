@@ -1,6 +1,6 @@
 return {
 	"nvim-telescope/telescope.nvim",
-	branch = "0.1.x",
+	branch = "master",
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons",
@@ -8,7 +8,8 @@ return {
 	},
 	config = function()
 		local telescope = require("telescope")
-		local actions = require("telescope.actions")
+		local actions   = require("telescope.actions")
+
 		telescope.setup({
 			defaults = {
 				path_display = { "smart" },
@@ -23,15 +24,18 @@ return {
 					},
 				},
 				mappings = {
-					i = { ["<C-q>"] = actions.send_selected_to_qflist },
+					i = { ["<C-q>"] = actions.send_selected_to_qflist, },
 				},
 			},
 		})
-		telescope.load_extension("fzf")
-		-- set keymaps
-		vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>",  { desc = "Files in cwd" })
-		vim.keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>",    { desc = "Recent files" })
-		vim.keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>",   { desc = "String in cwd" })
-		vim.keymap.set("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", { desc = "String under cursor in cwd" })
+
+		pcall(telescope.load_extension, "fzf")
+		local map  = vim.keymap.set
+		local opts = { noremap = true, silent = true }
+
+		map("n", "<leader>ff", "<cmd>Telescope find_files<cr>",  vim.tbl_extend("force", opts, { desc = "Files in cwd" }))
+		map("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>",    vim.tbl_extend("force", opts, { desc = "Recent files" }))
+		map("n", "<leader>fs", "<cmd>Telescope live_grep<cr>",   vim.tbl_extend("force", opts, { desc = "String in cwd" }))
+		map("n", "<leader>fc", "<cmd>Telescope grep_string<cr>", vim.tbl_extend("force", opts, { desc = "String under cursor in cwd" }))
 	end,
 }

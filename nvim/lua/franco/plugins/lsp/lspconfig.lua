@@ -7,7 +7,9 @@ return {
 	},
 	config = function()
 		-- Local variables for brevity
-		local lspconfig, cmp_nvim_lsp, keymap = require("lspconfig"), require("cmp_nvim_lsp"), vim.keymap
+		local lspconfig = require("lspconfig")
+    local cmp_nvim_lsp = require("cmp_nvim_lsp")
+    local keymap = vim.keymap
 		local capabilities = cmp_nvim_lsp.default_capabilities()
 		local runtime_path = vim.split(package.path, ";")
 		table.insert(runtime_path, "lua/?.lua")
@@ -33,20 +35,24 @@ return {
 
 		-- Show diagnostics on hover
 		vim.o.updatetime = 1500
-		vim.cmd([[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })]])
+    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+      callback = function()
+		    vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })
+	    end,
+    })
 
 		-- Keymaps setup function to reduce repetition
 		local function setup_lsp_keymaps(bufnr)
 			local maps = {
 				["<leader>ca"] = { vim.lsp.buf.code_action, "See code actions", { "n", "v" } },
-				["<leader>gd"] = { "<cmd>Telescope lsp_definitions<CR>", "Show LSP definitions" },
+        ["<leader>gd"] = { vim.lsp.buf.definition, "Show LSP definitions" },
 				["<leader>rn"] = { vim.lsp.buf.rename, "Smart rename" },
 				["<leader>rs"] = { ":LspRestart<CR>", "Restart LSP" },
-				["<leader>sd"] = {
+        ["<leader>sd"] = {
 					function()
 						vim.lsp.buf.hover({ border = "rounded" })
 					end,
-					"Show documentation for what is under cursor",
+					"Show under cursor documentation ",
 				},
 			}
 
@@ -79,16 +85,6 @@ return {
 
 		-- Global LSP settings
 		local servers = {
-			svelte = {
-				on_attach = function(client, _)
-					vim.api.nvim_create_autocmd("BufWritePost", {
-						pattern  = { "*.js", "*.ts" },
-						callback = function(ctx)
-							client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.match })
-						end,
-					})
-				end,
-			},
 			lua_ls = {
 				settings = {
 					Lua = {
