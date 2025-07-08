@@ -52,7 +52,7 @@ return {
 				}),
 			},
 		})
-		-- Enable vim-dadbod-completion in SQL files
+		-- Enable vim-dadbod-completion in SQL files only with database.lua
 		vim.api.nvim_create_autocmd("FileType", {
 			pattern = { "sql", "mysql", "plsql" },
 			callback = function()

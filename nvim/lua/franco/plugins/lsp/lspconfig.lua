@@ -98,19 +98,6 @@ return {
 				},
 				root_dir = nvim_config_root_dir,
 			},
-      pyright = {
-		    settings = {
-			    python = {
-				    analysis = {
-					    typeCheckingMode = "basic", -- "off", "basic", "strict"
-					    autoSearchPaths = true,
-					    useLibraryCodeForTypes = true,
-				    },
-			    },
-		    },
-	    },
-			jdtls = { cmd = { "jdtls" } },
-			clangd = {},
 		}
 
 		-- Setup all servers
