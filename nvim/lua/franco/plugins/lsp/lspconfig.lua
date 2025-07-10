@@ -17,6 +17,7 @@ return {
 
 		-- Configure diagnostics
 		vim.diagnostic.config({
+			   virtual_text = true,
 			signs = {
 				text = {
 					[vim.diagnostic.severity.ERROR] = "",
@@ -25,23 +26,9 @@ return {
 					[vim.diagnostic.severity.INFO]  = "",
 				},
 			},
-			float = {
-				border = "rounded",
-				format = function(d)
-					return string.format("%s (%s)", d.message, d.source)
-				end,
-			},
 		})
 
-		-- Show diagnostics on hover
-		vim.o.updatetime = 1500
-    vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-      callback = function()
-		    vim.diagnostic.open_float(nil, { focus = false, border = "rounded" })
-	    end,
-    })
-
-		-- Keymaps setup function to reduce repetition
+		-- Keymaps
 		local function setup_lsp_keymaps(bufnr)
 			local maps = {
 				["<leader>ca"] = { vim.lsp.buf.code_action, "See code actions", { "n", "v" } },
@@ -96,7 +83,7 @@ return {
 						completion = { callSnippet = "Replace" },
 					},
 				},
-				root_dir = nvim_config_root_dir,
+        root_dir = nvim_config_root_dir,
 			},
 		}
 
