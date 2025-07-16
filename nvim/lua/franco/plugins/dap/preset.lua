@@ -16,12 +16,13 @@ return {
 
 			-- 1) Mason-DAP
 			require("mason-nvim-dap").setup({
-				ensure_installed = { "codelldb", "java-debug-adapter" },
+				ensure_installed = { "codelldb", "debugpy" },
 				automatic_installation = true,
 			})
 
 			-- 2) Load adapters and their configurations
 			require("franco.plugins.dap.adapters.c").setup(dap)
+			require("franco.plugins.dap.adapters.python").setup(dap)
 
 			-- 3) Set up dap-ui
 			dapui.setup({
