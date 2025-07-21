@@ -14,8 +14,8 @@ return {
 		mason.setup({
 			ui = {
 				icons = {
-					package_installed   = "✓",
 					package_pending     = "󱑞",
+					package_installed   = "✓",
 					package_uninstalled = "󱂱",
 				},
 				border    = "rounded",
@@ -25,10 +25,10 @@ return {
 
 		-- LSP servers only
 		mason_lspconfig.setup({
-			automatic_setup = true,
+			automatic_setup = false,
 			automatic_installation = true,
 			ensure_installed = {
-				"lua_ls", "clangd", "jdtls", "ruff",
+				"lua_ls", "clangd", "jdtls", "hls", "pyright",
 			},
 		})
 
@@ -36,7 +36,8 @@ return {
 		mason_tool_installer.setup({
 			ensure_installed = {
 				"stylua",
-				"black", "pylint", "mypy",
+				"black", "pylint",
+        "fourmolu", "hlint",
 			},
 		})
 	end,

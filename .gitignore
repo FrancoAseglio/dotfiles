@@ -4,11 +4,9 @@
 .LSOverride
 Icon
 ._*
-
 # Thumbnail cache files
 ._*
 Thumbs.db
-
 # Files that might appear in the root of a volume
 .DocumentRevisions-V100
 .fseventsd
@@ -17,7 +15,6 @@ Thumbs.db
 .Trashes
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
-
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
@@ -25,21 +22,20 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Vim/Neovim specific
+# Vim/Neovim specific - ONLY runtime files, not config
 *.swp
 *.swo
 *~
 .netrwhist
-nvim/plugin/packer_compiled.lua
-lazy-lock.json
+# REMOVED: lazy-lock.json (this should be tracked for consistent plugin versions)
 
-# Shell specific
+# Shell specific - ONLY history and temporary files
 .zsh_history
 .zcompdump*
 .zsh_sessions
 .bash_history
 
-# Logs and databases
+# Logs and databases - be more specific
 *.log
 *.sqlite
 *.sqlite3
@@ -52,7 +48,7 @@ yarn-debug.log
 yarn-error.log
 
 # Python (for any Python-based tools)
-__pycache__/
+**/__pycache__**/
 *.py[cod]
 *$py.class
 .Python
@@ -69,20 +65,19 @@ __pycache__/
 *.sublime-project
 *.sublime-workspace
 
-# Personal configuration that might contain sensitive data
+# Personal configuration that might contain sensitive data - BE SPECIFIC
 .ssh/
 .aws/
-.config/hub
+.config/hub/
 .config/git/credentials
 *.pem
 *.key
-zshistory
 
 # Temporary files
 tmp/
 temp/
 .temp/
 
-# databases query
-**/pgcli/log
-**/pgcli/history
+# Database query history - be specific about paths
+.config/pgcli/log
+.config/pgcli/history

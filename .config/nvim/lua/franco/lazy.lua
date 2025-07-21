@@ -14,10 +14,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
-	-- franco/plugins/extra/ won't be loaded
-	{ import = "franco.plugins" },
+	{ import = "franco.plugins.editor" },
+	{ import = "franco.plugins.ui" },
 	{ import = "franco.plugins.lsp" },
-	{ import = "franco.plugins.dap" },
+	{ import = "franco.plugins.tools" },
+	{ import = "franco.plugins.lang" },
 }, {
 	checker = {
 		enabled = true,

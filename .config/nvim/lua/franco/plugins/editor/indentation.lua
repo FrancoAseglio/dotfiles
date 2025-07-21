@@ -6,45 +6,41 @@ return {
 		indent = {
 			char = "┊",
 		},
-
 		scope = {
-			enabled = true,
 			char = "┊",
-			show_start = false,
+			enabled = true,
 			show_end = false,
+			show_start = false,
 			include = {
 				node_type = {
 					["*"] = {
-						-- Control structures
 						"if_statement",
 						"for_statement",
-						"while_statement",
 						"try_statement",
 						"with_statement",
+						"while_statement",
 						"match_statement",
-						-- Functions and classes
 						"class_definition",
-						"function_definition",
 						"method_definition",
+						"function_definition",
 					},
 				},
 			},
 		},
-
 		exclude = {
 			filetypes = {
-				"help",
+				"qf",
 				"man",
+				"help",
 				"lspinfo",
 				"checkhealth",
 				"TelescopePrompt",
 				"TelescopeResults",
-				"qf",
 			},
 			buftypes = {
-				"terminal",
 				"nofile",
 				"prompt",
+				"terminal",
 			},
 		},
 	},

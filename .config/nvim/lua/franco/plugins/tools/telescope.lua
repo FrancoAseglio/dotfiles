@@ -5,11 +5,11 @@ return {
 		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons",
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-	},
+	  { "stevearc/dressing.nvim", event = "VeryLazy" },
+  },
 	config = function()
 		local telescope = require("telescope")
 		local actions   = require("telescope.actions")
-
 		telescope.setup({
 			defaults = {
 				path_display = { "smart" },
@@ -24,15 +24,15 @@ return {
 					},
 				},
 				mappings = {
-					i = { ["<C-q>"] = actions.send_selected_to_qflist, },
+					i = {
+						["<C-q>"] = actions.send_selected_to_qflist,
+					},
 				},
 			},
 		})
-
 		pcall(telescope.load_extension, "fzf")
 		local map  = vim.keymap.set
 		local opts = { noremap = true, silent = true }
-
 		map("n", "<leader>ff", "<cmd>Telescope find_files<cr>",  vim.tbl_extend("force", opts, { desc = "Files in cwd" }))
 		map("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>",    vim.tbl_extend("force", opts, { desc = "Recent files" }))
 		map("n", "<leader>fs", "<cmd>Telescope live_grep<cr>",   vim.tbl_extend("force", opts, { desc = "String in cwd" }))
