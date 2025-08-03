@@ -68,14 +68,36 @@ alias ls3="eza --tree --level=3"
 alias la3="eza -a --tree --level=3"
 
 # fzf cd
-function fd() {
+function fzf_dir() {
   local dir
   dir=$(find ~/ -type d 2>/dev/null | fzf)
-  [[ -n "$dir" ]] && cd "$dir"
+  [[ -n "$dir" ]] && cd "$dir" || echo "No directory selected"
 }
+alias fd='fzf_dir'
 
 # fzf file to nvim
-alias fn='nvim -p $(fzf -m --preview="bat --style=numbers --color=always --line-range=:500 {}")'
+function fzf_to_nvim() {
+  local files
+  files=$(fzf -m --preview="bat --theme=mocha --style=numbers --color=always --line-range=:500 {}")
+  [[ -z "$files" ]] && echo "No files selected" && return
+
+  if [ -f pyproject.toml ]; then
+    poetry run /opt/homebrew/bin/nvim -p $files
+  else
+    /opt/homebrew/bin/nvim -p $files
+  fi
+}
+alias fn='fzf_to_nvim'
+
+# poetry dependent nvim launcher
+function nvim_poetry() {
+  if [ -f pyproject.toml ]; then
+    poetry run /opt/homebrew/bin/nvim "$@"
+  else
+    /opt/homebrew/bin/nvim "$@"
+  fi
+}
+alias nvim='nvim_poetry'
 
 # Various
 alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'

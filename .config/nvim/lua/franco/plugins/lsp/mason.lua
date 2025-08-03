@@ -28,7 +28,7 @@ return {
 			automatic_setup = false,
 			automatic_installation = true,
 			ensure_installed = {
-				"lua_ls", "clangd", "jdtls", "hls", "pyright",
+				"lua_ls", "clangd", "jdtls", "hls", "pyright", "dockerls",
 			},
 		})
 
