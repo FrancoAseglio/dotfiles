@@ -41,4 +41,9 @@ return {
 			},
 		})
 	end,
+
+  keys = {
+		{ "<leader>ma", ":Mason<CR>", desc = "Toggle Mason" },
+	},
+
 }

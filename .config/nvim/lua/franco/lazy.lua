@@ -30,5 +30,7 @@ require("lazy").setup({
 	ui = {
 		border = "rounded",
 		title_pos = "center",
-	},
+	}
 })
+
+vim.keymap.set("n", "<leader>la", "<cmd>Lazy<CR>", { desc = "Toggle Lazy" })
