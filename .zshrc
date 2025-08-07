@@ -1,8 +1,13 @@
-# --- Reload & Edit ZSH ---
+# =============================================================================
+# ZSH CONFIGURATION
+# =============================================================================
+
+# --- ZSH Reload & Edit Aliases ---
 alias szsh="source ~/.zshrc"
 alias ezsh="nvim ~/.zshrc"
+alias ezp="nvim ~/.zprofile"
 
-# --- History Setup ---
+# --- History Configuration ---
 HISTFILE=$HOME/.config/zshistory
 SAVEHIST=1000
 HISTSIZE=999
@@ -14,17 +19,29 @@ setopt hist_verify
 # --- ZSH Plugins ---
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# --- Zoxide (better cd) ---
-eval "$(zoxide init zsh)"
+# --- Docker Completion Setup ---
+fpath=(/Users/francoaseglio/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
 
-# --- Bat (better cat) ---
-export BAT_THEME=tokyonight
+# =============================================================================
+# ENVIRONMENT VARIABLES & PATH
+# =============================================================================
 
-# --- Java Path ---
+# --- Java Environment ---
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
 export PATH="$JAVA_HOME/bin:$PATH"
 
-# --- fzf theme ---
+# --- pipx ---
+export PATH="$PATH:/Users/francoaseglio/.local/bin"
+
+# --- ghcup Environment ---
+[ -f "/Users/francoaseglio/.ghcup/env" ] && . "/Users/francoaseglio/.ghcup/env"
+
+# --- Bat Theme ---
+export BAT_THEME=tokyonight
+
+# --- fzf Theme ---
 export FZF_DEFAULT_OPTS="
 --color=fg:#CBE0F0
 --color=bg:#011628
@@ -41,23 +58,84 @@ export FZF_DEFAULT_OPTS="
 --color=border:#547998
 --color=gutter:#011628"
 
+# =============================================================================
+# TOOL INITIALIZATIONS
+# =============================================================================
+
+# --- Zoxide (better cd) ---
+eval "$(zoxide init zsh)"
+
 # --- Starship Prompt ---
 eval "$(starship init zsh)"
 
-# --- Aliases ---
+# =============================================================================
+# FUNCTIONS
+# =============================================================================
 
-# Parental dir navigation 
+# --- Docker Desktop Toggle ---
+function docker_toggle() {
+ if /usr/local/bin/docker info &> /dev/null; then
+   echo "Quitting Docker..."
+   /usr/local/bin/docker stop $(/usr/local/bin/docker ps -q) 2>/dev/null
+   pkill -f "Docker"
+ else
+   echo "Starting Docker..."
+   open -a Docker
+ fi
+}
+
+# --- FZF Directory Navigation ---
+function fzf_dir() {
+  local dir
+  dir=$(find ~/ -type d 2>/dev/null | fzf)
+  [[ -n "$dir" ]] && cd "$dir" || echo "No directory selected"
+}
+
+# --- FZF File to Neovim ---
+function fzf_to_nvim() {
+  local files
+  files=$(fzf -m --preview="bat --theme=mocha --style=numbers --color=always --line-range=:500 {}")
+  [[ -z "$files" ]] && echo "No files selected" && return
+  if [ -f pyproject.toml ]; then
+    poetry run /opt/homebrew/bin/nvim -p $files
+  else
+    /opt/homebrew/bin/nvim -p $files
+  fi
+}
+
+# --- Poetry-Dependent Neovim Launcher ---
+function nvim_poetry() {
+  if [ -f pyproject.toml ]; then
+    poetry run /opt/homebrew/bin/nvim "$@"
+  else
+    /opt/homebrew/bin/nvim "$@"
+  fi
+}
+
+# --- FZF Project Navigation to Neovim ---
+function fzf_project_nvim() {
+  local project
+  project=$(find ~ -maxdepth 3 -type d -name ".git" | sed 's/\/.git$//' | fzf)
+  [[ -n "$project" ]] && cd "$project"
+  nvim .
+}
+
+# =============================================================================
+# ALIASES
+# =============================================================================
+
+# --- Directory Navigation ---
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 
-# Useful Dir Navigation
+# --- Quick Directory Access ---
 alias gd="cd ~/Desktop"
 alias gl="cd ~/Downloads"
 alias gt="cd ~/.Trash"
 alias gc="cd ~/.config"
 
-# Eza (Better ls)
+# --- Enhanced ls with Eza ---
 alias ls="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
 alias la="eza -a --color=always --git --icons=always"
 alias ll="eza --color=always --git --icons=always --long --grid --accessed --modified --created"
@@ -67,43 +145,18 @@ alias la2="eza -a --tree --level=2"
 alias ls3="eza --tree --level=3"
 alias la3="eza -a --tree --level=3"
 
-# fzf cd
-function fzf_dir() {
-  local dir
-  dir=$(find ~/ -type d 2>/dev/null | fzf)
-  [[ -n "$dir" ]] && cd "$dir" || echo "No directory selected"
-}
+# --- FZF Enhanced Navigation ---
 alias fd='fzf_dir'
-
-# fzf file to nvim
-function fzf_to_nvim() {
-  local files
-  files=$(fzf -m --preview="bat --theme=mocha --style=numbers --color=always --line-range=:500 {}")
-  [[ -z "$files" ]] && echo "No files selected" && return
-
-  if [ -f pyproject.toml ]; then
-    poetry run /opt/homebrew/bin/nvim -p $files
-  else
-    /opt/homebrew/bin/nvim -p $files
-  fi
-}
 alias fn='fzf_to_nvim'
+alias fp='fzf_project_nvim'
 
-# poetry dependent nvim launcher
-function nvim_poetry() {
-  if [ -f pyproject.toml ]; then
-    poetry run /opt/homebrew/bin/nvim "$@"
-  else
-    /opt/homebrew/bin/nvim "$@"
-  fi
-}
+# --- Tool Aliases ---
 alias nvim='nvim_poetry'
-
-# Various
+alias dk='docker_toggle'
 alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'
 alias db="cd ~/db && ls"
 alias pg="pgcli"
 
-# dotfiles
+# --- Dotfiles Management (Commented) ---
 # alias dotme="git clone git@github.com:FrancoAseglio/dotfiles.git && cd ~/dotfiles"
 # alias undot="rm -rf ~/dotfiles"
