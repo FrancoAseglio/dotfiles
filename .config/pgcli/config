@@ -10,20 +10,22 @@ wider_completion_menu = False
 # Do not create new connections for refreshing completions;
 always_use_single_connection = False
 
-# Multi-line mode allows breaking up the sql statements into multiple lines. 
-# If this is set to True, then the end of the statements must have a semi-colon.
+# Allows breaking up the sql statements into multiple lines. 
+# If set to True, the end of the statements must have a semi-colon.
 multi_line = False
 
-# If multi_line_mode is set to "psql", in multi-line mode, [Enter] will execute
-# the current input if the input ends in a semicolon.
-# If multi_line_mode is set to "safe", in multi-line mode, [Enter] will always
-# insert a newline, and [Esc] [Enter] or [Alt]-[Enter] is used to execute.
+# If multi_line_mode is set to "psql", in multi-line mode, 
+# [Enter] will execute the current input if the ending in a semicolon.
+# If multi_line_mode is set to "safe", in multi-line mode, 
+# [Enter] will always insert a newline, 
+# and [Esc] [Enter] or [Alt]-[Enter] is used to execute.
 multi_line_mode = psql
 
-# Alert before executing a sql statement that may cause harm to the database.
+# Alert before executing a statement that may harm to the database.
 destructive_warning = drop, shutdown, delete, truncate, alter, update, unconditional_update
 
-# When `destructive_warning` is on and the user declines to proceed with a destructive statement, 
+# When `destructive_warning` is on 
+# and the user declines to proceed with a destructive statement, 
 # the current transaction (if any) is left untouched, by default. 
 # When setting `destructive_warning_restarts_connection` to "True", 
 # the connection to the server is restarted. 
@@ -47,7 +49,7 @@ auto_retry_closed_connection = True
 generate_aliases = False
 
 # Path to a json file that specifies specific table aliases 
-# to use when generate_aliases is set to True the format for this file should be:
+# to use when generate_aliases is set to True; this file should be:
 # {
 #     "some_table_name": "desired_alias",
 #     "some_other_table_name": "another_alias"
@@ -56,8 +58,6 @@ alias_map_file =
 
 # log_file location.
 # In Unix/Linux: ~/.config/pgcli/log
-# In Windows: %USERPROFILE%\AppData\Local\dbcli\pgcli\log
-# %USERPROFILE% is typically C:\Users\{username}
 log_file = default
 
 # keyword casing preference. Possible values: "lower", "upper", "auto"
@@ -92,7 +92,7 @@ search_path_filter = False
 # Timing of sql statements and table rendering.
 timing = False
 
-# Show/hide the informational toolbar with function keymap at the footer.
+# Show/hide informational toolbar with function keymap at the footer.
 show_bottom_toolbar = False
 
 # Recommended: psql, fancy_grid and grid.
@@ -111,14 +111,14 @@ on_error = STOP
 # Set threshold for row limit.
 row_limit = 1000
 
-# Truncate long text fields to this value for tabular display (does not apply to csv).
+# Truncate long text to this value for display (does not apply to csv).
 max_field_width = 500
 
 # Skip intro on startup and goodbye on exit
 less_chatty = True
 
-# Show all Postgres error fields (as listed in
-# https://www.postgresql.org/docs/current/protocol-error-fields.html).
+# Show all Postgres error fields as listed at:
+# https://www.postgresql.org/docs/current/protocol-error-fields.html.
 # Can be toggled with \v.
 verbose_errors = False
 
@@ -138,9 +138,9 @@ verbose_errors = False
 prompt = '\u@\h:\d> '
 
 # Number of lines to reserve for the suggestion menu
-min_num_menu_lines = 4
+min_num_menu_lines = 6
 
-# Character used to left pad multi-line queries to match the prompt size.
+# Character used to left pad multi-line queries to match prompt size.
 multiline_continuation_char = ''
 
 # The string used in place of a null value.
@@ -155,28 +155,28 @@ keyring = True
 # Automatically set the session time zone to the local time zone
 use_local_timezone = False
 
-# Custom colors for the completion menu, toolbar, etc.
+# Catppuccin Mocha colors for pgcli
 [colors]
-completion-menu.completion.current = 'bg:#ffffff #000000'
-completion-menu.completion = 'bg:#008888 #ffffff'
-completion-menu.meta.completion.current = 'bg:#44aaaa #000000'
-completion-menu.meta.completion = 'bg:#448888 #ffffff'
-completion-menu.multi-column-meta = 'bg:#aaffff #000000'
-scrollbar.arrow = 'bg:#003333'
-scrollbar = 'bg:#00aaaa'
-selected = '#ffffff bg:#6666aa'
-search = '#ffffff bg:#4444aa'
-search.current = '#ffffff bg:#44aa44'
-bottom-toolbar = 'bg:#222222 #aaaaaa'
-bottom-toolbar.off = 'bg:#222222 #888888'
-bottom-toolbar.on = 'bg:#222222 #ffffff'
+completion-menu.completion.current = 'bg:#585b70 #cdd6f4'
+completion-menu.completion = 'bg:#313244 #bac2de'
+completion-menu.meta.completion.current = 'bg:#45475a #cdd6f4'
+completion-menu.meta.completion = 'bg:#313244 #a6adc8'
+completion-menu.multi-column-meta = 'bg:#45475a #cdd6f4'
+scrollbar.arrow = 'bg:#313244'
+scrollbar = 'bg:#45475a'
+selected = '#1e1e2e bg:#89b4fa'
+search = '#cdd6f4 bg:#89b4fa'
+search.current = '#1e1e2e bg:#a6e3a1'
+bottom-toolbar = 'bg:#1e1e2e #bac2de'
+bottom-toolbar.off = 'bg:#1e1e2e #6c7086'
+bottom-toolbar.on = 'bg:#1e1e2e #cdd6f4'
 search-toolbar = 'noinherit bold'
 search-toolbar.text = 'nobold'
 system-toolbar = 'noinherit bold'
 arg-toolbar = 'noinherit bold'
 arg-toolbar.text = 'nobold'
-bottom-toolbar.transaction.valid = 'bg:#222222 #00ff5f bold'
-bottom-toolbar.transaction.failed = 'bg:#222222 #ff005f bold'
+bottom-toolbar.transaction.valid = 'bg:#1e1e2e #a6e3a1 bold'
+bottom-toolbar.transaction.failed = 'bg:#1e1e2e #f38ba8 bold'
 
 # style classes for colored table output
 output.header = "#00ff5f bold"

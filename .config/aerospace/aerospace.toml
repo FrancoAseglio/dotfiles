@@ -1,13 +1,7 @@
-after-login-command   = []
-after-startup-command = []
-
-# Start AeroSpace at login
 start-at-login = true
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
-
-# The 'accordion-padding' specifies the size of accordion padding
-accordion-padding = 0
+accordion-padding = 9
 
 # Possible values: tiles|accordion
 default-root-container-layout = 'tiles'
@@ -18,56 +12,63 @@ default-root-container-orientation = 'auto'
 # Possible values: (qwerty|dvorak)
 key-mapping.preset = 'qwerty'
 
-# Mouse follows focus when focused monitor changes
+# Mouse follows focus on focused monitor/window change
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed = "move-mouse window-lazy-center"
 
 # Gaps between windows (inner) and between monitor edges (outer).
 [gaps]
-inner.horizontal = 30
-inner.vertical   = 30
-outer.left       = 30
-outer.bottom     = 30
-outer.top        = 30
-outer.right      = 30
+inner.horizontal = 15
+inner.vertical   = 15
+outer.left       = 15
+outer.bottom     = 15
+outer.top        = 15
+outer.right      = 15
 
 [mode.main.binding]
-# Layout Split  
+# Layouts  
 alt-t = 'layout tiles'
 alt-a = 'layout accordion'
 
-# Focus commands  
+# Focus 
 cmd-left  = 'focus left'
 cmd-down  = 'focus down'
 cmd-up    = 'focus up'
 cmd-right = 'focus right'
 
-# Move commands  
-alt-left  = 'move left'
-alt-down  = 'move down'
-alt-up    = 'move up'
-alt-right = 'move right'
+# Window Movements 
+cmd-alt-left  = 'move left'
+cmd-alt-down  = 'move down'
+cmd-alt-up    = 'move up'
+cmd-alt-right = 'move right'
 
-# Move to Workspaces   
-alt-g = 'workspace G' # GoodNotes 
-alt-h = 'workspace H' # Home 
-alt-m = 'workspace M' # Music
-alt-n = 'workspace N' # Notes 
-alt-s = 'workspace S' # Safari
-alt-w = 'workspace W' # WezTerm
-alt-y = 'workspace Y' # YouTube
+# Workspaces   
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
 
-# Moving node to Workspace  
-cmd-alt-g = 'move-node-to-workspace G'
-cmd-alt-h = 'move-node-to-workspace H'
-cmd-alt-m = 'move-node-to-workspace M'
-cmd-alt-n = 'move-node-to-workspace N'
-cmd-alt-s = 'move-node-to-workspace S'
-cmd-alt-w = 'move-node-to-workspace W'
-cmd-alt-y = 'move-node-to-workspace Y'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
+alt-0 = 'workspace 0'
+
+# Move node to Workspace  
+cmd-alt-1 = 'move-node-to-workspace 1'
+cmd-alt-2 = 'move-node-to-workspace 2'
+cmd-alt-3 = 'move-node-to-workspace 3'
+
+cmd-alt-8 = 'move-node-to-workspace 8'
+cmd-alt-9 = 'move-node-to-workspace 9'
+cmd-alt-0 = 'move-node-to-workspace 0'
+
+# Resize
+alt-right = 'resize smart -50'
+alt-left  = 'resize smart +50'
+alt-up    = 'resize smart -50'
+alt-down  = 'resize smart +50'
 
 # Sevice Mode  
 alt-shift-s = 'mode service'
 
-# 'service' binding mode declaration.
+# Service Mode Actions
 [mode.service.binding]
 r = ['reload-config', 'mode main']

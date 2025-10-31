@@ -5,122 +5,87 @@ return {
 		local alpha = require("alpha")
 		local dashboard = require("alpha.themes.dashboard")
 
-		-- Colors Set inspired by starship palette
-		vim.api.nvim_set_hl(0, "AlphaHeader",   { fg = "#FFCC80" }) -- Light orange for header
-		vim.api.nvim_set_hl(0, "AlphaButtons",  { fg = "#80DEEA" }) -- Cyan for buttons and icons
-		vim.api.nvim_set_hl(0, "AlphaShortcut", { fg = "#80DEEA" }) -- Cyan for shortcuts
+		local function get_header_padding()
+			local header_height = 16
+			local win_height = vim.fn.winheight(0)
+			local padding = math.max(0, math.floor((win_height - header_height) / 2) - 2)
+			local pad_lines = {}
 
-		-- Headers at: https://texteditor.com/multiline-text-art/
-		dashboard.section.header.val = {
-			"██╗████████╗ █╗ ███████╗   █╗█╗     ██╗ █████╗ ██╗   ██╗ █╗█╗   ██╗   █╗█╗  █████╗ █╗█╗",
-			"██║╚══██╔══╝ ╚╝ ██╔════╝   ╚╝╚╝     ██║██╔══██╗██║   ██║ ╚╝╚╝   ██║   ╚╝╚╝ ██╔══██╗╚╝╚╝",
-			"██║   ██║       ███████╗            ██║███████║██║   ██║     ████████╗     ███████║    ",
-			"██║   ██║       ╚════██║       ██   ██║██╔══██║╚██╗ ██╔╝        ██╔══╝     ██╔══██║    ",
-			"██║   ██║       ███████║       ╚█████╔╝██║  ██║ ╚████╔╝         ██║        ██║  ██║    ",
-			"╚═╝   ╚═╝       ╚══════╝        ╚════╝ ╚═╝  ╚═╝  ╚═══╝          ╚═╝        ╚═╝  ╚═╝    ",
-			"                                                                                       ",
-			"                                                                                       ",
-			"                              ⣐⢕⢕⢕⢕⢕⢕⢕⢕⠅⢗⢕⢕⢕⢕⢕⢕⢕⠕⠕⢕⢕⢕⢕⢕⢕⢕⢕                             ",
-			"                             ⢐⢕⢕⢕⢕⢕⣕⢕⢕⠕⠁⢕⢕⢕⢕⢕⢕⢕⢕⠅⡄⢕⢕⢕⢕⢕⢕⢕⢕⢕                            ",
-			"                             ⢕⢕⢕⢕⠅⢗⢕⠕⣠⠄⣗⢕⢕⠕⢕⢕⢕⠕⢠⣿⠐⢕⢕⢕⠑⢕⢕⠵⢕                             ",
-			"                            ⢐⢕⢕⢕⢕⠁⢜⠕⢁⣴⣿⡇⢓⢕⢵⢐⢕⢕⠕⢁⣾⢿⣧⠑⢕⢕⠄⢑⢕⠅⢕                            ",
-			"                            ⣘⢕⢕⠵⢁⠔⢁⣤⣤⣶⣶⣶⡐⣕⢽⠐⢕⠕⣡⣾⣶⣶⣶⣤⡁⢓⢕⠄⢑⢅⢑                            ",
-			"                            ⢕⠍⣧⠄⣶⣾⣿⣿⣿⣿⣿⣿⣷⣔⢕⢄⢡⣾⣿⣿⣿⣿⣿⣿⣿⣦⡑⢕⢤⠱⢐                            ",
-			"                            ⢕⢠⢕⠅⣾⣿⠋⢿⣿⣿⣿⠉⣿⣿⣷⣦⣶⣽⣿⣿⠈⣿⣿⣿⣿⠏⢹⣷⣷⡅⢐                            ",
-			"                            ⢕⣔⢕⢥⢻⣿⡀⠈⠛⠛⠁⢠⣿⣿⣿⣿⣿⣿⣿⣿⡀⠈⠛⠛⠁ ⣼⣿⣿⡇⢔                            ",
-			"                            ⢕⢕⢕⢽⢸⢟⢟⢖⢖⢤⣶⡟⢻⣿⡿⠻⣿⣿⡟⢀⣿⣦⢤⢤⢔⢞⢿⢿⣿⠁⢕                            ",
-			"                            ⢕⢕⢕⠅⣐⢕⢕⢕⢕⢕⣿⣿⡄⠛⢀⣦⠈⠛⢁⣼⣿⢗⢕⢕⢕⢕⢕⢕⡏⣘⢕                            ",
-			"                            ⢕⢕⢕⠅⢓⣕⣕⣕⣕⣵⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣷⣕⢕⢕⢕⢕⡵⢀⢕⢕                            ",
-			"                            ⢕⢑⢕⠃⡈⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢃⢕⢕⢕                            ",
-			"                            ⢕⣆⢕⠄⢱⣄⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⢁⢕⢕⠕⢁                             ",
-			"                            ⢕⣿⣦⡀⣿⣿⣷⣶⣬⣍⣛⣛⣛⡛⠿⠿⠿⠛⠛⢛⣛⣉⣭⣤⣂⢜⠕⢑⣡⣴⣿                            ",
-		}
+			for _ = 1, padding do
+				table.insert(pad_lines, "")
+			end
 
-		dashboard.section.header.opts.hl = "AlphaHeader"
-
-		local function create_button(sc, txt)
-			local opts = {
-				position = "center",
-				text = txt,
-				shortcut = sc,
-				cursor = 3,
-				width = 40,
-				align_shortcut = "right",
-				hl = "AlphaButtons",
-				hl_shortcut = "AlphaShortcut",
-			}
-
-			return {
-				type = "button",
-				val = txt,
-				opts = opts,
-			}
+			return pad_lines
 		end
 
-		-- Menu: check keymaps.lua
-		-- icons at: https://www.nerdfonts.com/cheat-sheet
-		dashboard.section.buttons.val = {
-			-- create_button("SPC + sr", "  > Session Restore", ""),
-			create_button("SPC + fe", "  > File Explorer"),
-			create_button("SPC + ff", "󰱼  > Fuzzy File"),
-			create_button("SPC + fs", "󰺮  > Live Grep"),
-			create_button("SPC + tt", "  > Terminal"),
-			create_button("SPC + nf", "  > NewFile"),
-			create_button("SPC + gc", "  > Config"),
-			-- create_button("SPC + td", "  > ToDos"),
-			create_button("SPC + la", "󰒲  > Lazy"),
-			create_button("SPC + lg", "  > Git"),
+		local header = {
+			"                                NVRMND v09/11",
+			"",
+			"               Nvim Diesel is a mythological figure you can discover",
+			"                            https://neovim.io/#chat",
+			"",
+			"    press SPC + q                 TO QUIT. We've all been through this",
+			"",
+			"    type  :help nvim<Enter>       if you are new, do not type <Enter> though",
+			"    type  :checkhealth<Enter>     to optimize 'Fast & Furious' gaslighting",
+			"    type  :help<Enter>            why would you even consider asking",
+			"",
+			"    type  :help news<Enter>       to try moving on from 09/11",
+			"",
+			"                          Help poor Francos at UniTo!",
+			"                         email: ABGsWinItAll@yahoo.tnx",
 		}
-		dashboard.section.buttons.opts.hl = "AlphaButtons"
-		dashboard.section.buttons.opts.spacing = 0
 
-		alpha.setup(dashboard.config)
-		vim.cmd([[autocmd FileType alpha setlocal nofoldenable]])
+		-- Padding
+		local function get_full_header()
+			local padding = get_header_padding()
+			local full_header = {}
+
+			for _, line in ipairs(padding) do
+				table.insert(full_header, line)
+			end
+
+			for _, line in ipairs(header) do
+				table.insert(full_header, line)
+			end
+
+			return full_header
+		end
+
+		dashboard.section.header.val = get_full_header()
+		dashboard.section.buttons.val = {}
+
+		-- Setup
+		alpha.setup(dashboard.opts)
+
+		-- Window resize
+		vim.api.nvim_create_autocmd("VimResized", {
+			callback = function()
+				if vim.bo.filetype == "alpha" then
+					dashboard.section.header.val = get_full_header()
+					alpha.redraw()
+				end
+			end,
+		})
 	end,
 
-  -- Utils toggle
-	vim.keymap.set("n", "<leader><leader>", function()
-		if vim.bo.filetype == "alpha" then
-			require("alpha").close()
-		else
-			require("alpha").start()
-		end
-	end, { desc = "Toggle Alpha" }),
-}
+	keys = {
+		{
+			"<leader><leader>",
+			function()
+				local alpha_available, alpha = pcall(require, "alpha")
 
--- " ███████╗███████╗ ██████╗ ███╗   ███╗███████╗███╗   ██╗████████╗ █████╗ ████████╗██╗ ██████╗ ███╗   ██╗",
--- " ██╔════╝██╔════╝██╔════╝ ████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔══██╗╚══██╔══╝██║██╔═══██╗████╗  ██║",
--- " ███████╗█████╗  ██║  ███╗██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ███████║   ██║   ██║██║   ██║██╔██╗ ██║",
--- " ╚════██║██╔══╝  ██║   ██║██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ██╔══██║   ██║   ██║██║   ██║██║╚██╗██║",
--- " ███████║███████╗╚██████╔╝██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ██║  ██║   ██║   ██║╚██████╔╝██║ ╚████║",
--- " ╚══════╝╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝   ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝",
--- "											                                                                                 ",
--- "            ██╗   ██╗ ██████╗ ██╗   ██╗██████╗      ███████╗ █████╗ ██╗   ██╗██╗  ████████╗            ",
--- "            ╚██╗ ██╔╝██╔═══██╗██║   ██║██╔══██╗     ██╔════╝██╔══██╗██║   ██║██║  ╚══██╔══╝            ",
--- "             ╚████╔╝ ██║   ██║██║   ██║██████╔╝     █████╗  ███████║██║   ██║██║     ██║               ",
--- "              ╚██╔╝  ██║   ██║██║   ██║██╔══██╗     ██╔══╝  ██╔══██║██║   ██║██║     ██║               ",
--- "               ██║   ╚██████╔╝╚██████╔╝██║  ██║     ██║     ██║  ██║╚██████╔╝███████╗██║               ",
--- "               ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═╝     ╚═╝     ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝               ",
---
---
---
--- "    ██████╗ ██████╗ ██╗███╗   ███╗███████╗ █████╗  ██████╗ ███████╗███╗   ██╗    ███╗   ███╗███████╗   ",
--- "    ██╔══██╗██╔══██╗██║████╗ ████║██╔════╝██╔══██╗██╔════╝ ██╔════╝████╗  ██║    ████╗ ████║██╔════╝   ",
--- "    ██████╔╝██████╔╝██║██╔████╔██║█████╗  ███████║██║  ███╗█████╗  ██╔██╗ ██║    ██╔████╔██║█████╗     ",
--- "    ██╔═══╝ ██╔══██╗██║██║╚██╔╝██║██╔══╝  ██╔══██║██║   ██║██╔══╝  ██║╚██╗██║    ██║╚██╔╝██║██╔══╝     ",
--- "    ██║     ██║  ██║██║██║ ╚═╝ ██║███████╗██║  ██║╚██████╔╝███████╗██║ ╚████║    ██║ ╚═╝ ██║███████╗   ",
--- "    ╚═╝     ╚═╝  ╚═╝╚═╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═══╝    ╚═╝     ╚═╝╚══════╝   ",
--- "                                                                                                       ",
--- "██╗    ██╗██╗████████╗██╗  ██╗    ███████╗ ██████╗ ███╗   ███╗███████╗    ███████╗██╗███╗   ██╗███████╗",
--- "██║    ██║██║╚══██╔══╝██║  ██║    ██╔════╝██╔═══██╗████╗ ████║██╔════╝    ██╔════╝██║████╗  ██║██╔════╝",
--- "██║ █╗ ██║██║   ██║   ███████║    ███████╗██║   ██║██╔████╔██║█████╗      █████╗  ██║██╔██╗ ██║█████╗  ",
--- "██║███╗██║██║   ██║   ██╔══██║    ╚════██║██║   ██║██║╚██╔╝██║██╔══╝      ██╔══╝  ██║██║╚██╗██║██╔══╝  ",
--- "╚███╔███╔╝██║   ██║   ██║  ██║    ███████║╚██████╔╝██║ ╚═╝ ██║███████╗    ██║     ██║██║ ╚████║███████╗",
--- " ╚══╝╚══╝ ╚═╝   ╚═╝   ╚═╝  ╚═╝    ╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝    ╚═╝     ╚═╝╚═╝  ╚═══╝╚══════╝",
--- "                                                                                                       ",
--- "          ██████╗ ██████╗  ██████╗ ██████╗ ███╗   ██╗██╗   ██╗████████╗     ██████╗ ██╗██╗             ",
--- "         ██╔════╝██╔═══██╗██╔════╝██╔═══██╗████╗  ██║██║   ██║╚══██╔══╝    ██╔═══██╗██║██║             ",
--- "         ██║     ██║   ██║██║     ██║   ██║██╔██╗ ██║██║   ██║   ██║       ██║   ██║██║██║             ",
--- "         ██║     ██║   ██║██║     ██║   ██║██║╚██╗██║██║   ██║   ██║       ██║   ██║██║██║             ",
--- "         ╚██████╗╚██████╔╝╚██████╗╚██████╔╝██║ ╚████║╚██████╔╝   ██║       ╚██████╔╝██║███████╗        ",
--- "          ╚═════╝ ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝    ╚═╝        ╚═════╝ ╚═╝╚══════╝        ",
+				if not alpha_available then
+					return
+				end
+
+				if vim.bo.filetype == "alpha" then
+					print("./")
+				else
+					alpha.start()
+				end
+			end,
+			desc = "Toggle Alpha",
+		},
+	},
+}
