@@ -2,6 +2,7 @@ return {
 	"ThePrimeagen/harpoon",
 	branch = "harpoon2",
 	dependencies = { "nvim-lua/plenary.nvim" },
+
 	config = function()
 		local map = vim.keymap.set
 		local harpoon = require("harpoon")
@@ -22,5 +23,6 @@ return {
 				harpoon:list():select(i)
 			end, { desc = "Harpoon file " .. i })
 		end
+
 	end,
 }

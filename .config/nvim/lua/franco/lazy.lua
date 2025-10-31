@@ -6,7 +6,7 @@ if not vim.loop.fs_stat(lazypath) then
 		"clone",
 		"--filter=blob:none",
 		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
+		"--branch=stable",
 		lazypath,
 	})
 end
@@ -19,10 +19,12 @@ require("lazy").setup({
 	{ import = "franco.plugins.lsp" },
 	{ import = "franco.plugins.tools" },
 	{ import = "franco.plugins.lang" },
+	-- { import = "franco.plugins.extra" },
+	-- { import = "franco.plugins.dap" },
 }, {
 	checker = {
 		enabled = true,
-		notify  = false,
+		notify = false,
 	},
 	change_detection = {
 		notify = false,
@@ -30,7 +32,7 @@ require("lazy").setup({
 	ui = {
 		border = "rounded",
 		title_pos = "center",
-	}
+	},
 })
 
 vim.keymap.set("n", "<leader>la", "<cmd>Lazy<CR>", { desc = "Toggle Lazy" })

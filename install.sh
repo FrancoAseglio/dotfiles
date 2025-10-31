@@ -226,9 +226,9 @@ main() {
     detect_and_install_packages
     create_symlinks
     install_zsh_autosuggestions
-    print_message "🚀 Note: AeroSpace is not installed automatically."
-    print_message "👉 You can install it manually from https://github.com/nikitabobko/AeroSpace"
+    print_message "Note: AeroSpace is not installed automatically."
+    print_message "You can install it manually from https://github.com/nikitabobko/AeroSpace"
     print_success "All done!"
-    print_message "✨ Restart your terminal to apply changes."
+    print_message "Restart your terminal to apply changes."
 }
 main

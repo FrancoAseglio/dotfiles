@@ -4,8 +4,8 @@ vim.cmd("let g:netrw_liststyle = 3")
 vim.opt.timeoutlen = 500
 
 -- line numbers
-vim.opt.relativenumber = true
 vim.opt.number         = true
+vim.opt.relativenumber = true
 
 -- tabs & indentation
 vim.opt.tabstop    = 2
@@ -13,10 +13,14 @@ vim.opt.shiftwidth = 2
 vim.opt.expandtab  = true
 vim.opt.autoindent = true
 
+-- characters delimitation
+vim.opt.colorcolumn = "78"
+vim.cmd("highlight ColorColumn guibg=#313244")
+
 -- line wrapping
 vim.opt.wrap = false
 
--- search settings
+-- search vim.opttings
 vim.opt.ignorecase = true
 vim.opt.smartcase  = true
 

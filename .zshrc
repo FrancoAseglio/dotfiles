@@ -1,162 +1,203 @@
-# =============================================================================
-# ZSH CONFIGURATION
-# =============================================================================
+# ───────────────────────────────────────────────────────────────────────────
+# ZSH Configuration
+# ───────────────────────────────────────────────────────────────────────────
+# Enable vi mode EARLY to avoid conflicts
+bindkey -v
+export KEYTIMEOUT=1
 
-# --- ZSH Reload & Edit Aliases ---
-alias szsh="source ~/.zshrc"
-alias ezsh="nvim ~/.zshrc"
-alias ezp="nvim ~/.zprofile"
-
-# --- History Configuration ---
+# History Configuration
 HISTFILE=$HOME/.config/zshistory
 SAVEHIST=1000
-HISTSIZE=999
+HISTSIZE=1000
 setopt share_history
 setopt hist_expire_dups_first
 setopt hist_ignore_dups
 setopt hist_verify
+setopt hist_ignore_space
+setopt auto_pushd
+setopt pushd_ignore_dups
 
-# --- ZSH Plugins ---
-source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# --- Docker Completion Setup ---
+# Completions (load early)
 fpath=(/Users/francoaseglio/.docker/completions $fpath)
 autoload -Uz compinit
-compinit
 
-# =============================================================================
-# ENVIRONMENT VARIABLES & PATH
-# =============================================================================
+# Only regenerate compinit once per day for performance
+if [[ -n ${ZDOTDIR}/.zcompdump(#qNmh+24) ]]; then
+  compinit
+else
+  compinit -C
+fi
 
-# --- Java Environment ---
+# ───────────────────────────────────────────────────────────────────────────
+# Environment Variables
+# ───────────────────────────────────────────────────────────────────────────
+export BAT_THEME="mocha"
 export JAVA_HOME="/opt/homebrew/opt/openjdk@21"
-export PATH="$JAVA_HOME/bin:$PATH"
+export PATH="$JAVA_HOME/bin:$HOME/.local/bin:$PATH"
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export FZF_DEFAULT_OPTS=" \
+--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
+--color=fg:#cdd6f4,header:#f38ba8,info:#cba6ac,pointer:#f5e0dc \
+--color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6ac,hl+:#f38ba8"
 
-# --- pipx ---
-export PATH="$PATH:/Users/francoaseglio/.local/bin"
+# ───────────────────────────────────────────────────────────────────────────
+# External Tool Initialization
+# ───────────────────────────────────────────────────────────────────────────
+# Plugins
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# --- ghcup Environment ---
-[ -f "/Users/francoaseglio/.ghcup/env" ] && . "/Users/francoaseglio/.ghcup/env"
-
-# --- Bat Theme ---
-export BAT_THEME=tokyonight
-
-# --- fzf Theme ---
-export FZF_DEFAULT_OPTS="
---color=fg:#CBE0F0
---color=bg:#011628
---color=hl:#7AA2F7
---color=fg+:#CBE0F0
---color=bg+:#143652
---color=hl+:#7AA2F7
---color=info:#B4D0E9
---color=prompt:#CBE0F0
---color=pointer:#7AA2F7
---color=marker:#7AA2F7
---color=spinner:#B4D0E9
---color=header:#627E97
---color=border:#547998
---color=gutter:#011628"
-
-# =============================================================================
-# TOOL INITIALIZATIONS
-# =============================================================================
-
-# --- Zoxide (better cd) ---
+# Tool inits (load after environment is set)
 eval "$(zoxide init zsh)"
-
-# --- Starship Prompt ---
 eval "$(starship init zsh)"
 
-# =============================================================================
-# FUNCTIONS
-# =============================================================================
-
-# --- Docker Desktop Toggle ---
-function docker_toggle() {
- if /usr/local/bin/docker info &> /dev/null; then
-   echo "Quitting Docker..."
-   /usr/local/bin/docker stop $(/usr/local/bin/docker ps -q) 2>/dev/null
-   pkill -f "Docker"
- else
-   echo "Starting Docker..."
-   open -a Docker
- fi
+# ───────────────────────────────────────────────────────────────────────────
+# VI Mode Configuration
+# ───────────────────────────────────────────────────────────────────────────
+function zle-keymap-select {
+  case ${KEYMAP} in
+    vicmd|block)      echo -ne '\e[2 q' ;;  # Steady block
+    main|viins|''|beam) echo -ne '\e[5 q' ;;  # Blinking beam
+  esac
+  zle reset-prompt
 }
+zle -N zle-keymap-select
 
-# --- FZF Directory Navigation ---
+zle-line-init() {
+  echo -ne "\e[5 q"  # Beam cursor on startup
+  zle reset-prompt
+}
+zle -N zle-line-init
+
+bindkey "^?" backward-delete-char
+
+# ───────────────────────────────────────────────────────────────────────────
+# Navigation & Directory Shortcuts
+# ───────────────────────────────────────────────────────────────────────────
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+alias gc="cd ~/.config"
+alias gd="cd ~/Desktop"
+alias gl="cd ~/Downloads"
+alias gt="cd ~/.Trash"
+alias gu="cd ~/unito"
+alias db="cd ~/db && ls"
+
+# ───────────────────────────────────────────────────────────────────────────
+# File Operations
+# ───────────────────────────────────────────────────────────────────────────
+# Base eza options
+_EZA_BASE="eza --color=always --git --icons=always"
+
+# Listing
+alias ls="$_EZA_BASE"
+alias la="$_EZA_BASE -a"
+alias ll="$_EZA_BASE --long --grid --accessed --modified --created"
+alias lla="$_EZA_BASE -a --long --grid --accessed --modified --created"
+alias ls2="eza --tree --level=2"
+alias ls3="eza --tree --level=3"
+alias la2="eza -a --tree --level=2"
+alias la3="eza -a --tree --level=3"
+
+# Config management
+alias szsh="source ~/.zshrc"
+alias ezsh="nvim ~/.zshrc"
+alias ezp="nvim ~/.zprofile"
+
+# Python x Poetry
+alias data="poetry add jupyter pandas numpy matplotlib"
+
+# ───────────────────────────────────────────────────────────────────────────
+# Application Shortcuts
+# ───────────────────────────────────────────────────────────────────────────
+alias pg="pgcli"
+alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'
+
+# ───────────────────────────────────────────────────────────────────────────
+# Custom Functions
+# ───────────────────────────────────────────────────────────────────────────
+
+# vscode opener
+function open_in_vscode(){
+  local file="$1"
+
+  if [[ -z "$file" ]]; then
+    open -a vscode .
+  else
+    open -a vscode "$file"
+  fi
+}
+alias code="open_in_vscode"
+
+# Navigation with fzf
 function fzf_dir() {
   local dir
   dir=$(find ~/ -type d 2>/dev/null | fzf)
-  [[ -n "$dir" ]] && cd "$dir" || echo "No directory selected"
+  [[ -n "$dir" ]] && cd "$dir"
 }
+alias fd='fzf_dir'
+# ───────────────────────────────────────────────────────────────────────────
 
-# --- FZF File to Neovim ---
+# Nvim opener
 function fzf_to_nvim() {
   local files
   files=$(fzf -m --preview="bat --theme=mocha --style=numbers --color=always --line-range=:500 {}")
-  [[ -z "$files" ]] && echo "No files selected" && return
-  if [ -f pyproject.toml ]; then
-    poetry run /opt/homebrew/bin/nvim -p $files
-  else
-    /opt/homebrew/bin/nvim -p $files
-  fi
-}
+  [[ -z "$files" ]] && return 1
 
-# --- Poetry-Dependent Neovim Launcher ---
+  local nvim_cmd="/opt/homebrew/bin/nvim"
+  [[ -f pyproject.toml ]] && nvim_cmd="poetry run $nvim_cmd"
+
+  $nvim_cmd -p $files
+}
+alias fn='fzf_to_nvim'
+# ───────────────────────────────────────────────────────────────────────────
+
+# Poetry-aware nvim launcher
 function nvim_poetry() {
-  if [ -f pyproject.toml ]; then
+  if [[ -f pyproject.toml ]]; then
     poetry run /opt/homebrew/bin/nvim "$@"
   else
     /opt/homebrew/bin/nvim "$@"
   fi
 }
+alias nvim='nvim_poetry'
+# ───────────────────────────────────────────────────────────────────────────
 
-# --- FZF Project Navigation to Neovim ---
+# Project management
 function fzf_project_nvim() {
   local project
-  project=$(find ~ -maxdepth 3 -type d -name ".git" | sed 's/\/.git$//' | fzf)
-  [[ -n "$project" ]] && cd "$project"
-  nvim .
+  project=$(find ~ -maxdepth 3 -type d -name ".git" 2>/dev/null | sed 's/\/.git$//' | fzf \
+    --preview '
+      echo "=== GIT STATUS ===";
+      git -C {} status --short 2>/dev/null || echo "No git changes";
+      echo "";
+      echo "=== README ===";
+      for readme in {}/README.{md,txt}; do
+        [[ -f "$readme" ]] && bat --theme=mocha --style=plain --color=always --line-range=:15 "$readme" 2>/dev/null && break;
+      done;
+      echo "";
+      echo "=== REPO STRUCTURE ===";
+      eza --tree --level=3 --color=always --icons=always {} 2>/dev/null || ls -la {};
+    ' \
+    --preview-window=right:60%:wrap)
+
+  [[ -n "$project" ]] && cd "$project" && nvim .
 }
-
-# =============================================================================
-# ALIASES
-# =============================================================================
-
-# --- Directory Navigation ---
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-
-# --- Quick Directory Access ---
-alias gd="cd ~/Desktop"
-alias gl="cd ~/Downloads"
-alias gt="cd ~/.Trash"
-alias gc="cd ~/.config"
-
-# --- Enhanced ls with Eza ---
-alias ls="eza --color=always --git --no-filesize --icons=always --no-time --no-user --no-permissions"
-alias la="eza -a --color=always --git --icons=always"
-alias ll="eza --color=always --git --icons=always --long --grid --accessed --modified --created"
-alias lla="eza -a --color=always --git --icons=always --long --grid --accessed --modified --created"
-alias ls2="eza --tree --level=2"
-alias la2="eza -a --tree --level=2"
-alias ls3="eza --tree --level=3"
-alias la3="eza -a --tree --level=3"
-
-# --- FZF Enhanced Navigation ---
-alias fd='fzf_dir'
-alias fn='fzf_to_nvim'
 alias fp='fzf_project_nvim'
+# ───────────────────────────────────────────────────────────────────────────
 
-# --- Tool Aliases ---
-alias nvim='nvim_poetry'
+# System utilities
+function docker_toggle() {
+  if /usr/local/bin/docker info &> /dev/null; then
+    echo "Quitting Docker..."
+    /usr/local/bin/docker stop $(/usr/local/bin/docker ps -q) 2>/dev/null
+    pkill -f "Docker"
+  else
+    echo "Starting Docker..."
+    open -a Docker
+  fi
+}
 alias dk='docker_toggle'
-alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'
-alias db="cd ~/db && ls"
-alias pg="pgcli"
-
-# --- Dotfiles Management (Commented) ---
-# alias dotme="git clone git@github.com:FrancoAseglio/dotfiles.git && cd ~/dotfiles"
-# alias undot="rm -rf ~/dotfiles"
+# ───────────────────────────────────────────────────────────────────────────

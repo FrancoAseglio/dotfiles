@@ -1,75 +1,11 @@
 vim.g.mapleader = " " --set leader key to 'space'
 local map = vim.keymap.set
 
--- Default
-map("n", "<leader>w", ":w<CR>",  { desc = "Save current file" })
-map("n", "<leader>q", ":q<CR>",  { desc = "Quit Neovim" })
-map("n", "<leader>k", ":q!<CR>", { desc = "Quit no saving" })
-map("i", "jj", "<Esc>", { desc = "Exit insert mode" })
-
--- Window Navigation
-map("n", "wh", "<C-w>h",{ desc = "Move to left window"  })
-map("n","wl", "<C-w>l", { desc = "Move to right window" })
-map("n", "wj", "<C-w>j",{ desc = "Move to lower window" })
-map("n", "wk","<C-w>k", { desc = "Move to upper window" })
-
--- Dir navigation
-map("n", "<leader>gc", ":lua vim.cmd('cd ~/.config/nvim'); print(vim.fn.getcwd())<CR>")
-map("n", "gh", ":lua vim.cmd('cd'); print(vim.fn.getcwd())<CR>")
-map("n", "gl", ":lua vim.cmd('cd ~/Downloads/'); print(vim.fn.getcwd())<CR>")
-map("n", "gd", ":lua vim.cmd('cd ~/Desktop/'); print(vim.fn.getcwd())<CR>")
-
--- Utils
-map("n", "<leader>sb", ":source %<CR>", { desc = "Source current file" })
-map("n", "<leader>zc", ":set foldmethod=expr<CR>", { desc = "Enable expr fold" })
-map("n", "<leader>mm", "@m", { desc = "Toggles @m macro" })
-map("n", "<leader>hc", ":noh<CR>", { desc = "Clean buffer result" })
-map("n", "<leader>nf", function()
-	local ok, filename = pcall(vim.fn.input, "New file: ")
-
-	if not ok or filename == "" then
-		return
-	end
-
-	vim.cmd("edit " .. filename)
-end, { desc = "Edit new file in cwd" })
-
--- QuickFix List
-map("n", "<leader>fl", function()
-
-	for _, win in pairs(vim.fn.getwininfo()) do
-
-    if win.quickfix == 1 then
-			return vim.cmd("cclose")
-		end
-	end
-
-	vim.cmd("copen")
-end, { desc = "Toggle quickfix" })
-
-map("n", "fd", function()
-	if vim.bo.filetype ~= "qf" then
-		return print("Not in quickfix window")
-	end
-
-	local current_line = vim.fn.line(".")
-	local qflist = vim.fn.getqflist()
-
-	if current_line <= #qflist then
-		table.remove(qflist, current_line)
-		vim.fn.setqflist(qflist)
-		vim.fn.cursor(math.min(current_line, #qflist), 1)
-	end
-end, { desc = "Remove quickfix entry under cursor" })
-
-map("n", "fj", "<cmd>:cnext<CR>", { desc = "Next quickfix item" })
-map("n", "fk", "<cmd>:cprev<CR>", { desc = "Prev quickfix item" })
-
 -- Terminal
 local state = { buf = -1, win = -1 }
-local function float_term(cmd)
+local function float_term()
 	local width  = math.floor(vim.o.columns * 0.6)
-	local height = math.floor(vim.o.lines  * 0.8)
+	local height = math.floor(vim.o.lines   * 0.8)
 	local col = math.floor((vim.o.columns - width)  / 2)
 	local row = math.floor((vim.o.lines   - height) / 2)
 
@@ -97,18 +33,33 @@ local function float_term(cmd)
 
 	-- Start terminal if not already
 	if vim.bo[state.buf].buftype ~= "terminal" then
-		if cmd then
-			vim.fn.termopen(cmd)
-		else
-			vim.cmd.terminal()
-		end
-	end
-	vim.cmd.startinsert()
+	  vim.cmd.terminal()
+  end
+
+  vim.cmd.startinsert()
 end
 
-map({ "n", "t" }, "<leader>tt", function() float_term() end)
+-- HTML trigger
+local function html_open()
+	local filepath = vim.api.nvim_buf_get_name(0)
+	if vim.fn.fnamemodify(filepath, ":e") == "html" then
+		vim.fn.system(string.format("open %s", filepath))
+	else
+		print("Current file is not an HTML file.")
+	end
+end
 
--- Toggle LazyDocker
-map("n", "<leader>ld", function()
-	float_term("lazydocker")
-end, { desc = "Open Lazydocker" })
+-- Default
+map("n", "<leader>w", ":w<CR>", { desc = "Save current file" })
+map("n", "<leader>q", ":q<CR>", { desc = "Quit Neovim" })
+map("n", "<leader>k", ":q!<CR>", { desc = "Quit no saving" })
+map("i", "jj", "<Esc>", { desc = "Exit insert mode" })
+
+-- Utils
+map("n", "<leader>gc", ":lua vim.cmd('cd ~/.config/nvim'); print(vim.fn.getcwd())<CR>")
+map("n", "<leader>sb", ":source %<CR>", { desc = "Source current file" })
+map("n", "<leader>zc", ":set foldmethod=expr<CR>")
+map("n", "<leader>mm", "@m", { desc = "Toggles @m macro" })
+map("n", "<leader>hc", ":noh<CR>", { desc = "Clean buffer search result" })
+map({ "n", "t" }, "<leader>tt", function() float_term() end)
+map("n", "<leader>hh", function() html_open() end)
