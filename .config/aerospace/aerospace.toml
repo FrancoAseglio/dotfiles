@@ -27,8 +27,7 @@ outer.right      = 15
 
 [mode.main.binding]
 # Layouts  
-alt-t = 'layout tiles'
-alt-a = 'layout accordion'
+cmd-alt-tab = 'layout tiles accordion'
 
 # Focus 
 cmd-left  = 'focus left'
@@ -43,32 +42,51 @@ cmd-alt-up    = 'move up'
 cmd-alt-right = 'move right'
 
 # Workspaces   
+alt-0 = 'workspace 0'
 alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
 
-alt-8 = 'workspace 8'
-alt-9 = 'workspace 9'
-alt-0 = 'workspace 0'
-
 # Move node to Workspace  
+cmd-alt-0 = 'move-node-to-workspace 0'
 cmd-alt-1 = 'move-node-to-workspace 1'
 cmd-alt-2 = 'move-node-to-workspace 2'
 cmd-alt-3 = 'move-node-to-workspace 3'
 
-cmd-alt-8 = 'move-node-to-workspace 8'
-cmd-alt-9 = 'move-node-to-workspace 9'
-cmd-alt-0 = 'move-node-to-workspace 0'
-
 # Resize
 alt-right = 'resize smart -50'
 alt-left  = 'resize smart +50'
-alt-up    = 'resize smart -50'
-alt-down  = 'resize smart +50'
+alt-up    = 'resize smart +50'
+alt-down  = 'resize smart -50'
 
 # Sevice Mode  
-alt-shift-s = 'mode service'
+cmd-alt-s = 'mode service'
 
-# Service Mode Actions
+# Service Mode Actions & App Launchers
 [mode.service.binding]
 r = ['reload-config', 'mode main']
+f = ['exec-and-forget open -a "Finder"',   'mode main']
+e = ['exec-and-forget open -a "Mail"',     'mode main']
+w = ['exec-and-forget open -a "WezTerm"',  'mode main']
+v = ['exec-and-forget open -a "vsCode"',   'mode main']
+s = ['exec-and-forget open -a "Safari"',   'mode main']
+y = ['exec-and-forget open -a "YouTube"',  'mode main']
+n = ['exec-and-forget open -a "Stickies"', 'mode main']
+m = ['exec-and-forget open -a "Music"',    'mode main']
+
+# App to Workspace assignments
+[[on-window-detected]]
+if.app-name-regex-substring = 'Stickies|Music'
+run = 'move-node-to-workspace 0'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'WezTerm|vsCode'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'Safari'
+run = 'move-node-to-workspace 2'
+
+[[on-window-detected]]
+if.app-name-regex-substring = 'YouTube'
+run = 'move-node-to-workspace 3'
