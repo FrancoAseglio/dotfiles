@@ -52,8 +52,6 @@ return {
 					},
 					harpoon_component,
 					"encoding",
-					"filetype",
-					"fileformat",
 				},
 			},
 		})
