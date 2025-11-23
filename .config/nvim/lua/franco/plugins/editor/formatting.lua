@@ -20,7 +20,6 @@ return {
         java       = { "google-java-format" },
         json       = { "prettier" },
         python     = { "black" },
-        haskell    = { "fourmolu" },
         markdown   = { "prettier" },
         postgresql = { "sqlfluff" },
       },

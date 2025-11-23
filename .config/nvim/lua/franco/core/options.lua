@@ -48,3 +48,8 @@ vim.opt.foldlevelstart = 10
 vim.opt.foldcolumn     = "0"
 vim.opt.foldmethod     = "expr"
 vim.opt.foldexpr       = "nvim_treesitter#foldexpr()"
+
+-- undo history
+vim.opt.undofile   = true
+vim.opt.undodir    = vim.fn.stdpath('data') .. '/undo'
+vim.opt.undolevels = 10000

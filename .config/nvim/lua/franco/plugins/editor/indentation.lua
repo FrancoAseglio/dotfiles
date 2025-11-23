@@ -9,38 +9,69 @@ return {
 		scope = {
 			char = "┊",
 			enabled = true,
-			show_end = false,
 			show_start = false,
+			show_end = false,
+
 			include = {
 				node_type = {
 					["*"] = {
+						-- Control flow
 						"if_statement",
 						"for_statement",
+						"while_statement",
 						"try_statement",
 						"with_statement",
-						"while_statement",
 						"match_statement",
+
+						-- Definitions
 						"class_definition",
-						"method_definition",
 						"function_definition",
+						"method_definition",
+
+						-- Additional useful scopes
+						"arguments",
+						"parameters",
+						"table_constructor",
+						"dictionary",
+						"object",
 					},
 				},
 			},
 		},
+
+		whitespace = {
+			remove_blankline_trail = true,
+		},
+
 		exclude = {
 			filetypes = {
-				"qf",
-				"man",
+				-- Help and documentation
 				"help",
+				"man",
+
+				-- Plugin interfaces
+				"lazy",
+				"mason",
 				"lspinfo",
 				"checkhealth",
+
+				-- Telescope
 				"TelescopePrompt",
 				"TelescopeResults",
+
+				-- Dashboard/startup screens
+				"dashboard",
+				"alpha",
+				"starter",
+
+				-- Other special buffers
+				"notify",
 			},
 			buftypes = {
 				"nofile",
 				"prompt",
 				"terminal",
+				"quickfix",
 			},
 		},
 	},

@@ -22,8 +22,6 @@ return {
 				"json",
 				"yaml",
 				"bash",
-        "latex",
-        "bibtex",
 				"python",
 				"markdown",
 				"gitignore",
