@@ -114,8 +114,10 @@ alias undot="rm -rf ~/dotfiles && cd ~"
 #                          Application Shortcuts
 # ===========================================================================
 alias pg="pgcli"
+# alias mg='mongosh -u admin -p ciravegna --authenticationDatabase admin'
 alias mg="mongosh --quiet"
 alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'
+alias lg="lazygit"
 
 # ===========================================================================
 #                            Custom Functions
@@ -177,14 +179,23 @@ function fzf_project_nvim() {
       echo "";
       echo "=== README ===";
       for readme in {}/README.{md,txt}; do
-        [[ -f "$readme" ]] && bat --theme=mocha --style=plain --color=always --line-range=:15 "$readme" 2>/dev/null && break;
+        if [[ -f "$readme" ]]; then
+          if [[ "$readme" == *.md ]] && command -v glow &>/dev/null; then
+            glow -s dark "$readme" 2>/dev/null;
+          elif [[ "$readme" == *.md ]] && command -v mdcat &>/dev/null; then
+            mdcat "$readme" 2>/dev/null;
+          else
+            bat --theme=mocha --style=plain --color=always --line-range=:15 "$readme" 2>/dev/null;
+          fi;
+          break;
+        fi;
       done;
       echo "";
       echo "=== REPO STRUCTURE ===";
       eza --tree --level=3 --color=always --icons=always {} 2>/dev/null || ls -la {};
     ' \
-    --preview-window=right:60%:wrap)
-
+    --preview-window=right:60%:wrap \
+    --ansi)
   [[ -n "$project" ]] && cd "$project" && nvim .
 }
 alias fp='fzf_project_nvim'
@@ -205,55 +216,8 @@ alias dk='docker_toggle'
 
 # ───────────────────────────────────────────────────────────────────────────
 # Python x Poetry DataAnalysis Setup
-function add_data_opt(){
-  cat > data_opt.py << 'EOF'
-import pandas as pd
+alias data="poetry add jupyter pandas numpy matplotlib seaborn regex geopandas folium\
+            && poetry install && mkdir datasets notebooks && touch ./notebooks/nb.ipynb"
 
-
-def downcast_df(df):
-    """
-    Modifies the DataFrame in-place by:
-    - Converting integers to smallest possible type
-    - Converting floats to float32 when possible
-    - Converting object columns to datetime when appropriate
-    - Converting object columns to category when < 50% values are unique
-    """
-    for col in df.columns:
-        col_type = df[col].dtype
-        
-        if pd.api.types.is_integer_dtype(col_type):
-            df[col] = pd.to_numeric(df[col], downcast="integer")
-            
-        elif pd.api.types.is_float_dtype(col_type):
-            df[col] = pd.to_numeric(df[col], downcast="float")
-            
-        elif col_type == "object":
-            try:
-                df[col] = pd.to_datetime(df[col], errors='raise')
-            except:
-                if df[col].nunique() / len(df) < 0.5:
-                    df[col] = df[col].astype("category")
-    
-    return df
-
-
-def my_mem_usage(df):
-    """
-    Optimizes DataFrame memory usage by downcasting column types.
-    Prints before/after memory usage and optimization percentage.
-    Returns the optimized DataFrame.
-    """
-    before_mem = df.memory_usage(deep=True).sum() / 1024
-    print(f"Before: {before_mem:>12.2f} KB")
-    df = downcast_df(df)
-    after_mem = df.memory_usage(deep=True).sum() / 1024
-    print(f"After:  {after_mem:>12.2f} KB")
-    print(f"Opt: {100 * (before_mem - after_mem) / before_mem:>15.2f} %")
-    return df
-EOF
-}
-
-alias data="poetry add jupyter pandas numpy matplotlib seaborn regex \
-            && mkdir datasets notebooks && touch ./notebooks/nb.ipynb \
-            && add_data_opt"
+alias exportd="poetry run pip freeze > requirements.txt"
 # ───────────────────────────────────────────────────────────────────────────

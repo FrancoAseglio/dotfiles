@@ -18,7 +18,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # ========== Config Targets ==========
 configs=("nvim" "wezterm" "bat" "yazi" "lazygit" "pgcli")
 files=("starship.toml")
-base_packages=("neovim" "bat" "starship" "yazi" "git")
+base_packages=("neovim" "bat" "starship" "yazi" "git" "glow")
 
 # ========== Backup Configs ==========
 backup_configs() {
