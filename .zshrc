@@ -150,13 +150,13 @@ function fzf_to_nvim() {
   files=$(fzf -m --preview="bat --theme=mocha --style=numbers --color=always --line-range=:500 {}")
   [[ -z "$files" ]] && return 1
 
-  local nvim_cmd="/opt/homebrew/bin/nvim"
-  [[ -f pyproject.toml ]] && nvim_cmd="poetry run $nvim_cmd"
-
-  $nvim_cmd -p $files
+  if [[ -f pyproject.toml ]]; then
+    poetry run sh -c "/opt/homebrew/bin/nvim -p $files"
+  else
+    /opt/homebrew/bin/nvim -p $files
+  fi
 }
 alias fn='fzf_to_nvim'
-
 # ───────────────────────────────────────────────────────────────────────────
 # Poetry-aware nvim launcher
 function nvim_poetry() {
