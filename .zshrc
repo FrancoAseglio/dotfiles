@@ -1,10 +1,11 @@
 # ===========================================================================
 #                            ZSH Configuration
 # ===========================================================================
+
 # Enable vi mode EARLY to avoid conflicts
 bindkey -v
 export KEYTIMEOUT=1
-# ───────────────────────────────────────────────────────────────────────────
+
 # History Configuration
 HISTFILE=$HOME/.config/zshistory
 SAVEHIST=1000
@@ -16,11 +17,11 @@ setopt hist_verify
 setopt hist_ignore_space
 setopt auto_pushd
 setopt pushd_ignore_dups
-# ───────────────────────────────────────────────────────────────────────────
+
 # Completions (load early)
 fpath=(/Users/francoaseglio/.docker/completions $fpath)
 autoload -Uz compinit
-# ───────────────────────────────────────────────────────────────────────────
+
 # Only regenerate compinit once per day for performance
 if [[ -n ${ZDOTDIR}/.zcompdump(#qNmh+24) ]]; then
   compinit
@@ -39,6 +40,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6ac,pointer:#f5e0dc \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6ac,hl+:#f38ba8"
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
 
 # ===========================================================================
 #                       External Tool Initialization
@@ -46,7 +48,7 @@ export FZF_DEFAULT_OPTS=" \
 # Plugins
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# ───────────────────────────────────────────────────────────────────────────
+
 # Tool inits (load after environment is set)
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
@@ -56,8 +58,8 @@ eval "$(starship init zsh)"
 # ===========================================================================
 function zle-keymap-select {
   case ${KEYMAP} in
-    vicmd|block)      echo -ne '\e[2 q' ;;  # Steady block
-    main|viins|''|beam) echo -ne '\e[5 q' ;;  # Blinking beam
+    vicmd|block)      echo -ne '\e[2 q' ;;   # Steady block
+    main|viins|''|beam) echo -ne '\e[5 q' ;; # Blinking beam
   esac
   zle reset-prompt
 }
@@ -77,12 +79,12 @@ bindkey "^?" backward-delete-char
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
-# ───────────────────────────────────────────────────────────────────────────
+
 alias gc="cd ~/.config"
 alias gd="cd ~/Desktop"
 alias gl="cd ~/Downloads"
 alias gt="cd ~/.Trash"
-alias gu="cd ~/unito/25-26/"
+alias gs="cd ~/ScreenShots"
 alias db="cd ~/db && ls"
 
 # ===========================================================================
@@ -90,7 +92,7 @@ alias db="cd ~/db && ls"
 # ===========================================================================
 # Base eza options
 _EZA_BASE="eza --color=always --git --icons=always"
-# ───────────────────────────────────────────────────────────────────────────
+
 # Listing
 alias ls="$_EZA_BASE"
 alias la="$_EZA_BASE -a"
@@ -100,12 +102,12 @@ alias ls2="eza --tree --level=2"
 alias ls3="eza --tree --level=3"
 alias la2="eza -a --tree --level=2"
 alias la3="eza -a --tree --level=3"
-# ───────────────────────────────────────────────────────────────────────────
+
 # Config management
 alias szsh="source ~/.zshrc"
 alias ezsh="nvim ~/.zshrc"
 alias ezp="nvim ~/.zprofile"
-# ───────────────────────────────────────────────────────────────────────────
+
 # Dotfiles management
 alias dotme="git clone git@github.com:FrancoAseglio/dotfiles.git && cd dotfiles"
 alias undot="rm -rf ~/dotfiles && cd ~"
@@ -114,8 +116,6 @@ alias undot="rm -rf ~/dotfiles && cd ~"
 #                          Application Shortcuts
 # ===========================================================================
 alias pg="pgcli"
-# alias mg='mongosh -u admin -p ciravegna --authenticationDatabase admin'
-alias mg="mongosh --quiet"
 alias y='[ -z "$YAZI_LEVEL" ] && yazi || exit'
 alias lg="lazygit"
 
@@ -134,7 +134,6 @@ function open_in_vscode(){
 }
 alias code="open_in_vscode"
 
-# ───────────────────────────────────────────────────────────────────────────
 # Navigation with fzf
 function fzf_dir() {
   local dir
@@ -143,7 +142,6 @@ function fzf_dir() {
 }
 alias fd='fzf_dir'
 
-# ───────────────────────────────────────────────────────────────────────────
 # Nvim opener
 function fzf_to_nvim() {
   local files
@@ -157,7 +155,7 @@ function fzf_to_nvim() {
   fi
 }
 alias fn='fzf_to_nvim'
-# ───────────────────────────────────────────────────────────────────────────
+
 # Poetry-aware nvim launcher
 function nvim_poetry() {
   if [[ -f pyproject.toml ]]; then
@@ -168,11 +166,10 @@ function nvim_poetry() {
 }
 alias nvim='nvim_poetry'
 
-# ───────────────────────────────────────────────────────────────────────────
 # Project management
 function fzf_project_nvim() {
   local project
-  project=$(find ~ -maxdepth 3 -type d -name ".git" 2>/dev/null | sed 's/\/.git$//' | fzf \
+  project=$(find ~ -maxdepth 5 -type d -name ".git" 2>/dev/null | sed 's/\/.git$//' | fzf \
     --preview '
       echo "=== GIT STATUS ===";
       git -C {} status --short 2>/dev/null || echo "No git changes";
@@ -200,7 +197,6 @@ function fzf_project_nvim() {
 }
 alias fp='fzf_project_nvim'
 
-# ───────────────────────────────────────────────────────────────────────────
 # Docker utils
 function docker_toggle() {
   if /usr/local/bin/docker info &> /dev/null; then
@@ -213,11 +209,3 @@ function docker_toggle() {
   fi
 }
 alias dk='docker_toggle'
-
-# ───────────────────────────────────────────────────────────────────────────
-# Python x Poetry DataAnalysis Setup
-alias data="poetry add jupyter pandas numpy matplotlib seaborn regex geopandas folium\
-            && poetry install && mkdir datasets notebooks && touch ./notebooks/nb.ipynb"
-
-alias exportd="poetry run pip freeze > requirements.txt"
-# ───────────────────────────────────────────────────────────────────────────
