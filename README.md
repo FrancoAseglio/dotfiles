@@ -33,14 +33,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 
 ### 📦 1. Clone the Repository
 
-Using HTTPS:
-
-```bash
-git clone https://github.com/FrancoAseglio/dotfiles.git
-```
-
-Or with SSH (requires SSH key):
-
 ```bash
 git clone git@github.com:FrancoAseglio/dotfiles.git
 ```
@@ -105,8 +97,6 @@ The script performs the following automated steps:
 ## 🗃️ Backup Management
 
 - Backups are stored in: `~/.config/backup_[timestamp]`
-- Review and clean old backups occasionally
-- Always keep at least one known good backup
 
 ---
 
