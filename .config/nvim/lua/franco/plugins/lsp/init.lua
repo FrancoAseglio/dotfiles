@@ -5,7 +5,7 @@ vim.o.updatetime = 250
 
 local function setup_lsp_keymaps(bufnr)
 	local maps = {
-		{ "<leader>rs", ":LspRestart<CR>", "Restart LSP" },
+		{ "<leader>rs", ":lsp restart<CR>", "Restart LSP" },
 		{ "<leader>rn", buf.rename, "Smart rename" },
 		{ "<leader>ca", buf.code_action, "See code actions", { "n", "v" } },
 		{ "<leader>gd", buf.definition, "Go to definition" },
