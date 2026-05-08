@@ -1,7 +1,5 @@
 # A TOML linter such as https://taplo.tamasfe.dev/ can use this schema to validate your config.
 # If you encounter any issues, please make an issue at https://github.com/yazi-rs/schemas.
-"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
-
 [mgr]
 
 keymap = [
@@ -124,12 +122,13 @@ keymap = [
 	{ on = [ ",", "r" ], run = "sort random --reverse=no",                      desc = "Sort randomly" },
 
   # Goto
-  { on = [ "g", "h" ],       run = "cd ~",             desc = "Go home" },
-  { on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Goto ~/.config" },
-  { on = [ "g", "l" ],       run = "cd ~/Downloads",   desc = "Goto ~/Downloads" },
-  { on = [ "g", "d" ],       run = "cd ~/Desktop",     desc = "Goto ~/Desktop" },
-  { on = [ "g", "t" ],       run = "cd ~/.Trash",      desc = "Goto ~/.Trash" },
-  { on = [ "g", "u" ],       run = "cd ~/unito/",      desc = "Goto ~/unito" },
+  { on = [ "g", "h" ], run = "cd ~",              desc = "Go home" },
+  { on = [ "g", "c" ], run = "cd ~/.config",      desc = "Goto ~/.config" },
+  { on = [ "g", "l" ], run = "cd ~/Downloads",    desc = "Goto ~/Downloads" },
+  { on = [ "g", "d" ], run = "cd ~/Desktop",      desc = "Goto ~/Desktop" },
+  { on = [ "g", "t" ], run = "cd ~/.Trash",       desc = "Goto ~/.Trash" },
+  { on = [ "g", "u" ], run = "cd ~/unito/",       desc = "Goto ~/unito" },
+  { on = [ "g", "s" ], run = "cd ~/ScreenShots/", desc = "Goto ~/ScreenShots" },
   
   # Tabs
 	{ on = "t", run = "tab_create --current", desc = "Create a new tab with CWD" },
