@@ -15,8 +15,10 @@ $c\
 $rust\
 $golang\
 $nodejs\
+$php\
 $java\
 $kotlin\
+$haskell\
 $python\
 [](fg:green bg:sapphire)\
 $conda\
@@ -52,6 +54,13 @@ format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music"     = "󰝚 "
+"Pictures"  = " "
+"Developer" = "󰲋 "
+
 [git_branch]
 symbol = ""
 style  = "bg:yellow"
@@ -81,6 +90,11 @@ symbol = ""
 style  = "bg:green"
 format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
+[php]
+symbol = ""
+style  = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
+
 [java]
 symbol = ""
 style  = "bg:green"
@@ -90,6 +104,13 @@ format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 symbol = ""
 style  = "bg:green"
 format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
+
+[haskell]
+disabled = true
+symbol = ""
+style  = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
+command_timeout = 500  # 1 second timeout
 
 [python]
 symbol = ""

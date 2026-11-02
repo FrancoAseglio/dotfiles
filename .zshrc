@@ -20,9 +20,10 @@ setopt pushd_ignore_dups
 
 # Completions (load early)
 fpath=(/Users/francoaseglio/.docker/completions $fpath)
-autoload -Uz compinit
+autoload -U +X bashcompinit && bashcompinit
 
 # Only regenerate compinit once per day for performance
+autoload -Uz compinit
 if [[ -n ${ZDOTDIR}/.zcompdump(#qNmh+24) ]]; then
   compinit
 else
@@ -41,6 +42,8 @@ export FZF_DEFAULT_OPTS=" \
 --color=fg:#cdd6f4,header:#f38ba8,info:#cba6ac,pointer:#f5e0dc \
 --color=marker:#f5e0dc,fg+:#cdd6f4,prompt:#cba6ac,hl+:#f38ba8"
 export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
+export PATH="/usr/local/texlive/2026/bin/universal-darwin:$PATH"
+export XDG_CONFIG_HOME="$HOME/.config"
 
 # ===========================================================================
 #                       External Tool Initialization
@@ -197,15 +200,89 @@ function fzf_project_nvim() {
 }
 alias fp='fzf_project_nvim'
 
-# Docker utils
-function docker_toggle() {
-  if /usr/local/bin/docker info &> /dev/null; then
-    echo "Quitting Docker..."
-    /usr/local/bin/docker stop $(/usr/local/bin/docker ps -q) 2>/dev/null
-    pkill -f "Docker"
+# Master Wrapper Function: Toggles APP
+toggle() {
+  local app=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+
+  if typeset -f "toggle_$app" > /dev/null; then
+    local current_dir="$PWD"   
+    cd ~ >/dev/null           
+    "toggle_$app"
+    cd "$current_dir" >/dev/null
   else
-    echo "Starting Docker..."
-    open -a Docker
+    echo "Usage: toggle [docker|jenkins]"
+    return 1
   fi
 }
-alias dk='docker_toggle'
+
+# --- Dedicated Implementations ---
+toggle_docker() {
+  if docker info >/dev/null 2>&1; then
+    echo "Stopping Docker Desktop..."
+    echo "Cleaning up local Kubernetes helpers..."
+    
+    docker stop kind-registry-mirror kind-cloud-provider >/dev/null 2>&1
+    docker rm kind-registry-mirror kind-cloud-provider >/dev/null 2>&1
+    docker volume prune -f >/dev/null 2>&1
+    echo "Kubernetes stopped."
+
+    osascript -e 'tell application "Docker Desktop" to quit'
+    while docker info >/dev/null 2>&1; do sleep 1; done
+    echo "Docker stopped."
+  else
+    echo "Starting Docker Desktop..."
+    open -a Docker
+    while ! docker info >/dev/null 2>&1; do sleep 1; done
+    echo "Docker ready."
+
+    echo "Waiting for Kubernetes to initialize..."
+    local timeout=180
+    local interval=15
+    local elapsed=0
+    local ready=0
+
+    while [ $elapsed -lt $timeout ]; do
+      if kubectl cluster-info >/dev/null 2>&1; then
+        ready=1
+        break
+      fi
+      
+      echo "  Checking... ($((elapsed + interval))s / ${timeout}s)"
+      sleep $interval
+      elapsed=$((elapsed + interval))
+    done
+
+    if [ $ready -eq 1 ]; then
+      echo "Kubernetes ready!"
+    else
+      echo "Kubernetes timed out..."
+    fi
+  fi
+}
+
+toggle_jenkins() {
+  if brew services list | grep -qE "jenkins(-lts)? +started"; then
+    echo "Stopping Jenkins..."
+    brew services stop jenkins-lts 2>/dev/null || brew services stop jenkins
+    while brew services list | grep -qE "jenkins(-lts)? +started"; do sleep 1; done
+    echo "Jenkins stopped."
+  else
+    echo "Starting Jenkins..."
+    brew services start jenkins-lts 2>/dev/null || brew services start jenkins
+    echo "Waiting for Jenkins to initialize..."
+    while ! curl -s http://localhost:8080 >/dev/null; do sleep 2; done
+    echo "Jenkins ready at http://localhost:8080"
+  fi
+}
+
+# ===========================================================================
+#                      Kubernetes & Docker Autocompletion
+# ===========================================================================
+if command -v kubectl &>/dev/null; then
+  source <(kubectl completion zsh)
+fi
+
+if command -v docker &>/dev/null; then
+  source <(docker completion zsh)
+fi
+

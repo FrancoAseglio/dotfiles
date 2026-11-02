@@ -1,6 +1,6 @@
-local buf      = vim.lsp.buf
-local keymap   = vim.keymap
-local severity = vim.diagnostic.severity
+local buf        = vim.lsp.buf
+local keymap     = vim.keymap
+local severity   = vim.diagnostic.severity
 vim.o.updatetime = 250
 
 local function setup_lsp_keymaps(bufnr)

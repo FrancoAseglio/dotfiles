@@ -68,24 +68,4 @@ return {
 			end,
 		})
 	end,
-
-	keys = {
-		{
-			"<leader><leader>",
-			function()
-				local alpha_available, alpha = pcall(require, "alpha")
-
-				if not alpha_available then
-					return
-				end
-
-				if vim.bo.filetype == "alpha" then
-					print("./")
-				else
-					alpha.start()
-				end
-			end,
-			desc = "Toggle Alpha",
-		},
-	},
 }

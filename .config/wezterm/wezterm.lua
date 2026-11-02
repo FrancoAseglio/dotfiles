@@ -6,13 +6,14 @@ local config = wezterm.config_builder()
 config.window_close_confirmation = "NeverPrompt"
 
 -- Font Settings
+config.font_dirs = { "/Library/Fonts" }
 config.font = wezterm.font("MesloLGS Nerd Font Mono")
 config.font_size = 14
 
 -- Window Appearance
 config.enable_tab_bar = false
 config.window_decorations = "RESIZE"
-config.window_background_opacity = 0.95
+config.window_background_opacity = 0.80
 
 -- Alt Key Behavior
 config.send_composed_key_when_left_alt_is_pressed  = true

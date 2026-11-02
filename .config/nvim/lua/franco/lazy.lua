@@ -15,22 +15,20 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 	{ import = "franco.plugins.editor" },
-	{ import = "franco.plugins.ui" },
-	{ import = "franco.plugins.lsp" },
-	{ import = "franco.plugins.tools" },
-	{ import = "franco.plugins.lang" },
-	-- { import = "franco.plugins.extra" },
-	-- { import = "franco.plugins.dap" },
+	{ import = "franco.plugins.ui"     },
+	{ import = "franco.plugins.lsp"    },
+	{ import = "franco.plugins.tools"  },
+	{ import = "franco.plugins.lang"   },
 }, {
 	checker = {
 		enabled = true,
-		notify = false,
+		notify  = false,
 	},
 	change_detection = {
 		notify = false,
 	},
 	ui = {
-		border = "rounded",
+		border    = "rounded",
 		title_pos = "center",
 	},
 })

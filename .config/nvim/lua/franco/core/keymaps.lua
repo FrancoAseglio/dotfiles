@@ -39,27 +39,15 @@ local function float_term()
   vim.cmd.startinsert()
 end
 
--- HTML trigger
-local function html_open()
-	local filepath = vim.api.nvim_buf_get_name(0)
-	if vim.fn.fnamemodify(filepath, ":e") == "html" then
-		vim.fn.system(string.format("open %s", filepath))
-	else
-		print("Current file is not an HTML file.")
-	end
-end
-
 -- Default
-map("n", "<leader>w", ":w<CR>", { desc = "Save current file" })
-map("n", "<leader>q", ":q<CR>", { desc = "Quit Neovim" })
+map("n", "<leader>w", ":w<CR>",  { desc = "Save current file" })
+map("n", "<leader>q", ":q<CR>",  { desc = "Quit Neovim" })
 map("n", "<leader>k", ":q!<CR>", { desc = "Quit no saving" })
 map("i", "jj", "<Esc>", { desc = "Exit insert mode" })
 
 -- Utils
-map("n", "<leader>gc", ":lua vim.cmd('cd ~/.config/nvim'); print(vim.fn.getcwd())<CR>")
 map("n", "<leader>sb", ":source %<CR>", { desc = "Source current file" })
 map("n", "<leader>zc", ":set foldmethod=expr<CR>")
 map("n", "<leader>mm", "@m", { desc = "Toggles @m macro" })
 map("n", "<leader>hc", ":noh<CR>", { desc = "Clean buffer search result" })
 map({ "n", "t" }, "<leader>tt", function() float_term() end)
-map("n", "<leader>hh", function() html_open() end)

@@ -66,17 +66,18 @@ cmd-alt-s = 'mode service'
 [mode.service.binding]
 r = ['reload-config', 'mode main']
 f = ['exec-and-forget open -a "Finder"',   'mode main']
-e = ['exec-and-forget open -a "Mail"',     'mode main']
+e = ['exec-and-forget open -a "Spark"',    'mode main']
+g = ['exec-and-forget open -a "Goodnotes"','mode main']
 w = ['exec-and-forget open -a "WezTerm"',  'mode main']
 v = ['exec-and-forget open -a "vsCode"',   'mode main']
 s = ['exec-and-forget open -a "Safari"',   'mode main']
 y = ['exec-and-forget open -a "YouTube"',  'mode main']
-n = ['exec-and-forget open -a "Stickies"', 'mode main']
+d = ['exec-and-forget open -a "Discord"',  'mode main']
 m = ['exec-and-forget open -a "Music"',    'mode main']
 
 # App to Workspace assignments
 [[on-window-detected]]
-if.app-name-regex-substring = 'Stickies|Music'
+if.app-name-regex-substring = 'Music'
 run = 'move-node-to-workspace 0'
 
 [[on-window-detected]]
@@ -88,5 +89,5 @@ if.app-name-regex-substring = 'Safari'
 run = 'move-node-to-workspace 2'
 
 [[on-window-detected]]
-if.app-name-regex-substring = 'YouTube'
+if.app-name-regex-substring = 'YouTube|Discord'
 run = 'move-node-to-workspace 3'
